@@ -5,6 +5,7 @@ import { domains } from "../data/domains";
 import ArchitectureOrb from "../components/framework/ArchitectureOrb";
 import ContextPanel from "../components/framework/ContextPanel";
 import FrameworkComponentVisuals from "../components/framework/FrameworkComponentVisuals";
+import EnterpriseFrameworkCommandCenter from "../components/framework/EnterpriseFrameworkCommandCenter";
 import FrameworkStructureDiagram from "../components/framework/FrameworkStructureDiagram";
 import StageRail from "../components/framework/StageRail";
 import GlowCard from "../components/common/GlowCard";
