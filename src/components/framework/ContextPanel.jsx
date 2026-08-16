@@ -1,0 +1,2 @@
+import GlowCard from "../common/GlowCard";
+export default function ContextPanel({icon:Icon,title,subtitle,items,color}){return <GlowCard color={color} className="p-5"><div className="flex items-center gap-3"><Icon className="h-7 w-7" style={{color}}/><div><b className="block text-sm">{title}</b><span className="text-[10px] text-slate-500">{subtitle}</span></div></div><ul className="mt-4 space-y-2">{items.map(x=><li key={x} className="flex gap-2 text-[11px] leading-5 text-slate-400"><span style={{color}}>●</span>{x}</li>)}</ul></GlowCard>}
