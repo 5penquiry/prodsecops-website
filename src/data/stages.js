@@ -1,0 +1,1 @@
+export const stages = ["Audit","Acquire","Build","Deploy","Validate","Assess","Execute","Assure"];
