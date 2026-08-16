@@ -1,1 +1,0 @@
-export default function Brand(){return <div className="font-[Manrope] text-xl font-extrabold tracking-[-.06em]"><span className="text-sky-400">Prod</span><span>Sec</span><span className="text-emerald-400">Ops</span></div>}
