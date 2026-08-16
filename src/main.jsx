@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router";
 
 import App from "./App.jsx";
 import "./index.css";
+import "./styles/approved-visuals.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
