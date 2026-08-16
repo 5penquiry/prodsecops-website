@@ -1,0 +1,1 @@
+import { Outlet } from "react-router"; import Header from "./Header"; import Footer from "./Footer"; export default function PageLayout(){return <div className="min-h-screen bg-[#020916] text-slate-50"><Header/><main id="main-content"><Outlet/></main><Footer/></div>}
