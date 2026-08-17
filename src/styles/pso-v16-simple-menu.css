@@ -1,7 +1,7 @@
 /*
- * V16 simplified premium hero menu.
- * Import after V14 and V15.
- */
+  ProdSecOps V16 simplified hero perspective menu.
+  This stylesheet must load after V14 and V15.
+*/
 
 .v14-model {
   grid-template-co*umns: minmax(0, 500px) 142px;
@@ -16,259 +16,243 @@
   align-content: center;
   gap* 0.58rem;
 
-  padding* 0.55rem 0;
-* background: transparent;
+  padding: 0.55rem 0;
+ *background: transparent;
 }
 
-/* Individual perspective CTA */
-
-.v16-hero-menu button {
-  --menu-border: color-mix(
-    in srgb,
-    var(--item) 42%,
-    #183d58
-  );
-
-  position: relative;
+.v16-h*ro-menu button {
+  position: relat*ve;
 
   display: grid;
-  grid-template-columns: 4px 1fr;
-  gap: 0.72rem;
+  grid*template-columns: 4px *fr;
+  gap* 0.72rem;
   align-items: center;
 
-  min-height: 48px;
+* min*height: 48px;
   overflow: hidden;
-
-  border: 1px solid var(--menu-border);
-  border-radius: 12px;
+*  border: 1px solid
+    color-mix(*      in srgb,
+      var*--item) 42%,
+      #183d58
+    );
+*  border*radius: 12px;
 
   background:
-    linear-gradient(
+    l*near-gradient(
       135deg,
-      rgba(7, 27, 47, 0.9),
-      rgba(3, 13, 25, 0.88)
+     *rgba(7, 27, 47, 0.9),
+      rgba*3, 13, 25, 0.88)
     );
 
-  padding: 0.68rem 0.78rem;
+**padding: 0.68rem 0.78rem;
 
-  color: #8fa3b6;
+  color* #8fa3b6;
   text-align: left;
-  cursor: pointer;
+  cu*sor* pointer;
 
   box-shadow:
-    inset 0 1px rgba(255, 255, 255, 0.025);
-
-  transition:
+    inset*0 1px rgba(255, 255, 255, 0.025);
+*  transition*
     transform 240ms ease,
-    border-color 240ms ease,
-    color 240ms ease,
-    box-shadow 240ms ease,
-    background 240ms ease;
+    bor*er-color 240ms ease,
+    color 240*s ease,
+    box-shadow 240ms ease,*    background 240ms ease;
 }
 
-/* Subtle active color wash */
+.v16*hero-menu button::before {
+ *content: "";
 
-.v16-hero-menu button::before {
-  content: "";
-
-  position: absolute;
+  position: absolute*
   inset: 0;
 
   opacity: 0;
 
-  background:
-    radial-gradient(
+  bac*ground:
+    radial*gradient(
       circle at 0 50%,
-      color-mix(
+ *    color-mix(
         in srgb,
-        var(--item) 20%,
-        transparent
+  *     var(--item) 20%,
+        tran*parent
       ),
-      transparent 64%
+      transparent *4%
     );
 
-  transition: opacity 240ms ease;
+  transition* opacity 240ms ease;
 }
 
-/* Perspective color signal */
-
-.v16-hero-menu button > span {
-  position: relative;
+.v16*hero-menu button > span {
+ *position: relative;
   z-index: 1;
-
-  width: 4px;
+*  width: 4px;
   height: 24px;
 
-  border-radius: 999px;
+  b*rder-radius: 999px;
 
-  background: var(--item);
+  background:*var(--item);
   opacity: 0.32;
 
-  box-shadow: 0 0 0 transparent;
+  b*x-shadow: 0 0 0 transparent;
 
-  transition:
+  tr*nsition:
     height 240ms ease,
-    opacity 240ms ease,
-    box-shadow 240ms ease;
+  * opacity 240ms ease,
+    box*shadow 240ms ease;
 }
 
-/* Perspective name */
-
-.v16-hero-menu button > b {
-  position: relative;
+.v16-hero-me*u button > b {
+  position:*relative;
   z-index: 1;
 
-  font-family: Manrope, sans-serif;
-  font-size: 0.58rem;
-  font-weight: 800;
+  font*family: Manrope, sans-serif;
+  fon*-size: 0.58rem;
+  font-weight* 800;
   line-height: 1;
 
-  letter-spacing: 0.045em;
+  letter*spacing: 0.045em;
 }
 
-/* Hover, keyboard focus, and active state */
-
-.v16-hero-menu button:hover,
-.v16-hero-menu button:focus-visible,
-.v16-hero-menu button.active {
+.v16-hero-men* button:hover,
+.v16-hero-menu butt*n:focus-visible,
+.v16-hero-menu bu*ton.active {
   outline: none;
 
-  transform: translateX(-5px);
+  t*ansform: translateX(-5px);
 
-  border-color: var(--item);
-  color: #ffffff;
+  bord*r-color: var(--item);
+  color: #ff*fff;
 
   background:
-    linear-gradient(
+    linear-gra*ient(
       135deg,
-      color-mix(
+      color-mi*(
         in srgb,
-        var(--item) 13%,
+        var(--i*em) 13%,
         #071b2f
       ),
-      rgba(3, 13, 25, 0.96)
+*     rgba(3, 13, 25, 0.96)
     );
-
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.28),
+*  box-shadow:
+    0 10px 25px rgba*0, 0, 0, 0.28),
     0 0 18px
-      color-mix(
+     *color-mix(
         in srgb,
-        var(--item) 24%,
-        transparent
+      * var(--item) 24%,
+        transpar*nt
       ),
-    inset 0 1px rgba(255, 255, 255, 0.04);
+    inset 0 1px rgba(2*5, 255, 255, 0.04);
 }
 
-.v16-hero-menu button:hover::before,
-.v16-hero-menu button:focus-visible::before,
-.v16-hero-menu button.active::before {
+.v16-hero-m*nu button:hover::before,
+.v16-hero*menu button:focus-visible::before,*.v16-hero-menu button.active::befo*e {
   opacity: 1;
 }
 
-.v16-hero-menu button:hover > span,
-.v16-hero-menu button:focus-visible > span,
-.v16-hero-menu button.active > span {
-  height: 32px;
+.v16-hero-men* button:hover > span,
+.v16-hero-me*u button:focus-visible > span,
+.v1*-hero-menu button.active > span {
+* height: 32px;
   opacity: 1;
 
-  box-shadow:
-    0 0 13px var(--item);
-}
+  bo*-shadow:
+    0 0 13px var(--item);*}
 
-/* Small active-state signal dot */
-
-.v16-hero-menu button.active::after {
+.v16-hero-menu button.active::a*ter {
   content: "";
 
-  position: absolute;
+  position: *bsolute;
   right: 12px;
 
-  width: 5px;
+  width: *px;
   height: 5px;
 
-  border-radius: 50%;
+  border-radiu*: 50%;
 
-  background: var(--item);
-
+  background: var(--item);*
   box-shadow:
-    0 0 10px var(--item);
+    0 0 10px var(--*tem);
 
   animation:
-    v16MenuPulse 1.8s ease-in-out infinite;
+    v16MenuPul*e 1.8s ease-in-out infinite;
 }
 
-@keyframes v16MenuPulse {
+@k*yframes v16MenuPulse {
+  0%,
+  100* {
+    opacity: 1;
+    transform: *cale(1);
+  }
+
   50% {
-    opacity: 0.42;
+    opacity:*0.42;
     transform: scale(0.72);
+* }
+}
+
+@media (max-width: 1160px) {*  .v14-model {
+    grid-template-c*lumns: minmax(0, 460px) 134px;
+   *width: min(100%, 616px);
   }
 }
 
-/* Medium desktop */
-
-@media (max-width: 1160px) {
-  .v14-model {
-    grid-template-columns: minmax(0, 460px) 134px;
-    width: min(100%, 616px);
-  }
-}
-
-/* Mobile and narrow tablet */
-
-@media (max-width: 760px) {
-  .v14-model {
-    grid-template-columns: 1fr;
+@m*dia (max-width: 760px) {
+  .v14-mo*el {
+    grid-template-columns: 1f*;
     width: 100%;
   }
 
-  .v16-hero-menu {
-    grid-template-columns: repeat(5, 1fr);
+  .v16-her*-menu {
+    grid-template-columns:*repeat(5, 1fr);
     gap: 0.35rem;
-
-    width: min(100%, 520px);
-    margin: auto;
-    padding-top: 0.6rem;
+*    width: min(100%, 520px);
+    m*rgin: auto;
+    padding-top: 0.6re*;
   }
 
   .v16-hero-menu button {
-    display: flex;
-    justify-content: center;
+ *  display: flex;
+    justify-conte*t: center;
 
     min-height: 42px;
-
-    padding: 0.55rem 0.35rem;
-    text-align: center;
+*    padding: 0.55rem 0.35rem;
+    *ext-align: center;
   }
 
-  .v16-hero-menu button > span {
-    display: none;
+  .v16-her*-menu button > span {
+    display:*none;
   }
 
-  .v16-hero-menu button > b {
+  .v16-hero-menu button*> b {
     font-size: 0.43rem;
   }
-
-  .v16-hero-menu button:hover,
-  .v16-hero-menu button:focus-visible,
-  .v16-hero-menu button.active {
-    transform: translateY(-3px);
-  }
-
-  .v16-hero-menu button.active::after {
+*  .v16-hero-menu button:hover,
+  .*16-hero-menu button:focus-visible,*  .v16-hero-menu button.active {
+ *  transform: translateY(-3px);
+  }*
+  .v16-hero-menu button.active::a*ter {
     right: 50%;
-    bottom: 5px;
+    bottom: *px;
 
-    transform: translateX(50%);
+    transform: translateX(50%*;
   }
 }
 
-/* Accessibility */
+@media (max-width: 520px)*{
+  .v16-hero-menu {
+    grid-temp*ate-columns: repeat(2, 1fr);
+  }
 
-@media (prefers-reduced-motion: reduce) {
+* .v16-hero-menu button:last-child *
+    grid-column: 1 / -1;
+  }
+}
+
+@*edia (prefers-reduced-motion: redu*e) {
   .v16-hero-menu button,
-  .v16-hero-menu button::after {
-    animation: none !important;
-    transition: none !important;
+  .v*6-hero-menu button::before,
+  .v16*hero-menu button::after,
+  .v16-he*o-menu button > span {
+    animati*n: none !important;
+    transition* none !important;
   }
 }
