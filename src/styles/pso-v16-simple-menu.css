@@ -1,0 +1,274 @@
+/*
+ * V16 simplified premium hero menu.
+ * Import after V14 and V15.
+ */
+
+.v14-model {
+  grid-template-co*umns: minmax(0, 500px) 142px;
+  ga*: 22px;
+  width: min(100%, 665px);*}
+
+.v16-hero-menu {
+  position: re*ative;
+  z-index: 5;
+
+  display: g*id;
+  align-content: center;
+  gap* 0.58rem;
+
+  padding* 0.55rem 0;
+* background: transparent;
+}
+
+/* Individual perspective CTA */
+
+.v16-hero-menu button {
+  --menu-border: color-mix(
+    in srgb,
+    var(--item) 42%,
+    #183d58
+  );
+
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 4px 1fr;
+  gap: 0.72rem;
+  align-items: center;
+
+  min-height: 48px;
+  overflow: hidden;
+
+  border: 1px solid var(--menu-border);
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(7, 27, 47, 0.9),
+      rgba(3, 13, 25, 0.88)
+    );
+
+  padding: 0.68rem 0.78rem;
+
+  color: #8fa3b6;
+  text-align: left;
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.025);
+
+  transition:
+    transform 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease;
+}
+
+/* Subtle active color wash */
+
+.v16-hero-menu button::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+
+  background:
+    radial-gradient(
+      circle at 0 50%,
+      color-mix(
+        in srgb,
+        var(--item) 20%,
+        transparent
+      ),
+      transparent 64%
+    );
+
+  transition: opacity 240ms ease;
+}
+
+/* Perspective color signal */
+
+.v16-hero-menu button > span {
+  position: relative;
+  z-index: 1;
+
+  width: 4px;
+  height: 24px;
+
+  border-radius: 999px;
+
+  background: var(--item);
+  opacity: 0.32;
+
+  box-shadow: 0 0 0 transparent;
+
+  transition:
+    height 240ms ease,
+    opacity 240ms ease,
+    box-shadow 240ms ease;
+}
+
+/* Perspective name */
+
+.v16-hero-menu button > b {
+  position: relative;
+  z-index: 1;
+
+  font-family: Manrope, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 800;
+  line-height: 1;
+
+  letter-spacing: 0.045em;
+}
+
+/* Hover, keyboard focus, and active state */
+
+.v16-hero-menu button:hover,
+.v16-hero-menu button:focus-visible,
+.v16-hero-menu button.active {
+  outline: none;
+
+  transform: translateX(-5px);
+
+  border-color: var(--item);
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--item) 13%,
+        #071b2f
+      ),
+      rgba(3, 13, 25, 0.96)
+    );
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.28),
+    0 0 18px
+      color-mix(
+        in srgb,
+        var(--item) 24%,
+        transparent
+      ),
+    inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.v16-hero-menu button:hover::before,
+.v16-hero-menu button:focus-visible::before,
+.v16-hero-menu button.active::before {
+  opacity: 1;
+}
+
+.v16-hero-menu button:hover > span,
+.v16-hero-menu button:focus-visible > span,
+.v16-hero-menu button.active > span {
+  height: 32px;
+  opacity: 1;
+
+  box-shadow:
+    0 0 13px var(--item);
+}
+
+/* Small active-state signal dot */
+
+.v16-hero-menu button.active::after {
+  content: "";
+
+  position: absolute;
+  right: 12px;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--item);
+
+  box-shadow:
+    0 0 10px var(--item);
+
+  animation:
+    v16MenuPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes v16MenuPulse {
+  50% {
+    opacity: 0.42;
+    transform: scale(0.72);
+  }
+}
+
+/* Medium desktop */
+
+@media (max-width: 1160px) {
+  .v14-model {
+    grid-template-columns: minmax(0, 460px) 134px;
+    width: min(100%, 616px);
+  }
+}
+
+/* Mobile and narrow tablet */
+
+@media (max-width: 760px) {
+  .v14-model {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .v16-hero-menu {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.35rem;
+
+    width: min(100%, 520px);
+    margin: auto;
+    padding-top: 0.6rem;
+  }
+
+  .v16-hero-menu button {
+    display: flex;
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0.55rem 0.35rem;
+    text-align: center;
+  }
+
+  .v16-hero-menu button > span {
+    display: none;
+  }
+
+  .v16-hero-menu button > b {
+    font-size: 0.43rem;
+  }
+
+  .v16-hero-menu button:hover,
+  .v16-hero-menu button:focus-visible,
+  .v16-hero-menu button.active {
+    transform: translateY(-3px);
+  }
+
+  .v16-hero-menu button.active::after {
+    right: 50%;
+    bottom: 5px;
+
+    transform: translateX(50%);
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .v16-hero-menu button,
+  .v16-hero-menu button::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
