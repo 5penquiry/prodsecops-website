@@ -21,6 +21,7 @@ import "./styles/pso-v14-hybrid.css";
 import "./styles/pso-v15-lower-assembly.css";
 import "./styles/pso-v16-simple-menu.css";
 import "./styles/pso-v17-final-hero.css";
+import "./styles/pso-v18-premium-menu.css";
 
 
 const redirectPath = sessionStorage.getItem(
