@@ -2,6 +2,7 @@ import { useEffect,useState } from "react";
 import { AnimatePresence,motion } from "framer-motion";
 import { ArrowRight,Bot,Boxes,BrainCircuit,Database,Fingerprint,Gauge,GitBranch,RefreshCw,ShieldEllipsis,TestTube2,TriangleAlert,Workflow } from "lucide-react";
 import { domains } from "../data/domains";
+import FrameworkHero from "../components/framework/FrameworkHero";
 import ArchitectureOrb from "../components/framework/ArchitectureOrb";
 import ContextPanel from "../components/framework/ContextPanel";
 import FrameworkComponentVisuals from "../components/framework/FrameworkComponentVisuals";
