@@ -13,6 +13,7 @@ import "./styles/pso-v6.css";
 import "./styles/pso-v7-balloon.css";
 import "./styles/pso-v8-balloon.css";
 import "./styles/pso-v9-balloon.css";
+import "./styles/pso-v10-pyramid.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
