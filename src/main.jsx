@@ -19,6 +19,7 @@ import "./styles/pso-v12-final.css";
 import "./styles/pso-v13-restored.css";
 import "./styles/pso-v14-hybrid.css";
 import "./styles/pso-v15-lower-assembly.css";
+import "./styles/pso-v16-simple-menu.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
