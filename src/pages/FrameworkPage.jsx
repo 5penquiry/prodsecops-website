@@ -1,13 +1,11 @@
 import { useEffect,useState } from "react";
 import { AnimatePresence,motion } from "framer-motion";
-import { ArrowRight,Bot,Boxes,BrainCircuit,Database,Fingerprint,Gauge,GitBranch,RefreshCw,ShieldEllipsis,TestTube2,TriangleAlert,Workflow } from "lucide-react";
+import { ArrowRight,Bot,BrainCircuit,Database,ShieldEllipsis,TestTube2 } from "lucide-react";
 import { domains } from "../data/domains";
 import FrameworkHero from "../components/framework/FrameworkHero";
-import ArchitectureOrb from "../components/framework/ArchitectureOrb";
 import ContextPanel from "../components/framework/ContextPanel";
 import FrameworkComponentVisuals from "../components/framework/FrameworkComponentVisuals";
 import EnterpriseFrameworkCommandCenter from "../components/framework/EnterpriseFrameworkCommandCenter";
-import FrameworkStructureDiagram from "../components/framework/FrameworkStructureDiagram";
 import StageRail from "../components/framework/StageRail";
 import GlowCard from "../components/common/GlowCard";
 import SectionHeader from "../components/common/SectionHeader";
@@ -37,19 +35,19 @@ export default function FrameworkPage() {
       />
 
       <section
-        id="framework-structure"
-        className="px-5 py-24"
-      >
-        <div className="mx-auto max-w-[1450px]">
-          <SectionHeader
-            eyebrow="FRAMEWORK STRUCTURE"
-            title="One intelligence core connects proving, governance, and execution"
-            body="ProdSecOps converts security findings, production state, threat context, and organizational risk criteria into tested evidence, authorized decisions, controlled execution, production monitoring, and assurance."
-          />
+  id="framework-structure"
+  className="px-5 py-20"
+>
+  <div className="mx-auto max-w-[1550px]">
+    <SectionHeader
+      eyebrow="ENTERPRISE FRAMEWORK STRUCTURE"
+      title="One operating context coordinates risk, security, compliance, and resilience"
+      body="The Production-Risk Case connects exact production state, 5D Intelligence, RGSM governance, isolated SecLabs evidence, controlled execution, monitoring, recovery, and assurance."
+    />
 
-          <FrameworkStructureDiagram />
-        </div>
-      </section>
+    <EnterpriseFrameworkCommandCenter />
+  </div>
+</section>
 
       <section
         id="architecture"
