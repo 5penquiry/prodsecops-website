@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import "./index.css";
 import "./styles/approved-visuals.css";
 import "./styles/enterprise-command-center.css";
+import "./styles/framework-hero-v2.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
