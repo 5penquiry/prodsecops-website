@@ -15,6 +15,12 @@ import FrameworkHero from "../components/framework/FrameworkHero";
 import ContextPanel from "../components/framework/ContextPanel";
 import FrameworkComponentVisuals from "../components/framework/FrameworkComponentVisuals";
 import EnterpriseFrameworkCommandCenter from "../components/framework/EnterpriseFrameworkCommandCenter";
+import {
+  FrameworkIntroduction,
+  IntegrationNarrative,
+  OperatingModelNarrative,
+  PrinciplesBenefitsCoordination,
+} from "../components/framework/FrameworkNarrativeSections";
 import StageRail from "../components/framework/StageRail";
 import GlowCard from "../components/common/GlowCard";
 import SectionHeader from "../components/common/SectionHeader";
@@ -39,6 +45,8 @@ export default function FrameworkPage() {
         setActiveKey={setActiveKey}
       />
 
+      <FrameworkIntroduction />
+      
       <section
         id="framework-structure"
         className="px-5 py-20"
@@ -53,6 +61,8 @@ export default function FrameworkPage() {
           <EnterpriseFrameworkCommandCenter />
         </div>
       </section>
+
+      <IntegrationNarrative />
 
       <section
         id="architecture"
@@ -254,6 +264,8 @@ export default function FrameworkPage() {
         </div>
       </section>
 
+      <OperatingModelNarrative />
+
       <section
         id="domains"
         className="border-y border-sky-950 bg-[#020b17]/70 px-5 py-24"
@@ -311,6 +323,8 @@ export default function FrameworkPage() {
           </div>
         </div>
       </section>
+
+      <PrinciplesBenefitsCoordination />
 
       <section
         id="ai-governance"
