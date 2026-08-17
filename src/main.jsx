@@ -7,6 +7,7 @@ import "./index.css";
 import "./styles/approved-visuals.css";
 import "./styles/framework-hero-v2.css";
 import "./styles/enterprise-command-center.css";
+import "./styles/pso-precision-v4.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
