@@ -3,10 +3,11 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
 import App from "./App.jsx";
+
 import "./index.css";
 import "./styles/approved-visuals.css";
-import "./styles/enterprise-command-center.css";
 import "./styles/framework-hero-v2.css";
+import "./styles/enterprise-command-center.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
