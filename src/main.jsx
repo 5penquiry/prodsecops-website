@@ -14,6 +14,7 @@ import "./styles/pso-v7-balloon.css";
 import "./styles/pso-v8-balloon.css";
 import "./styles/pso-v9-balloon.css";
 import "./styles/pso-v10-pyramid.css";
+import "./styles/pso-v11-external-pentagon.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
