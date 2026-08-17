@@ -57,7 +57,7 @@ ${form.message}`,
           <label>Message<textarea required rows="5" name="message" value={form.message} onChange={update} /></label>
           <div className="v21-contact-actions">
             <small>This static-site form opens the visitor's email application addressed to framework@vpilot.org.</small>
-            <button type="submit"><Mail size={15} /> PREPARE EMAIL</button>
+            <button type="submit"><Mail size={15} /> SEND EMAIL</button>
           </div>
         </form>
       </section>
