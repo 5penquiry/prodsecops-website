@@ -1,1 +1,82 @@
-import{Link}from"react-router";import AnimatedLogo from"./AnimatedLogo";export default function Footer(){return <footer className="premium-footer px-5 py-14"><div className="mx-auto grid max-w-[1450px] gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr]"><div><Link to="/"><AnimatedLogo footer/></Link><p className="mt-3 text-sm text-slate-300">Risk-Driven AI Infrastructure Security Operations Framework</p></div><div><b>Framework</b><div className="footer-links"><Link to="/">Architecture</Link><a href="/#components">Three components</a><a href="/#architecture">Domain orchestration</a></div></div><div><b>Intelligence domains</b><div className="footer-links"><Link to="/remediation-intelligence">Remediation</Link><Link to="/soc-intelligence">SOC</Link><Link to="/incident-response-intelligence">Incident response</Link><Link to="/resilience-intelligence">Resilience</Link><Link to="/compliance-intelligence">Compliance</Link></div></div><div><b>Organization</b><div className="footer-links"><a href="mailto:framework@vpilot.org">Framework feedback</a><a href="mailto:enquiry@vpilot.org">Executive briefing</a></div></div></div><div className="mx-auto mt-10 max-w-[1450px] border-t border-white/5 pt-5 text-xs text-slate-500">© 2026 V Pilot Cyber Solutions LLP</div></footer>}
+import { Link } from "react-router";
+import AnimatedLogo from "./AnimatedLogo";
+
+const footerGroups = [
+  {
+    title: "Framework",
+    links: [
+      ["Overview", "/"],
+      ["5D Threat Intelligence", "/#five-dimensional-intelligence"],
+      ["Risk Governance", "/#risk-governance"],
+      ["Architecture", "/#architecture"],
+      ["Operating workflow", "/#workflow"],
+    ],
+  },
+  {
+    title: "Intelligence",
+    links: [
+      ["Remediation", "/remediation-intelligence"],
+      ["SOC", "/soc-intelligence"],
+      ["Incident Response", "/incident-response-intelligence"],
+      ["Resilience", "/resilience-intelligence"],
+      ["Compliance", "/compliance-intelligence"],
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      ["Solutions", "/solutions"],
+      ["Research", "/research"],
+      ["Insights and Blog", "/research#insights"],
+      ["Framework publications", "/research#publications"],
+      ["Release history", "/research#releases"],
+    ],
+  },
+];
+
+export default function Footer() {
+  return (
+    <footer className="premium-footer v20-footer" id="contact">
+      <div className="v20-footer-main">
+        <div className="v20-footer-brand">
+          <Link to="/" aria-label="ProdSecOps home">
+            <AnimatedLogo footer />
+          </Link>
+          <b>Threat-Informed Infrastructure Security</b>
+          <b>Management and Operations Framework</b>
+          <p>Risk-driven security operations aligned through five-dimensional threat intelligence and accountable Risk Governance.</p>
+          <span>Framework Preview 1.0</span>
+        </div>
+
+        {footerGroups.map((group) => (
+          <section className="v20-footer-group" key={group.title}>
+            <h2>{group.title}</h2>
+            <div>
+              {group.links.map(([label, path]) => <Link to={path} key={label}>{label}</Link>)}
+            </div>
+          </section>
+        ))}
+
+        <section className="v20-footer-group">
+          <h2>Connect</h2>
+          <div>
+            <Link to="/contact">Contact</Link>
+            <a href="mailto:enquiry@vpilot.org">Executive Briefing</a>
+            <a href="mailto:framework@vpilot.org">Framework Feedback</a>
+            <a href="mailto:enquiry@vpilot.org">General Enquiries</a>
+          </div>
+        </section>
+      </div>
+
+      <div className="v20-footer-bottom">
+        <span>© 2026 V Pilot Cyber Solutions LLP</span>
+        <nav aria-label="Legal navigation">
+          <Link to="/terms">Terms</Link>
+          <Link to="/privacy">Privacy</Link>
+          <Link to="/accessibility">Accessibility</Link>
+          <Link to="/sitemap">Sitemap</Link>
+        </nav>
+      </div>
+    </footer>
+  );
+}
