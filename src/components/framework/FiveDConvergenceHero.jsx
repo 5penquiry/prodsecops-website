@@ -136,43 +136,28 @@ export default function FiveDConvergenceHero() {
         </div>
       </div>
 
-      <aside className="v14-command-rail" aria-label="Threat-intelligence perspective controls">
-        <header>
-          <span>5D CONTROL PLANE</span>
-          <b>Intelligence Perspectives</b>
-          <small>Select a dimension to trace its paired convergence paths.</small>
-        </header>
+      <aside
+  className="v16-hero-menu"
+  aria-label="Threat-intelligence perspectives"
+>
+  {perspectives.map((item, index) => (
+    <button
+      key={item.title}
+      type="button"
+      className={active === index ? "active" : ""}
+      style={{ "--item": item.color }}
+      onMouseEnter={() => selectPerspective(index)}
+      onFocus={() => selectPerspective(index)}
+      onBlur={() => setPaused(false)}
+      onClick={() => setActive(index)}
+      aria-pressed={active === index}
+    >
+      <span aria-hidden="true" />
+      <b>{item.title}</b>
+    </button>
+  ))}
+</aside>
 
-        <nav>
-          {perspectives.map((item, index) => (
-            <button
-              key={item.title}
-              type="button"
-              className={active === index ? "active" : ""}
-              style={{ "--item": item.color }}
-              onMouseEnter={() => selectPerspective(index)}
-              onFocus={() => selectPerspective(index)}
-              onBlur={() => setPaused(false)}
-              onClick={() => setActive(index)}
-            >
-              <span>0{index + 1}</span>
-              <div>
-                <b>{item.title}</b>
-                <small>{item.detail}</small>
-              </div>
-              <i aria-hidden="true">›</i>
-            </button>
-          ))}
-        </nav>
-
-        <footer style={{ "--status": current.color }}>
-          <span>ACTIVE CONVERGENCE</span>
-          <b>{current.title}</b>
-          <small>
-            One intelligence plane and two adjacent paths converge on Integrated Risk Governance.
-          </small>
-        </footer>
-      </aside>
     </div>
   );
 }
