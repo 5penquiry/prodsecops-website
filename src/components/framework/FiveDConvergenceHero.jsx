@@ -8,12 +8,13 @@ const perspectives = [
   { title: "COMPLIANCE", detail: "Defensible assurance", color: "#f3c34e" },
 ];
 
+/* All strings begin at the canopy mouth or lower skirt, never inside the canopy. */
 const suspensionLines = [
-  [286, 455, 314, 548],
-  [323, 466, 338, 548],
-  [360, 470, 360, 548],
-  [397, 466, 382, 548],
-  [434, 455, 406, 548],
+  [286, 468, 318, 548],
+  [322, 478, 339, 548],
+  [360, 482, 360, 548],
+  [398, 478, 381, 548],
+  [434, 468, 402, 548],
 ];
 
 export default function FiveDConvergenceHero() {
@@ -30,110 +31,112 @@ export default function FiveDConvergenceHero() {
   const activeStrings = [active, (active + 1) % suspensionLines.length];
 
   return (
-    <div className="v7-balloon-model" aria-label="Five-dimensional threat-intelligence balloon convergence model">
-      <div className="v7-flight-grid grid-far" aria-hidden="true" />
-      <div className="v7-flight-grid grid-near" aria-hidden="true" />
-      <div className="v7-air-streak streak-one" aria-hidden="true" />
-      <div className="v7-air-streak streak-two" aria-hidden="true" />
-      <div className="v7-air-streak streak-three" aria-hidden="true" />
+    <div className="v8-balloon-model" aria-label="Integrated five-dimensional threat-intelligence balloon model">
+      <div className="v8-flight-grid grid-far" aria-hidden="true" />
+      <div className="v8-flight-grid grid-near" aria-hidden="true" />
+      <div className="v8-flight-horizon" aria-hidden="true" />
+      <div className="v8-air-streak streak-one" aria-hidden="true" />
+      <div className="v8-air-streak streak-two" aria-hidden="true" />
+      <div className="v8-air-streak streak-three" aria-hidden="true" />
 
-      <svg viewBox="0 0 720 680" role="img">
+      <svg viewBox="0 0 720 690" role="img">
         <defs>
-          <radialGradient id="v7-canopy-depth" cx="33%" cy="20%" r="78%">
-            <stop offset="0" stopColor="#173a62" />
-            <stop offset=".45" stopColor="#0b213c" />
+          <radialGradient id="v8-canopy-depth" cx="32%" cy="19%" r="80%">
+            <stop offset="0" stopColor="#183e69" />
+            <stop offset=".48" stopColor="#0b233e" />
             <stop offset="1" stopColor="#030a15" />
           </radialGradient>
-          <linearGradient id="v7-canopy-sheen" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#ffffff" stopOpacity=".12" />
-            <stop offset=".45" stopColor="#ffffff" stopOpacity="0" />
+          <linearGradient id="v8-canopy-sheen" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ffffff" stopOpacity=".13" />
+            <stop offset=".44" stopColor="#ffffff" stopOpacity="0" />
             <stop offset="1" stopColor="#38bdf8" stopOpacity=".05" />
           </linearGradient>
-          <linearGradient id="v7-basket" x1="0" y1="0" x2="1" y2="0">
+          <linearGradient id="v8-basket" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stopColor="#07101e" />
             <stop offset=".5" stopColor="#304763" />
             <stop offset="1" stopColor="#07101e" />
           </linearGradient>
-          <radialGradient id="v7-burner" cx="50%" cy="45%" r="55%">
+          <radialGradient id="v8-burner" cx="50%" cy="45%" r="55%">
             <stop offset="0" stopColor="#ffffff" />
             <stop offset=".2" stopColor="#67e8f9" />
             <stop offset=".5" stopColor="#3b82f6" stopOpacity=".88" />
             <stop offset="1" stopColor="#040914" stopOpacity="0" />
           </radialGradient>
-          <filter id="v7-glow" x="-100%" y="-100%" width="300%" height="300%">
+          <filter id="v8-glow" x="-100%" y="-100%" width="300%" height="300%">
             <feGaussianBlur stdDeviation="8" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
-          <clipPath id="v7-canopy-clip">
-            <path d="M360 55C210 55 112 151 104 278C96 401 205 467 285 477C310 481 330 483 360 483C390 483 410 481 435 477C515 467 624 401 616 278C608 151 510 55 360 55Z" />
+          <clipPath id="v8-canopy-clip">
+            <path d="M360 68C225 68 132 153 120 270C107 381 195 446 280 466C310 473 333 477 360 477C387 477 410 473 440 466C525 446 613 381 600 270C588 153 495 68 360 68Z" />
           </clipPath>
         </defs>
 
-        <g className="v7-canopy">
-          <path className="canopy-body" d="M360 55C210 55 112 151 104 278C96 401 205 467 285 477C310 481 330 483 360 483C390 483 410 481 435 477C515 467 624 401 616 278C608 151 510 55 360 55Z" />
+        <g className="v8-canopy">
+          <path className="canopy-body" d="M360 68C225 68 132 153 120 270C107 381 195 446 280 466C310 473 333 477 360 477C387 477 410 473 440 466C525 446 613 381 600 270C588 153 495 68 360 68Z" />
 
-          <g clipPath="url(#v7-canopy-clip)" className="v7-canopy-panels">
+          <g clipPath="url(#v8-canopy-clip)" className="v8-canopy-panels">
             {[0,1,2,3,4].map((index) => (
               <path
                 key={index}
                 className={active === index ? "active" : ""}
                 style={{ "--panel": perspectives[index].color }}
                 d={[
-                  "M104 278Q170 140 360 55L285 477Q165 452 104 278Z",
-                  "M190 115Q277 65 360 55L330 483Q302 482 285 477Z",
-                  "M360 55Q443 65 530 115L435 477Q418 482 390 483Z",
-                  "M530 115Q597 170 616 278Q555 452 435 477L360 55Z",
-                  "M190 115Q360 18 530 115L360 55Z",
+                  "M120 270Q180 150 360 68L280 466Q176 439 120 270Z",
+                  "M208 120Q282 75 360 68L333 477Q304 474 280 466Z",
+                  "M360 68Q438 75 512 120L440 466Q416 474 387 477Z",
+                  "M512 120Q579 174 600 270Q544 439 440 466L360 68Z",
+                  "M208 120Q360 34 512 120L360 68Z",
                 ][index]}
                 onMouseEnter={() => setActive(index)}
                 onFocus={() => setActive(index)}
               />
             ))}
 
-            <path className="canopy-sheen" d="M171 148C244 71 365 43 464 83C327 95 236 179 185 302C153 274 148 210 171 148Z" />
-            <path className="canopy-horizontal-seam seam-one" d="M116 244Q360 155 604 244" />
-            <path className="canopy-horizontal-seam seam-two" d="M111 330Q360 250 609 330" />
-            <path className="canopy-horizontal-seam seam-three" d="M151 409Q360 350 569 409" />
-            <path className="canopy-vertical-seam" d="M360 55Q265 280 285 477" />
-            <path className="canopy-vertical-seam" d="M360 55Q320 280 330 483" />
-            <path className="canopy-vertical-seam" d="M360 55Q400 280 390 483" />
-            <path className="canopy-vertical-seam" d="M360 55Q455 280 435 477" />
+            <path className="canopy-sheen" d="M181 153C246 85 357 56 449 91C326 103 242 177 194 291C163 262 161 207 181 153Z" />
+            <path className="canopy-horizontal-seam" d="M132 237Q360 158 588 237" />
+            <path className="canopy-horizontal-seam" d="M128 319Q360 247 592 319" />
+            <path className="canopy-horizontal-seam" d="M166 397Q360 345 554 397" />
+            <path className="canopy-vertical-seam" d="M360 68Q270 278 280 466" />
+            <path className="canopy-vertical-seam" d="M360 68Q323 278 333 477" />
+            <path className="canopy-vertical-seam" d="M360 68Q397 278 387 477" />
+            <path className="canopy-vertical-seam" d="M360 68Q450 278 440 466" />
           </g>
-
-          <ellipse className="canopy-mouth" cx="360" cy="473" rx="76" ry="18" />
+          <ellipse className="canopy-mouth" cx="360" cy="469" rx="74" ry="17" />
         </g>
 
-        <g className="v7-suspension">
+        {/* Suspension system stays below the canopy silhouette. */}
+        <g className="v8-suspension">
           {suspensionLines.map((line, index) => (
             <line
               key={index}
-              x1={line[0]}
-              y1={line[1]}
-              x2={line[2]}
-              y2={line[3]}
+              x1={line[0]} y1={line[1]} x2={line[2]} y2={line[3]}
               className={activeStrings.includes(index) ? "active" : ""}
               style={{ "--line": perspectives[active].color }}
             />
           ))}
         </g>
 
-        <g className="v7-burner-assembly">
-          <rect className="burner-frame" x="324" y="526" width="72" height="28" rx="8" />
-          <ellipse className="burner-glow" cx="360" cy="522" rx="36" ry="29" filter="url(#v7-glow)" />
-          <path className="burner-flame flame-outer" d="M345 532C335 504 354 491 360 463C371 493 386 505 374 532Z" />
-          <path className="burner-flame flame-inner" d="M353 531C348 513 358 503 361 488C369 508 373 516 367 531Z" />
+        <g className="v8-burner-assembly">
+          <rect className="burner-frame" x="326" y="527" width="68" height="26" rx="8" />
+          <ellipse className="burner-glow" cx="360" cy="522" rx="34" ry="28" filter="url(#v8-glow)" />
+          <path className="burner-flame flame-outer" d="M346 532C337 505 354 492 360 465C370 493 384 505 373 532Z" />
+          <path className="burner-flame flame-inner" d="M353 531C349 514 358 504 361 489C368 508 372 516 367 531Z" />
         </g>
 
-        <g className="v7-basket">
-          <path className="basket-body" d="M311 548L409 548L400 626Q360 642 320 626Z" />
-          <rect className="basket-rim" x="306" y="543" width="108" height="19" rx="8" />
-          <path className="basket-weave" d="M322 565H398M320 585H400M319 605H401M336 560L330 626M360 560V635M384 560L390 626" />
-          <text className="basket-title" x="360" y="581">5D THREAT-INTELLIGENCE</text>
-          <text className="basket-subtitle" x="360" y="600">INTEGRATED RISK GOVERNANCE</text>
+        <g className="v8-basket">
+          <path className="basket-body" d="M313 548L407 548L398 618Q360 632 322 618Z" />
+          <rect className="basket-rim" x="308" y="543" width="104" height="18" rx="8" />
+          <path className="basket-weave" d="M323 567H397M321 586H399M320 604H400M337 560L331 619M360 560V627M383 560L389 619" />
         </g>
       </svg>
 
-      <div className="v7-perspective-menu" aria-label="Select a threat-intelligence perspective">
+      <div className="v8-model-title">
+        <span>INTEGRATED 5D CONTEXT</span>
+        <b>5D Threat-Intelligence</b>
+        <small>Integrated Risk Governance</small>
+      </div>
+
+      <div className="v8-perspective-menu" aria-label="Select a threat-intelligence perspective">
         {perspectives.map((item, index) => (
           <button
             key={item.title}
