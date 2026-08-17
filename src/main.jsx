@@ -10,6 +10,7 @@ import "./styles/enterprise-command-center.css";
 import "./styles/pso-precision-v4.css";
 import "./styles/pso-v5.css";
 import "./styles/pso-v6.css";
+import "./styles/pso-v7-balloon.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
