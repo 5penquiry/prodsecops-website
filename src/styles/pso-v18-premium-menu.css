@@ -1,0 +1,190 @@
+/* ProdSecOps V18 premium compact perspective menu */
+
+.v17-model {
+  grid-template-columns: minmax(0, 500px) max-content;
+  gap: 16px;
+  width: min(100%, 638px);
+}
+
+.v17-hero-menu {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  align-content: center;
+  justify-items: end;
+  gap: 8px;
+  width: auto;
+  min-width: 0;
+}
+
+.v17-hero-menu button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: max-content;
+  min-width: 104px;
+  min-height: 38px;
+  overflow: hidden;
+  border: 1px solid #245d81;
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(7, 27, 47, 0.96), rgba(3, 13, 25, 0.98));
+  padding: 9px 16px;
+  color: #91a5b8;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.03);
+  isolation: isolate;
+  transition: transform 220ms ease, border-color 220ms ease, color 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.v17-hero-menu button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0;
+  background: linear-gradient(135deg, var(--item), color-mix(in srgb, var(--item) 72%, #05111f));
+  transition: opacity 240ms ease;
+}
+
+.v17-hero-menu button::after {
+  content: "";
+  position: absolute;
+  top: -55%;
+  left: -75%;
+  z-index: -1;
+  width: 42%;
+  height: 210%;
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: rotate(18deg);
+  opacity: 0;
+  transition: left 520ms ease, opacity 220ms ease;
+}
+
+.v17-hero-menu button > span {
+  display: none;
+}
+
+.v17-hero-menu button > b {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  color: inherit;
+  font-family: Manrope, sans-serif;
+  font-size: 9px;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0.075em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.v17-hero-menu button:hover,
+.v17-hero-menu button:focus-visible,
+.v17-hero-menu button.active {
+  outline: none;
+  transform: translateX(-4px) scale(1.025);
+  border-color: color-mix(in srgb, var(--item) 74%, #ffffff);
+  color: #ffffff;
+  background: transparent;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32), 0 0 20px color-mix(in srgb, var(--item) 38%, transparent), inset 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.v17-hero-menu button:hover::before,
+.v17-hero-menu button:focus-visible::before,
+.v17-hero-menu button.active::before {
+  opacity: 0.88;
+}
+
+.v17-hero-menu button:hover::after,
+.v17-hero-menu button:focus-visible::after,
+.v17-hero-menu button.active::after {
+  left: 130%;
+  opacity: 0.72;
+}
+
+.v17-hero-menu button.active {
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.34), 0 0 24px color-mix(in srgb, var(--item) 48%, transparent), inset 0 1px rgba(255, 255, 255, 0.22);
+  animation: v18-active-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes v18-active-breathe {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.12);
+  }
+}
+
+@media (max-width: 1160px) {
+  .v17-model {
+    grid-template-columns: minmax(0, 460px) max-content;
+    width: min(100%, 586px);
+  }
+
+  .v17-hero-menu button {
+    min-width: 98px;
+    padding-inline: 13px;
+  }
+}
+
+@media (max-width: 760px) {
+  .v17-model {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .v17-hero-menu {
+    grid-template-columns: repeat(5, max-content);
+    justify-content: center;
+    justify-items: center;
+    gap: 6px;
+    width: min(100%, 520px);
+    margin: auto;
+  }
+
+  .v17-hero-menu button {
+    min-width: 0;
+    min-height: 36px;
+    padding: 8px 10px;
+  }
+
+  .v17-hero-menu button > b {
+    font-size: 7px;
+  }
+
+  .v17-hero-menu button:hover,
+  .v17-hero-menu button:focus-visible,
+  .v17-hero-menu button.active {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+@media (max-width: 560px) {
+  .v17-hero-menu {
+    grid-template-columns: repeat(2, minmax(112px, 1fr));
+    width: min(100%, 360px);
+  }
+
+  .v17-hero-menu button {
+    width: 100%;
+  }
+
+  .v17-hero-menu button:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 112px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v17-hero-menu button,
+  .v17-hero-menu button::before,
+  .v17-hero-menu button::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
