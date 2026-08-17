@@ -1,85 +1,123 @@
 import { useEffect, useState } from "react";
-import { BrainCircuit, Database, TestTube2, Workflow } from "lucide-react";
+import {
+  BrainCircuit,
+  Database,
+  ShieldCheck,
+  TestTube2,
+  Workflow,
+} from "lucide-react";
 import { domains } from "../../data/domains";
 
-const dimensions = ["Anticipate", "Observe", "Respond", "Restore", "Prove"];
+const dimensions = [
+  { name: "Anticipate", text: "Threat relevance and exposure" },
+  { name: "Observe", text: "Telemetry and material behavior" },
+  { name: "Respond", text: "Treatment and response authority" },
+  { name: "Restore", text: "Rollback and service recovery" },
+  { name: "Prove", text: "Evidence and outcome assurance" },
+];
 
-export default function FrameworkHero({ activeKey = "remediation", setActiveKey }) {
-  const [dimension, setDimension] = useState(0);
-  const active = domains[activeKey];
+export default function FrameworkHero({
+  activeKey = "remediation",
+  setActiveKey,
+}) {
+  const [activeDimension, setActiveDimension] = useState(0);
+  const activeDomain = domains[activeKey];
 
   useEffect(() => {
-    const id = window.setInterval(
-      () => setDimension((value) => (value + 1) % dimensions.length),
-      2600,
-    );
-    return () => window.clearInterval(id);
+    const timer = window.setInterval(() => {
+      setActiveDimension((current) =>
+        (current + 1) % dimensions.length
+      );
+    }, 2600);
+
+    return () => window.clearInterval(timer);
   }, []);
 
   return (
-    <section className="framework-hero-v2">
-      <div className="hero-v2-grid">
-        <div className="hero-v2-copy">
-          <p className="hero-v2-eyebrow">
-            PRODSECOPS FRAMEWORK · RISK-DRIVEN PRODUCTION SECURITY
+    <section className="pso-hero-v3">
+      <div className="pso-hero-v3-grid">
+        <div className="pso-hero-v3-copy">
+          <p className="pso-hero-kicker">
+            PRODSECOPS FRAMEWORK · GOVERNED PRODUCTION SECURITY
           </p>
 
           <h1>
-            Govern Production Security Through
-            <span> Intelligence, Evidence, and Recovery</span>
+            Coordinate Production Risk Through
+            <span> One Governed Operating Context</span>
           </h1>
 
-          <p className="hero-v2-lead">
+          <p className="pso-hero-summary">
             ProdSecOps is a risk-driven infrastructure security operations
             framework that connects exact production state, 5D Intelligence,
-            RGSM governance, isolated SecLabs proving, an eight-stage operating
-            lifecycle, authorized CI/CD execution, continuous monitoring, and
-            recovery assurance through one Production-Risk Case.
+            RGSM governance, isolated SecLabs proving, authorized execution,
+            continuous observation, rollback, recovery, and outcome assurance
+            through one Production-Risk Case.
           </p>
 
-          <div className="hero-v2-actions">
+          <div className="pso-hero-actions">
+            <a href="#why-prodsecops">Why ProdSecOps</a>
             <a href="#framework-structure">Explore the framework</a>
-            <a href="#operating-model">How the model operates</a>
           </div>
 
-          <div className="hero-v2-proof">
-            <span><b>1</b> Integrated risk context</span>
-            <span><b>3</b> Shared framework components</span>
-            <span><b>5</b> Intelligence domains</span>
-            <span><b>8</b> Governed lifecycle stages</span>
+          <div className="pso-hero-facts">
+            <div><b>1</b><span>Integrated risk context</span></div>
+            <div><b>3</b><span>Shared components</span></div>
+            <div><b>5</b><span>Intelligence domains</span></div>
+            <div><b>8</b><span>Governed stages</span></div>
           </div>
         </div>
 
-        <div className="hero-v2-visual" aria-label="5D Intelligence orchestration model">
-          <div className="hero-v2-orbit orbit-outer" />
-          <div className="hero-v2-orbit orbit-inner" />
+        <div
+          className="pso-hero-v3-visual"
+          style={{ "--domain-color": activeDomain.color }}
+          aria-label="5D Intelligence integrated risk context"
+        >
+          <div className="pso-hero-plane plane-a" />
+          <div className="pso-hero-plane plane-b" />
+          <div className="pso-hero-plane plane-c" />
 
-          <div className="hero-v2-core" style={{ "--active": active.color }}>
+          <div className="pso-hero-signal signal-a" />
+          <div className="pso-hero-signal signal-b" />
+          <div className="pso-hero-signal signal-c" />
+
+          <div className="pso-hero-core">
             <BrainCircuit />
             <small>5D INTELLIGENCE</small>
             <strong>INTEGRATED<br />RISK CONTEXT</strong>
-            <p>{dimensions[dimension]}</p>
+            <div className="pso-dimension-readout">
+              <b>{dimensions[activeDimension].name}</b>
+              <span>{dimensions[activeDimension].text}</span>
+            </div>
           </div>
 
-          <div className="hero-v2-component component-rgsm">
-            <Database /><b>RGSM</b><span>Govern risk and authority</span>
-          </div>
-          <div className="hero-v2-component component-labs">
-            <TestTube2 /><b>SecLabs</b><span>Prove safely</span>
-          </div>
-          <div className="hero-v2-component component-flow">
-            <Workflow /><b>8-Stage Workflow</b><span>Execute and assure</span>
+          <div className="pso-hero-node node-rgsm">
+            <Database />
+            <b>RGSM</b>
+            <span>Govern risk and authority</span>
           </div>
 
-          <div className="hero-v2-domains">
+          <div className="pso-hero-node node-labs">
+            <TestTube2 />
+            <b>SecLabs</b>
+            <span>Prove safely</span>
+          </div>
+
+          <div className="pso-hero-node node-workflow">
+            <Workflow />
+            <b>8-Stage Workflow</b>
+            <span>Execute and assure</span>
+          </div>
+
+          <div className="pso-hero-domain-ring">
             {Object.entries(domains).map(([key, domain]) => {
               const Icon = domain.icon;
               return (
                 <button
                   key={key}
                   type="button"
+                  aria-label={`Select ${domain.label}`}
                   className={key === activeKey ? "active" : ""}
-                  style={{ "--domain": domain.color }}
+                  style={{ "--item-color": domain.color }}
                   onClick={() => setActiveKey?.(key)}
                 >
                   <Icon />
@@ -87,6 +125,11 @@ export default function FrameworkHero({ activeKey = "remediation", setActiveKey 
                 </button>
               );
             })}
+          </div>
+
+          <div className="pso-hero-trust">
+            <ShieldCheck />
+            <span>Context · Evidence · Authority · Outcome</span>
           </div>
         </div>
       </div>
