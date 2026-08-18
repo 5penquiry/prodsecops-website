@@ -2,13 +2,26 @@ import { useEffect, useState } from "react";
 import { ChevronDown, Mail, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router";
 import AnimatedLogo from "./AnimatedLogo";
-import { moreNavigation, navigationItems } from "../../data/navigation";
+import ContactModal from "./ContactModal";
+import {
+  moreNavigation,
+  navigationItems,
+} from "../../data/navigation";
 
 function MegaLink({ item, onClick }) {
   if (item.external) {
-    return <a href={item.path} onClick={onClick}>{item.label}</a>;
+    return (
+      <a href={item.path} onClick={onClick}>
+        {item.label}
+      </a>
+    );
   }
-  return <Link to={item.path} onClick={onClick}>{item.label}</Link>;
+
+  return (
+    <Link to={item.path} onClick={onClick}>
+      {item.label}
+    </Link>
+  );
 }
 
 export default function Header() {
@@ -30,22 +43,38 @@ export default function Header() {
         setContactOpen(false);
       }
     };
+
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, []);
 
-  const navClass = ({ isActive }) => `premium-nav-link ${isActive ? "active" : ""}`;
+  const navClass = ({ isActive }) =>
+    `premium-nav-link ${isActive ? "active" : ""}`;
+
   const closeMenus = () => setActiveMenu(null);
 
   return (
     <>
-      <header className="premium-header v21-header" onMouseLeave={closeMenus}>
+      <header
+        className="premium-header v21-header"
+        onMouseLeave={closeMenus}
+      >
         <div className="v21-header-row">
-          <NavLink to="/" aria-label="ProdSecOps home" className="v21-brand-link">
+          <NavLink
+            to="/"
+            aria-label="ProdSecOps home"
+            className="v21-brand-link"
+          >
             <AnimatedLogo />
           </NavLink>
 
-          <nav className="v21-primary-nav" aria-label="Primary navigation">
+          <nav
+            className="v21-primary-nav"
+            aria-label="Primary navigation"
+          >
             {navigationItems.map((item, index) => (
               <div
                 className="v21-nav-item"
@@ -67,7 +96,9 @@ export default function Header() {
             >
               <button
                 type="button"
-                className={`premium-nav-link ${activeMenu === "more" ? "active" : ""}`}
+                className={`premium-nav-link ${
+                  activeMenu === "more" ? "active" : ""
+                }`}
               >
                 MORE
                 <ChevronDown size={12} aria-hidden="true" />
@@ -89,38 +120,57 @@ export default function Header() {
             className="v21-mobile-toggle"
             onClick={() => setMobileOpen((value) => !value)}
             aria-expanded={mobileOpen}
-            aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+            aria-label={
+              mobileOpen ? "Close navigation" : "Open navigation"
+            }
           >
             {mobileOpen ? <X /> : <Menu />}
           </button>
         </div>
 
-        <div className={`v21-mega-layer ${activeMenu !== null ? "open" : ""}`}>
+        <div
+          className={`v21-mega-layer ${
+            activeMenu !== null ? "open" : ""
+          }`}
+        >
           {navigationItems.map((item, index) => (
             <section
               key={item.path}
-              className={`v21-mega-panel ${activeMenu === index ? "active" : ""}`}
+              className={`v21-mega-panel ${
+                activeMenu === index ? "active" : ""
+              }`}
               aria-hidden={activeMenu !== index}
             >
               <div className="v21-mega-intro">
                 <span>{item.eyebrow}</span>
                 <h2>{item.title}</h2>
                 <p>{item.description}</p>
-                <Link className="v21-mega-primary" to={item.path} onClick={closeMenus}>
+                <Link
+                  className="v21-mega-primary"
+                  to={item.path}
+                  onClick={closeMenus}
+                >
                   Explore {item.label}
                 </Link>
               </div>
+
               <div className="v21-mega-links">
                 <span>Explore this domain</span>
                 {item.links.map((link) => (
-                  <MegaLink key={link.label} item={link} onClick={closeMenus} />
+                  <MegaLink
+                    key={link.label}
+                    item={link}
+                    onClick={closeMenus}
+                  />
                 ))}
               </div>
             </section>
           ))}
 
           <section
-            className={`v21-mega-panel v21-mega-more ${activeMenu === "more" ? "active" : ""}`}
+            className={`v21-mega-panel v21-mega-more ${
+              activeMenu === "more" ? "active" : ""
+            }`}
             aria-hidden={activeMenu !== "more"}
           >
             <div className="v21-mega-intro">
@@ -128,11 +178,16 @@ export default function Header() {
               <h2>{moreNavigation.title}</h2>
               <p>{moreNavigation.description}</p>
             </div>
+
             {moreNavigation.columns.map((column) => (
               <div className="v21-mega-links" key={column.title}>
                 <span>{column.title}</span>
                 {column.links.map((link) => (
-                  <MegaLink key={link.label} item={link} onClick={closeMenus} />
+                  <MegaLink
+                    key={link.label}
+                    item={link}
+                    onClick={closeMenus}
+                  />
                 ))}
               </div>
             ))}
@@ -140,20 +195,37 @@ export default function Header() {
         </div>
 
         {mobileOpen && (
-          <nav className="v21-mobile-nav" aria-label="Mobile navigation">
+          <nav
+            className="v21-mobile-nav"
+            aria-label="Mobile navigation"
+          >
             {navigationItems.map((item) => (
-              <NavLink key={item.path} to={item.path} onClick={() => setMobileOpen(false)}>
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setMobileOpen(false)}
+              >
                 {item.label}
               </NavLink>
             ))}
-            <button type="button" onClick={() => { setContactOpen(true); setMobileOpen(false); }}>
+
+            <button
+              type="button"
+              onClick={() => {
+                setContactOpen(true);
+                setMobileOpen(false);
+              }}
+            >
               CONTACT US
             </button>
           </nav>
         )}
       </header>
 
-      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+      <ContactModal
+        open={contactOpen}
+        onClose={() => setContactOpen(false)}
+      />
     </>
   );
 }
