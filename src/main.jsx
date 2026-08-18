@@ -28,6 +28,7 @@ import "./styles/pso-v22-nav-hero-spacing.css";
 import "./styles/pso-v23-spa-route-hero.css";
 import "./styles/pso-v24-seo-social.css";
 import "./styles/pso-v25-enterprise-pages.css";
+import "./styles/pso-v26-custom-404.css";
 
 
 const redirectPath = sessionStorage.getItem(
