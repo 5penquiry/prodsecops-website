@@ -71,9 +71,6 @@ export default function LegalPage({ pageType }) {
         </aside>
 
         <main className="v25-legal-content">
-          <div className="v25-legal-notice">
-            This publication is general website information and should be reviewed against applicable legal, regulatory, contractual, and organizational requirements.
-          </div>
           {page.sections.map(([title, body], index) => (
             <section id={`section-${index + 1}`} key={title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
