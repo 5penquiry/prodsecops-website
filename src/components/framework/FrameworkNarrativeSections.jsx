@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import GlowCard from "../common/GlowCard";
 import SectionHeader from "../common/SectionHeader";
+import WhyProdSecOps from "./WhyProdSecOps";
 
 const problems = [
   "Generic severity is frequently treated as organizational risk without production relevance or service impact.",
@@ -52,88 +53,7 @@ const benefits = [
 ];
 
 export function FrameworkIntroduction() {
-  return (
-    <>
-      <section id="why-prodsecops" className="pso-narrative-section pso-narrative-dark">
-        <div className="pso-narrative-container">
-          <SectionHeader
-            eyebrow="WHY PRODSECOPS"
-            title="Why infrastructure security needs a governed operating framework"
-            body="Production security is a cross-functional risk activity. Findings, service state, monitoring, incident response, compliance, change automation, backup, and recovery cannot be governed reliably as isolated technical workflows."
-          />
-
-          <div className="pso-narrative-split">
-            <GlowCard color="#ff806f" className="p-7">
-              <Activity className="h-9 w-9 text-orange-300" />
-              <h3 className="pso-narrative-title">The fragmented operating condition</h3>
-              <div className="pso-problem-list">
-                {problems.map((problem) => (
-                  <p key={problem}><span />{problem}</p>
-                ))}
-              </div>
-            </GlowCard>
-
-            <GlowCard color="#38e2a8" className="p-7">
-              <ShieldCheck className="h-9 w-9 text-emerald-300" />
-              <h3 className="pso-narrative-title">The governed operating response</h3>
-              <p className="pso-narrative-copy">
-                ProdSecOps establishes one Production-Risk Case that links
-                authoritative context, organizational risk criteria, accountable
-                ownership, isolated proving, authorized execution, continuous
-                observation, rollback and recovery protection, and Stage 08
-                outcome assurance.
-              </p>
-              <div className="pso-capability-grid">
-                {["Authoritative context", "Risk criteria", "Accountable authority", "Isolated proving", "Controlled execution", "Continuous observation", "Recovery protection", "Outcome assurance"].map((item, index) => (
-                  <div key={item}><b>{String(index + 1).padStart(2, "0")}</b><span>{item}</span></div>
-                ))}
-              </div>
-            </GlowCard>
-          </div>
-        </div>
-      </section>
-
-      <section id="what-is-prodsecops" className="pso-narrative-section">
-        <div className="pso-narrative-container">
-          <SectionHeader
-            eyebrow="FRAMEWORK DEFINITION"
-            title="What ProdSecOps is"
-            body="A production-risk operating framework, not another scanner, universal data repository, pipeline, or monitoring platform."
-          />
-          <div className="pso-definition-grid">
-            <article><BrainCircuit /><b>Risk-driven framework</b><p>Governs security conditions that exist in, affect, or depend on production systems by connecting technical evidence to business services, organizational criteria, authority, recovery, and residual risk.</p></article>
-            <article><Network /><b>Integration model</b><p>Coordinates scanners, CPDB, package repositories, SecLabs, SIEM, SOAR, CI/CD, backup platforms, continuity processes, and accountable roles without replacing their authoritative responsibilities.</p></article>
-            <article><Database /><b>Production-Risk Case</b><p>Maintains the linked record of affected state, domain evidence, risk criteria, decisions, exceptions, execution conditions, monitoring obligations, recovery references, and assurance outcomes.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <section id="prodsecops-devsecops" className="pso-narrative-section pso-narrative-dark">
-        <div className="pso-narrative-container">
-          <SectionHeader
-            eyebrow="PRODSECOPS AND DEVSECOPS"
-            title="Complementary operating models with different centers of gravity"
-            body="DevSecOps secures how software is produced and delivered. ProdSecOps governs how production-security risk is interpreted, proven, authorized, treated, monitored, recovered, and assured."
-          />
-          <div className="pso-compare-grid">
-            <GlowCard color="#4f9fff" className="p-7">
-              <Code2 className="h-9 w-9 text-blue-300" />
-              <h3 className="pso-narrative-title">DevSecOps</h3>
-              <p className="pso-narrative-copy">Integrates security into planning, development, build, test, packaging, release, deployment, software supply, pipeline controls, and runtime feedback.</p>
-              <div className="pso-chip-row">{["Plan", "Develop", "Build", "Test", "Release", "Deploy", "Operate"].map((item) => <span key={item}>{item}</span>)}</div>
-            </GlowCard>
-            <GlowCard color="#38e2a8" className="p-7">
-              <CloudCog className="h-9 w-9 text-emerald-300" />
-              <h3 className="pso-narrative-title">ProdSecOps</h3>
-              <p className="pso-narrative-copy">Governs the live production condition across infrastructure, configuration, identities, dependencies, findings, telemetry, incidents, compliance, exceptions, rollback, recovery, and return to service.</p>
-              <div className="pso-chip-row">{["Interpret", "Prove", "Authorize", "Execute", "Observe", "Recover", "Assure"].map((item) => <span key={item}>{item}</span>)}</div>
-            </GlowCard>
-          </div>
-          <div className="pso-integration-strip">They integrate through signed artifacts, infrastructure as code, security as code, CI/CD, deployment evidence, runtime telemetry, exact configuration state, and rollback and recovery assets.</div>
-        </div>
-      </section>
-    </>
-  );
+  return <WhyProdSecOps />;
 }
 
 export function IntegrationNarrative() {
