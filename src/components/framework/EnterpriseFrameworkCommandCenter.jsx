@@ -2,282 +2,248 @@ import { useEffect, useState } from "react";
 import {
   Activity,
   ArrowRight,
-  Boxes,
   BrainCircuit,
   CheckCircle2,
-  ClipboardCheck,
-  CloudCog,
   Database,
   FileCheck2,
-  GitBranch,
-  Network,
   Radar,
   RefreshCw,
-  RotateCcw,
   ShieldCheck,
   TestTube2,
   TicketCheck,
   Workflow,
-  Wrench,
 } from "lucide-react";
 
-const intelligenceDimensions = [
-  ["01", "ANTICIPATE", "Threat relevance, attack paths, exposure, criticality", "#3b82f6"],
-  ["02", "OBSERVE", "Telemetry, detection coverage, drift, monitoring confidence", "#06b6d4"],
-  ["03", "RESPOND", "Treatment, containment, authority, execution boundaries", "#8b5cf6"],
-  ["04", "RESTORE", "Rollback, reconstruction, recovery, return to service", "#24d39a"],
-  ["05", "PROVE", "Evidence, obligations, assurance, residual risk", "#f0b94b"],
-];
-
-const workflowStages = [
-  ["01", "Audit", "Scope, criteria, ownership, service impact", "PLAN", ClipboardCheck],
-  ["02", "Acquire", "Versioned configuration and production context", "PLAN", Database],
-  ["03", "Build", "Mirrored GoldenVault test environment", "PLAN", Boxes],
-  ["04", "Deploy", "Payloads, treatments, telemetry, recovery controls", "DO", GitBranch],
-  ["05", "Validate", "Applicability, compatibility, monitoring, rollback", "DO", TestTube2],
-  ["06", "Assess", "Integrated risk, impact, authority, treatment decision", "DO", BrainCircuit],
-  ["07", "Execute", "Authorized domain-specific operational action", "CHECK", Wrench],
-  ["08", "Assure", "Outcome evidence, residual risk, learning, baseline", "ACT", ShieldCheck],
-];
-
-const domains = {
-  remediation: {
+const domains = [
+  {
+    key: "remediation",
+    number: "01",
     label: "AUTO REMEDIATION",
+    ticket: "ARCT",
+    ticketName: "Auto Remediation Change Ticket",
+    source: "Vulnerability platform findings, CPDB state, service criticality, recovery references",
+    action: "Validate and execute a state-matched treatment or record a governed exception",
+    outputs: ["Remediation Code", "Risk Profile", "SIEM ASP Rule", "Recovery-Verified Package"],
     color: "#3b82f6",
-    purpose: "Treat production-relevant vulnerabilities through verified, state-matched, recovery-protected change.",
-    ticket: "ARCT · Auto Remediation Change Ticket",
-    source: "Tenable / Qualys findings, CPDB state, service criticality, CPaC and Recovery Package",
-    rism: ["Vulnerability ingestion", "CPDB target and dependency context", "ARCT and authority workflow", "Risk Remediation Registry", "Risk Exception Register", "Residual-risk and assurance record"],
-    seclabs: ["Versioned forensic acquisition", "GoldenVault target reconstruction", "ASP / TTP applicability test", "Remediation and workaround validation", "Compatibility and business-impact test", "Rollback and recovery validation"],
-    integrated: ["Capture SIEM telemetry during ASP testing", "Generate prioritized monitoring for accepted exceptions", "Tag verified remediation and recovery code", "Reuse recovery validation as target-specific BCP/DR evidence"],
-    action: "Approved remediation code is executed against the matched production state; a failure invokes verified rollback or recovery.",
-    outputs: ["Remediation Code", "Auto Remediation Risk Profile", "SIEM ASP Rule", "Recovery-Verified Package", "Assurance Evidence"],
   },
-  soc: {
+  {
+    key: "soc",
+    number: "02",
     label: "SOC INTELLIGENCE",
+    ticket: "ADCT",
+    ticketName: "Anomaly Detection and Correlation Ticket",
+    source: "SIEM/SOAR alerts, production telemetry, CPDB configuration profile, active exceptions",
+    action: "Qualify behavior, prove detection, publish monitoring content, and route escalation",
+    outputs: ["Monitoring Profile", "Correlation Rule", "Escalation Record", "Detection Evidence"],
     color: "#06b6d4",
-    purpose: "Monitor material production risks using actual configuration, treatment, exception, and threat context.",
-    ticket: "Monitoring Profile and Detection Engineering Ticket",
-    source: "CPDB configuration, exceptions, SecLabs telemetry, SIEM / SOAR records, active threat context",
-    rism: ["Monitoring obligations", "Detection engineering ticket", "Exception-linked priority", "Asset and service criticality", "Control-performance evidence", "Alert and assurance history"],
-    seclabs: ["Replay production-relevant behavior", "Validate SIEM and EDR visibility", "Measure signal quality", "Test correlation and escalation", "Verify workaround observability", "Capture monitoring evidence"],
-    integrated: ["Consume accepted remediation exceptions", "Prioritize rules by service and threat relevance", "Link alerts to Production-Risk Cases", "Escalate confirmed behavior to Incident Response"],
-    action: "Validated monitoring content is published with production-state scope, priority, escalation, and evidence requirements.",
-    outputs: ["SIEM Monitoring Profile", "Detection Content", "Exception Monitoring", "Escalation Criteria", "Coverage Evidence"],
   },
-  incident: {
+  {
+    key: "incident",
+    number: "03",
     label: "INCIDENT RESPONSE",
+    ticket: "IRCT",
+    ticketName: "Incident Response Control Ticket",
+    source: "Qualified incidents, WAF/firewall events, forensic evidence, affected-service context",
+    action: "Prove and authorize containment, control changes, evidence handling, and recovery coordination",
+    outputs: ["Response Playbook", "Containment Package", "Evidence Chain", "Recovery Decision"],
     color: "#8b5cf6",
-    purpose: "Coordinate evidence-led containment and response while protecting service recovery and accountable authority.",
-    ticket: "Incident Response and Evidence Case",
-    source: "Alerts, affected state, service dependencies, forensic evidence, playbooks, recovery packages",
-    rism: ["Incident ticket and severity", "Affected services and ownership", "Containment authority", "Evidence chain", "Communication and exception record", "Recovery and closure decision"],
-    seclabs: ["Replicate incident behavior", "Validate containment commands", "Test forensic acquisition", "Measure service consequence", "Verify eradication and recovery", "Exercise response playbook"],
-    integrated: ["Inherit SOC detection evidence", "Use remediation intelligence for treatment", "Engage resilience before destructive containment", "Return indicators and lessons to monitoring"],
-    action: "Authorized containment, eradication, and recovery actions execute with evidence preservation and service-impact controls.",
-    outputs: ["Incident Playbook", "Containment Package", "Evidence Record", "Recovery Decision", "Lessons Learned"],
   },
-  resilience: {
+  {
+    key: "resilience",
+    number: "04",
     label: "RESILIENCE",
+    ticket: "BCPCT",
+    ticketName: "Business Continuity and Recovery Change Ticket",
+    source: "BIA records, backup state, recovery packages, dependencies, RTO/RPO objectives",
+    action: "Validate rollback, reconstruction, restoration sequence, and return-to-service conditions",
+    outputs: ["Recovery Package", "Restore Evidence", "RTO/RPO Result", "Trusted Baseline"],
     color: "#24d39a",
-    purpose: "Prove that trusted infrastructure and services can be restored within approved objectives after security disruption.",
-    ticket: "Recovery Validation and Service Restoration Ticket",
-    source: "BIA registers, RTO / RPO, dependencies, CPaC, backups, recovery packages, trusted baselines",
-    rism: ["BIA and service priority", "Recovery ownership", "RTO / RPO criteria", "Dependency sequence", "Return-to-service authority", "Recovery assurance record"],
-    seclabs: ["Reconstruct trusted state", "Validate software and configuration", "Restore data and dependencies", "Measure RTO and RPO", "Verify security controls", "Prove return-to-service checks"],
-    integrated: ["Reuse remediation rollback tests", "Consume incident recovery requirements", "Validate SOC monitoring after restoration", "Update compliance and trusted-baseline evidence"],
-    action: "Recovery executes in the approved sequence and service operation resumes only after security and health assurance.",
-    outputs: ["Recovery-Verified Code", "Recovery Package", "Measured RTO / RPO", "Return-to-Service Evidence", "Trusted Baseline"],
   },
-  compliance: {
+  {
+    key: "compliance",
+    number: "05",
     label: "COMPLIANCE",
+    ticket: "CCAT",
+    ticketName: "Compliance Control Assurance Ticket",
+    source: "Control obligations, technical state, exceptions, test evidence, residual-risk records",
+    action: "Assess control applicability, treatment, compensating control, exception, and assurance outcome",
+    outputs: ["Control Evidence", "Assurance Profile", "Exception Record", "Compliance Conclusion"],
     color: "#f0b94b",
-    purpose: "Translate obligations and control expectations into production-state evidence, treatment, exceptions, and assurance.",
-    ticket: "Control Assurance and Exception Ticket",
-    source: "Policies, legal and contractual obligations, control criteria, CPDB state, domain evidence, risk decisions",
-    rism: ["Control applicability", "Compliance assessment ticket", "Evidence ownership", "Compensating controls", "Exception approval and expiry", "Assurance and management reporting"],
-    seclabs: ["Validate control behavior", "Test compensating controls", "Measure technical effectiveness", "Prove monitoring evidence", "Verify recovery obligations", "Reproduce audit evidence"],
-    integrated: ["Consume evidence from every domain", "Link obligations to exact assets and services", "Monitor exceptions through SOC Intelligence", "Route gaps to remediation or resilience"],
-    action: "Control treatment, compensating control, or governed exception is recorded with attributable evidence and residual risk.",
-    outputs: ["Control Evidence", "Compliance Risk Profile", "Exception Record", "Compensating Control", "Assurance Report"],
   },
-};
-
-const rismModules = [
-  [Database, "CPDB", "Assets, services, configuration, dependencies"],
-  [Activity, "Risk registers", "Risk, remediation, exception, assurance"],
-  [TicketCheck, "Operational tickets", "Change, incident, recovery, compliance"],
-  [FileCheck2, "Risk criteria", "Impact, likelihood, priority, acceptance"],
-  [ShieldCheck, "Authority", "Ownership, approvals, segregation of duties"],
-  [BrainCircuit, "Production-Risk Case", "Context, evidence, decision, outcome"],
 ];
 
-function DomainSelector({ activeKey, setActiveKey }) {
+const stages = ["AUDIT", "ACQUIRE", "BUILD", "DEPLOY", "VALIDATE", "ASSESS", "EXECUTE", "ASSURE"];
+
+function TicketRail({ active, setActive }) {
   return (
-    <div className="v32-domain-selector" aria-label="ProdSecOps domains">
-      {Object.entries(domains).map(([key, domain], index) => (
+    <div className="v33-ticket-rail" aria-label="ProdSecOps domain ticket types">
+      {domains.map((domain, index) => (
         <button
           type="button"
-          key={key}
-          className={activeKey === key ? "active" : ""}
+          key={domain.key}
+          className={active === index ? "active" : ""}
           style={{ "--domain": domain.color }}
-          onMouseEnter={() => setActiveKey(key)}
-          onFocus={() => setActiveKey(key)}
-          onClick={() => setActiveKey(key)}
+          onMouseEnter={() => setActive(index)}
+          onFocus={() => setActive(index)}
+          onClick={() => setActive(index)}
         >
-          <span>0{index + 1}</span><b>{domain.label}</b>
+          <span>{domain.number}</span>
+          <div><b>{domain.ticket}</b><small>{domain.label}</small></div>
         </button>
       ))}
     </div>
   );
 }
 
-function FiveDController({ activeDimension, setActiveDimension }) {
+function ControllerVisual({ domain }) {
+  const principles = ["Integrated", "Structured", "Customized", "Inclusive", "Dynamic", "Best information", "Human factors", "Improvement"];
   return (
-    <div className="v32-five-d-controller">
-      <div className="v32-controller-core">
-        <Radar />
-        <small>ORCHESTRATION CONTROLLER</small>
+    <div className="v33-controller" style={{ "--domain": domain.color }}>
+      <div className="v33-controller-core">
+        <BrainCircuit />
+        <small>MANAGEMENT AND ORCHESTRATION CONTROLLER</small>
         <b>5D THREAT<br />INTELLIGENCE</b>
-        <span>Integrated Risk Governance<br />and Security Operations</span>
+        <p>Integrated Risk Governance and Security Operations</p>
       </div>
-
-      {intelligenceDimensions.map(([number, title,, color], index) => (
-        <button
-          type="button"
-          key={number}
-          className={`v32-intel-node intel-${index + 1} ${activeDimension === index ? "active" : ""}`}
-          style={{ "--intel": color }}
-          onMouseEnter={() => setActiveDimension(index)}
-          onFocus={() => setActiveDimension(index)}
-          onClick={() => setActiveDimension(index)}
-        ><span>{number}</span><b>{title}</b></button>
-      ))}
-
-      <svg viewBox="0 0 600 600" aria-hidden="true">
-        <polygon points="300,40 548,220 454,512 146,512 52,220" />
-        <path pathLength="100" d="M300 40L548 220L454 512L146 512L52 220Z" />
+      <div className="v33-principle-ring">
+        {principles.map((item, index) => <span key={item} style={{ "--angle": `${index * 45}deg` }}>{item}</span>)}
+      </div>
+      <svg viewBox="0 0 520 520" aria-hidden="true">
+        <circle className="v33-controller-track" cx="260" cy="260" r="212" pathLength="100" />
+        <circle className="v33-controller-signal" cx="260" cy="260" r="212" pathLength="100" />
       </svg>
     </div>
   );
 }
 
-function WorkflowRing({ activeStage, setActiveStage }) {
+function RismVisual({ domain }) {
+  const modules = [
+    [Database, "CPDB Asset Inventory", "Assets, services, state, dependencies"],
+    [Activity, "Risk Registers", "Risk, treatment, exception, assurance"],
+    [TicketCheck, "Ticket Management", "Change, detection, incident, recovery, control"],
+    [ShieldCheck, "Risk Criteria", "Impact, likelihood, priority, acceptance"],
+    [FileCheck2, "Authority and Evidence", "Ownership, approvals, SoD, decisions"],
+    [BrainCircuit, "Production-Risk Cases", "Context, activities, outcome, residual risk"],
+  ];
   return (
-    <div className="v32-workflow-ring">
-      <div className="v32-workflow-core"><Workflow /><small>SHARED SYSTEMATIC LIFECYCLE</small><b>8-STAGE<br />WORKFLOW</b></div>
-      {workflowStages.map(([number, title,,, Icon], index) => (
+    <div className="v33-rism">
+      <div className="v33-risk-case">
+        <BrainCircuit /><small>GOVERNED RECORD</small><b>PRODUCTION-RISK CASE</b><p>Context · Criteria · Ticket · Authority · Evidence · Outcome</p>
+      </div>
+      <div className="v33-active-ticket" style={{ "--domain": domain.color }}>
+        <TicketCheck /><div><small>ACTIVE DOMAIN RECORD</small><b>{domain.ticket}</b><span>{domain.ticketName}</span></div>
+      </div>
+      <div className="v33-rism-modules">
+        {modules.map(([Icon, title, text]) => <article key={title}><Icon /><div><b>{title}</b><span>{text}</span></div></article>)}
+      </div>
+    </div>
+  );
+}
+
+function WorkflowVisual({ activeStage, setActiveStage, domain }) {
+  return (
+    <div className="v33-workflow" style={{ "--domain": domain.color }}>
+      <div className="v33-workflow-core"><Workflow /><small>EXTENDED FROM THE RISM TICKET</small><b>8-STAGE WORKFLOW</b></div>
+      {stages.map((stage, index) => (
         <button
+          key={stage}
           type="button"
-          key={number}
-          className={`v32-workflow-stage ${activeStage === index ? "active" : ""}`}
+          className={`v33-stage stage-${index + 1} ${activeStage === index ? "active" : ""}`}
           style={{ "--angle": `${index * 45}deg` }}
           onMouseEnter={() => setActiveStage(index)}
           onFocus={() => setActiveStage(index)}
           onClick={() => setActiveStage(index)}
-        ><Icon /><span>{number}</span><b>{title}</b></button>
+        ><span>0{index + 1}</span><b>{stage}</b></button>
       ))}
-      <svg viewBox="0 0 620 620" aria-hidden="true"><circle cx="310" cy="310" r="247" pathLength="100" /></svg>
+      <svg viewBox="0 0 560 560" aria-hidden="true"><circle cx="280" cy="280" r="215" pathLength="100" /></svg>
+    </div>
+  );
+}
+
+function LabVisual({ domain, activeStage }) {
+  const testActivities = ["Target acquisition", "GoldenVault build", "ASP / TTP test", "Treatment validation", "Impact assessment", "Restore validation"];
+  return (
+    <div className="v33-lab" style={{ "--domain": domain.color }}>
+      <div className="v33-lab-core"><TestTube2 /><small>WORKFLOW VALIDATION EXTENSION</small><b>SECLABS<br />GOLDENVAULT</b></div>
+      <div className="v33-lab-activities">
+        {testActivities.map((item, index) => <span key={item} className={activeStage >= 1 && activeStage <= 5 && index <= activeStage ? "active" : ""}><b>0{index + 1}</b>{item}</span>)}
+      </div>
+      <p>Lab build and validation are reusable technical activities. Every result is written back to the active RISM ticket and remains attributable to its domain purpose and authority.</p>
     </div>
   );
 }
 
 export default function EnterpriseFrameworkCommandCenter() {
-  const [activeKey, setActiveKey] = useState("remediation");
-  const [activeDimension, setActiveDimension] = useState(0);
+  const [active, setActive] = useState(0);
   const [activeStage, setActiveStage] = useState(0);
-  const active = domains[activeKey];
-  const dimension = intelligenceDimensions[activeDimension];
-  const stage = workflowStages[activeStage];
+  const domain = domains[active];
 
   useEffect(() => {
-    const intelTimer = window.setInterval(() => setActiveDimension((value) => (value + 1) % intelligenceDimensions.length), 3900);
-    const stageTimer = window.setInterval(() => setActiveStage((value) => (value + 1) % workflowStages.length), 3200);
-    return () => { window.clearInterval(intelTimer); window.clearInterval(stageTimer); };
+    const stageTimer = window.setInterval(() => setActiveStage((value) => (value + 1) % stages.length), 3000);
+    return () => window.clearInterval(stageTimer);
   }, []);
 
   return (
-    <div className="v32-framework" style={{ "--active-domain": active.color }}>
-      <header className="v32-framework-intro">
+    <div className="v33-ecc">
+      <header className="v33-ecc-intro">
         <span>THREAT-INFORMED INFRASTRUCTURE SECURITY OPERATING MODEL</span>
-        <h3>One architecture integrating risk intelligence, service management, isolated proving, and security operations.</h3>
-        <p>
-          ProdSecOps provides a technology-neutral and organization-scalable operating structure for risk-based infrastructure security. 5D Threat Intelligence orchestrates integrated analysis across five domains, while RISM, SecLabs, and the eight-stage workflow provide the management, proving, tracking, authorization, execution, and assurance capabilities required to operate systematically across on-premises, cloud, and hybrid environments.
-        </p>
+        <h3>5D Intelligence directs the risk process. RISM records and governs the work. The ticket extends through the eight-stage workflow and invokes SecLabs where proving is required.</h3>
+        <p>ISO 31000-inspired governance principles are applied through a dynamic controller that integrates context, risk assessment, treatment, monitoring, review, recording, reporting, and continual improvement across five security domains.</p>
       </header>
 
-      <DomainSelector activeKey={activeKey} setActiveKey={setActiveKey} />
+      <TicketRail active={active} setActive={setActive} />
 
-      <section className="v32-architecture-map">
-        <article className="v32-architecture-card v32-controller-card">
-          <header><span>ORCHESTRATION FUNCTION · NOT A STANDALONE COMPONENT</span><h4>5D Threat Intelligence Controller</h4></header>
-          <FiveDController activeDimension={activeDimension} setActiveDimension={setActiveDimension} />
-          <div className="v32-intel-readout" style={{ "--intel": dimension[3] }}><span>{dimension[0]} · {dimension[1]}</span><p>{dimension[2]}</p></div>
-        </article>
-
-        <article className="v32-architecture-card v32-rism-card">
-          <header><span>COMPONENT 01 · RISK INTELLIGENCE SERVICE MANAGEMENT</span><h4>RISM Governance and Service-Management Control Plane</h4></header>
-          <p>RISM is the auditable system of engagement for risk intelligence, operational tickets, delegated authority, evidence, exceptions, residual risk, and assurance. RISM tracks every domain action through linked cases and tickets in a service-management model.</p>
-          <div className="v32-rism-core"><BrainCircuit /><small>SINGLE GOVERNED RECORD</small><b>PRODUCTION-RISK CASE</b><span>Context · Criteria · Tickets · Authority · Evidence · Outcome</span></div>
-          <div className="v32-rism-modules">{rismModules.map(([Icon,title,text])=><section key={title}><Icon /><div><b>{title}</b><span>{text}</span></div></section>)}</div>
-        </article>
-
-        <article className="v32-architecture-card v32-seclabs-card">
-          <header><span>COMPONENT 02 · ISOLATED TESTBED</span><h4>SecLabs and GoldenVault Proving Environment</h4></header>
-          <p>SecLabs acquires versioned target context and reconstructs a purpose-bound GoldenVault environment. Security teams can test attack-surface payloads, treatments, workarounds, telemetry, business impact, compatibility, rollback, and recovery independently of production.</p>
-          <div className="v32-seclabs-stack">
-            {[[Database,"Acquire target state"],[Boxes,"Rebuild GoldenVault"],[Activity,"ASP / TTP test"],[TestTube2,"Validate treatment"],[RotateCcw,"Prove restore"],[FileCheck2,"Publish evidence"]].map(([Icon,title],index)=><section key={title}><span>0{index+1}</span><Icon /><b>{title}</b></section>)}
-          </div>
-          <div className="v32-authority-boundary"><ShieldCheck /><p><b>SecLabs proves technical behavior.</b> RISM governs the case. Authorized organizational roles approve risk, change, recovery, and return to service.</p></div>
-        </article>
-
-        <article className="v32-architecture-card v32-workflow-card">
-          <header><span>COMPONENT 03 · SHARED RESOURCE-OPTIMIZED PROCESS</span><h4>Eight-Stage Governed Workflow</h4></header>
-          <WorkflowRing activeStage={activeStage} setActiveStage={setActiveStage} />
-          <div className="v32-stage-readout"><span>{stage[3]} · STAGE {stage[0]}</span><b>{stage[1]}</b><p>{stage[2]}</p></div>
-        </article>
-      </section>
-
-      <section className="v32-domain-operating-view">
-        <header>
-          <span>SELECTED DOMAIN OPERATING VIEW</span>
-          <h4>{active.label}</h4>
-          <p>{active.purpose}</p>
-        </header>
-
-        <div className="v32-case-banner"><TicketCheck /><div><small>RISM CONTROL RECORD</small><b>{active.ticket}</b></div><ArrowRight /><p>{active.source}</p></div>
-
-        <div className="v32-domain-flow">
-          <article><span>RISM MODULES</span>{active.rism.map((item)=><p key={item}><CheckCircle2 />{item}</p>)}</article>
-          <ArrowRight />
-          <article><span>SECLABS PROVING</span>{active.seclabs.map((item)=><p key={item}><TestTube2 />{item}</p>)}</article>
-          <ArrowRight />
-          <article><span>5D INTEGRATED ORCHESTRATION</span>{active.integrated.map((item)=><p key={item}><Radar />{item}</p>)}</article>
+      <section className="v33-controller-section">
+        <div className="v33-controller-copy">
+          <span>MANAGEMENT AND ORCHESTRATION FUNCTION</span>
+          <h4>5D Intelligence organizes and directs the integrated risk process.</h4>
+          <p>5D Intelligence is not another component or ticket repository. The controller interprets each engagement through Anticipate, Observe, Respond, Restore, and Prove; applies organizational risk criteria; coordinates the three operating components; and evaluates every result across the wider security context.</p>
+          <div className="v33-controller-actions"><span>Communicate and consult</span><span>Scope, context, criteria</span><span>Identify, analyze, evaluate</span><span>Treat risk</span><span>Monitor and review</span><span>Record and report</span></div>
         </div>
-
-        <div className="v32-execution-line"><CloudCog /><div><small>AUTHORIZED DOMAIN ACTION</small><p>{active.action}</p></div></div>
-
-        <div className="v32-output-strip"><span>KEY OUTPUTS</span>{active.outputs.map((item)=><b key={item}>{item}</b>)}</div>
+        <ControllerVisual domain={domain} />
       </section>
 
-      <section className="v32-example">
-        <header><span>INTEGRATED OPERATION EXAMPLE</span><h4>One remediation cycle can produce intelligence for monitoring, recovery, compliance, and future response.</h4></header>
-        <div className="v32-example-flow">
-          {[
-            [Activity,"Vulnerability ingestion","Tenable or Qualys finding enters RISM and creates an ARCT."],
-            [Database,"Target acquisition","Exact state and dependencies are acquired and versioned."],
-            [TestTube2,"SecLabs validation","ASP payload, remediation, workaround, compatibility, and restore are tested."],
-            [Radar,"SOC intelligence","Test telemetry becomes a SIEM ASP rule and exception-monitoring priority."],
-            [RotateCcw,"Resilience evidence","Verified restore code contributes to target-specific recovery and BCP/DR assurance."],
-            [ShieldCheck,"Risk decision","The risk owner approves treatment or records a governed exception with residual risk."],
-          ].map(([Icon,title,text],index)=><article key={title}><span>0{index+1}</span><Icon /><b>{title}</b><p>{text}</p></article>)}
+      <section className="v33-operating-chain">
+        <article className="v33-component-card rism-card">
+          <header><span>COMPONENT 01</span><h4>RISM Service-Management Control Plane</h4><p>Tracks every engagement through linked records, tickets, authority, evidence, exceptions, residual risk, and assurance.</p></header>
+          <RismVisual domain={domain} />
+        </article>
+
+        <div className="v33-chain-arrow"><ArrowRight /><span>ticket drives workflow</span></div>
+
+        <article className="v33-component-card workflow-card">
+          <header><span>COMPONENT 02</span><h4>Shared Eight-Stage Ticket Workflow</h4><p>The active RISM ticket inherits the same governed lifecycle while stage activities and Stage 07 action change by domain.</p></header>
+          <WorkflowVisual activeStage={activeStage} setActiveStage={setActiveStage} domain={domain} />
+        </article>
+
+        <div className="v33-chain-arrow"><ArrowRight /><span>validation stages invoke lab</span></div>
+
+        <article className="v33-component-card lab-card">
+          <header><span>COMPONENT 03</span><h4>SecLabs Validation Extension</h4><p>Stages Acquire through Assess can invoke an isolated, purpose-bound GoldenVault environment for reusable build and test activities.</p></header>
+          <LabVisual domain={domain} activeStage={activeStage} />
+        </article>
+      </section>
+
+      <section className="v33-domain-readout" style={{ "--domain": domain.color }}>
+        <div className="v33-ticket-summary"><span>{domain.number} · {domain.label}</span><h4>{domain.ticket} · {domain.ticketName}</h4><p>{domain.source}</p></div>
+        <div className="v33-ticket-flow">
+          <span><Database />Source of truth</span><ArrowRight /><span><TicketCheck />RISM ticket</span><ArrowRight /><span><Workflow />8 stages</span><ArrowRight /><span><TestTube2 />SecLabs proving</span><ArrowRight /><span><ShieldCheck />Authorized action</span>
+        </div>
+        <div className="v33-ticket-outcome"><span>DOMAIN ACTION</span><p>{domain.action}</p><div>{domain.outputs.map((output) => <b key={output}>{output}</b>)}</div></div>
+      </section>
+
+      <section className="v33-integrated-example">
+        <header><span>INTEGRATED REMEDIATION EXAMPLE</span><h4>One ARCT engagement generates risk intelligence for multiple domains.</h4></header>
+        <div className="v33-example-flow">
+          <article><span>01</span><b>Finding ingestion</b><p>Tenable or Qualys data creates an ARCT and links the affected production state.</p></article>
+          <article><span>02</span><b>GoldenVault proving</b><p>ASP/TTP applicability, remediation, workaround, compatibility, impact, rollback, and recovery are tested.</p></article>
+          <article><span>03</span><b>SOC intelligence</b><p>Test telemetry becomes an ASP detection rule or a monitoring obligation for an accepted exception.</p></article>
+          <article><span>04</span><b>Resilience assurance</b><p>Verified restore code contributes to target-specific recovery evidence and BCP/DR readiness.</p></article>
+          <article><span>05</span><b>Risk decision</b><p>The risk owner approves treatment or records the exception and ongoing monitoring requirements.</p></article>
         </div>
       </section>
 
-      <footer className="v32-framework-boundary">
-        <Network />
-        <p><b>Framework boundary:</b> ProdSecOps coordinates infrastructure security risk and operations. It does not replace vulnerability platforms, SIEM / SOAR, CI/CD, IT service management, backup systems, cloud services, service ownership, or accountable organizational authority. ProdSecOps connects those capabilities through a consistent risk, ticket, proving, workflow, and assurance model.</p>
-      </footer>
+      <footer className="v33-boundary"><ShieldCheck /><div><b>Framework boundary</b><p>ProdSecOps supports structured risk-based infrastructure security operations. The framework does not replace the ISMS, organizational governance, source systems, accountable authorities, or certification processes.</p></div><RefreshCw /></footer>
     </div>
   );
 }
