@@ -10,12 +10,8 @@ import {
 
 export default function ContactModal({
   open = false,
-  isOpen = false,
-  show = false,
   onClose = () => {},
 }) {
-  const visible = open || isOpen || show;
-
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -25,13 +21,11 @@ export default function ContactModal({
   });
 
   useEffect(() => {
-    if (!visible) {
+    if (!open) {
       return undefined;
     }
 
-    const previousOverflow =
-      document.body.style.overflow;
-
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const handleEscape = (event) => {
@@ -40,23 +34,15 @@ export default function ContactModal({
       }
     };
 
-    document.addEventListener(
-      "keydown",
-      handleEscape,
-    );
+    document.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.body.style.overflow =
-        previousOverflow;
-
-      document.removeEventListener(
-        "keydown",
-        handleEscape,
-      );
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleEscape);
     };
-  }, [visible, onClose]);
+  }, [open, onClose]);
 
-  if (!visible) {
+  if (!open) {
     return null;
   }
 
@@ -65,7 +51,7 @@ export default function ContactModal({
 
     setForm((current) => ({
       ...current,
-      value,
+      [name]: value,
     }));
   };
 
@@ -73,8 +59,7 @@ export default function ContactModal({
     event.preventDefault();
 
     const subject =
-      form.subject.trim() ||
-      "ProdSecOps Framework Enquiry";
+      form.subject.trim() || "ProdSecOps Framework Enquiry";
 
     const body = [
       "ProdSecOps Framework Enquiry",
@@ -87,13 +72,10 @@ export default function ContactModal({
       form.message,
     ].join("\n");
 
-    const mailto = [
-      "mailto:framework@vpilot.org",
-      `?subject=${encodeURIComponent(subject)}`,
-      `&body=${encodeURIComponent(body)}`,
-    ].join("");
-
-    window.location.href = mailto;
+    window.location.href =
+      `mailto:framework@vpilot.org?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -117,11 +99,7 @@ export default function ContactModal({
             <span className="contact-modal-eyebrow">
               PRODSECOPS FRAMEWORK
             </span>
-
-            <h2 id="contact-modal-title">
-              Contact Us
-            </h2>
-
+            <h2 id="contact-modal-title">Contact Us</h2>
             <p>
               Submit an enquiry about the framework,
               enterprise implementation, research,
@@ -149,7 +127,6 @@ export default function ContactModal({
                 <User aria-hidden="true" />
                 Name
               </span>
-
               <input
                 type="text"
                 name="name"
@@ -165,7 +142,6 @@ export default function ContactModal({
                 <Mail aria-hidden="true" />
                 Email
               </span>
-
               <input
                 type="email"
                 name="email"
@@ -182,7 +158,6 @@ export default function ContactModal({
               <Building2 aria-hidden="true" />
               Organization
             </span>
-
             <input
               type="text"
               name="organization"
@@ -197,7 +172,6 @@ export default function ContactModal({
               <MessageSquare aria-hidden="true" />
               Subject
             </span>
-
             <input
               type="text"
               name="subject"
@@ -212,7 +186,6 @@ export default function ContactModal({
               <MessageSquare aria-hidden="true" />
               Message
             </span>
-
             <textarea
               name="message"
               rows="6"
@@ -224,10 +197,10 @@ export default function ContactModal({
           </label>
 
           <div className="contact-modal-notice">
-            Submitting this form opens the default
-            email application and prepares an email to
-            framework@vpilot.org. The website does not
-            transmit or store the entered information.
+            Preparing the message opens the default email
+            application and addresses the enquiry to
+            framework@vpilot.org. The website does not store
+            the information entered in this form.
           </div>
 
           <footer className="contact-modal-actions">
