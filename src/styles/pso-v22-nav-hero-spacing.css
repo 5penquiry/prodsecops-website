@@ -1,0 +1,152 @@
+/* ProdSecOps V22 navigation alignment and hero spacing correction */
+
+/*
+  Keep the logo, navigation titles, and CONTACT US button in one
+  controlled flex row. This removes the expandable grid column that
+  created the large gap after MORE.
+*/
+.v21-header-row {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 1450px !important;
+  height: 82px !important;
+  margin: 0 auto !important;
+  padding: 0 22px !important;
+  gap: 0 !important;
+}
+
+.v21-brand-link {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+}
+
+.v21-primary-nav {
+  display: flex !important;
+  flex: 0 1 auto !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+  margin-left: auto !important;
+}
+
+.v21-nav-item {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+}
+
+.v21-header .premium-nav-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  padding: 10px 3px !important;
+  line-height: 1 !important;
+}
+
+/* Fixed, deliberate distance between MORE and CONTACT US. */
+.v21-contact-cta {
+  flex: 0 0 auto !important;
+  min-height: 42px !important;
+  margin-left: 16px !important;
+}
+
+/*
+  The real homepage hero classes are v6-hero and v6-hero-grid.
+  Remove viewport-height centering and place the hero immediately
+  below the navigation with controlled premium spacing.
+*/
+#main-content > .v6-hero,
+#main-content .v6-hero {
+  min-height: 0 !important;
+  height: auto !important;
+  padding-top: 34px !important;
+  padding-bottom: 54px !important;
+}
+
+#main-content .v6-hero-grid {
+  min-height: 0 !important;
+  height: auto !important;
+  align-items: center !important;
+  align-content: center !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+#main-content .v6-hero-copy {
+  align-self: center !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  transform: translateY(-4px);
+}
+
+#main-content .v6-hero-copy h1 {
+  margin-top: 0 !important;
+  margin-bottom: 14px !important;
+}
+
+#main-content .v6-hero-copy h2 {
+  margin-top: 0 !important;
+  margin-bottom: 17px !important;
+}
+
+#main-content .v6-hero-copy p {
+  margin-top: 0 !important;
+}
+
+/* Keep the parachute visually aligned to the hero copy. */
+#main-content .v6-hero-grid > :last-child {
+  align-self: center !important;
+  margin-top: 0 !important;
+}
+
+@media (max-width: 1320px) {
+  .v21-primary-nav {
+    gap: 10px !important;
+  }
+
+  .v21-contact-cta {
+    margin-left: 12px !important;
+  }
+}
+
+@media (max-width: 1240px) {
+  .v21-header-row {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto auto !important;
+    gap: 10px !important;
+  }
+
+  .v21-primary-nav {
+    display: none !important;
+  }
+
+  .v21-contact-cta {
+    margin-left: 0 !important;
+  }
+
+  #main-content > .v6-hero,
+  #main-content .v6-hero {
+    padding-top: 30px !important;
+    padding-bottom: 48px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .v21-header-row {
+    grid-template-columns: auto 1fr auto !important;
+    height: 74px !important;
+    padding: 0 13px !important;
+  }
+
+  #main-content > .v6-hero,
+  #main-content .v6-hero {
+    padding-top: 24px !important;
+    padding-bottom: 40px !important;
+  }
+
+  #main-content .v6-hero-copy {
+    transform: none !important;
+  }
+}
