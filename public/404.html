@@ -1,7 +1,25 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><title>ProdSecOps Framework</title>
-<script>
-  const target = location.pathname + location.search + location.hash;
-  sessionStorage.setItem("prodsecops-redirect-path", target);
-  location.replace("/");
-</script></head><body></body></html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting to ProdSecOps</title>
+    <script>
+      (function () {
+        var route =
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
+
+        sessionStorage.setItem(
+          "prodsecops-redirect-path",
+          route
+        );
+
+        window.location.replace("/");
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
