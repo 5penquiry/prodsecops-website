@@ -2,208 +2,285 @@ import { useEffect, useState } from "react";
 import {
   Activity,
   ArrowRight,
-  Boxes,
   BrainCircuit,
   CheckCircle2,
-  CloudCog,
   Code2,
   Database,
+  Eye,
+  FileCheck2,
+  Gauge,
   GitBranch,
   Layers3,
   Radar,
   RefreshCw,
+  RotateCcw,
   ShieldCheck,
   TestTube2,
   Workflow,
+  Wrench,
 } from "lucide-react";
 
-const shiftLeft = [
-  ["Threat modeling", "Identify design weaknesses, abuse paths, trust boundaries, and security requirements before code is written."],
-  ["Secure engineering", "Embed secure coding, dependency controls, secrets protection, and policy checks into development."],
-  ["Pipeline assurance", "Automate repeatable testing, artifact integrity, approval evidence, and release controls through CI/CD."],
-  ["Runtime feedback", "Return software behavior, defects, and security observations to product and engineering teams."],
+const devSecOpsCapabilities = [
+  ["Threat modeling", "Identify design weaknesses, abuse paths, trust boundaries, and security requirements before implementation."],
+  ["Secure development", "Integrate secure coding, dependency controls, secrets protection, and review into engineering practices."],
+  ["CI/CD assurance", "Automate software testing, artifact integrity, release evidence, and deployment controls."],
+  ["Application feedback", "Return defects and runtime observations to product and engineering teams for rapid improvement."],
 ];
 
-const productionScope = [
-  ["Live state", "Infrastructure, configurations, identities, services, software, dependencies, controls, and approved exceptions."],
-  ["Operational intelligence", "Exposure, telemetry, detection coverage, incidents, threat relevance, and changing service conditions."],
-  ["Governed action", "Risk criteria, accountable ownership, SecLabs proving, authorization, execution boundaries, and evidence."],
-  ["Service assurance", "Rollback, restoration, continuity, recovery objectives, return to service, and residual-risk conclusions."],
+const prodSecOpsCapabilities = [
+  ["Production context", "Relate infrastructure, configuration, identity, service, dependency, control, exception, and recovery state."],
+  ["5D risk intelligence", "Analyze threat relevance, observability, response readiness, recoverability, and assurance evidence together."],
+  ["Governed operations", "Coordinate proving, authority, execution, monitoring, rollback, recovery, and residual-risk decisions."],
+  ["Continual assurance", "Convert operational outcomes into evidence, learning, improved criteria, and a renewed trusted baseline."],
 ];
 
-const lifecycle = [
-  ["PLAN", "Context and risk intent", "Establish service context, authoritative state, threat assumptions, risk criteria, ownership, objectives, and evidence expectations.", BrainCircuit, "#3b82f6"],
-  ["PROVE", "Validate before material action", "Reconstruct the relevant condition in SecLabs and test applicability, compatibility, monitoring, rollback, and recovery.", TestTube2, "#8b5cf6"],
-  ["OPERATE", "Authorize and execute", "Apply accountable authority and perform the approved action through Auto Remediation, SOC, Incident Response, Resilience, or Compliance.", Workflow, "#06b6d4"],
-  ["ASSURE", "Observe outcome and improve", "Confirm service health, risk treatment, evidence, recovery readiness, and residual risk, then improve the next operating baseline.", RefreshCw, "#24d39a"],
+const dimensions = [
+  ["ANTICIPATE", "Threat relevance", "Which threat conditions and attack paths are relevant to the exact production state?", "#3b82f6"],
+  ["OBSERVE", "Operational visibility", "Is the condition detectable, measurable, and observable before, during, and after action?", "#06b6d4"],
+  ["RESPOND", "Treatment readiness", "What treatment, containment, escalation, authority, and execution boundaries are required?", "#8b5cf6"],
+  ["RESTORE", "Recovery confidence", "Can the service be rolled back, reconstructed, recovered, and returned safely to operation?", "#24d39a"],
+  ["PROVE", "Assurance evidence", "What attributable evidence supports the decision, execution, outcome, and residual-risk conclusion?", "#f0b94b"],
 ];
 
-const capabilities = [
-  ["01", "Authoritative production context", "Maintains linked service, asset, configuration, dependency, control, exception, telemetry, and recovery references."],
-  ["02", "Integrated risk assessment", "Correlates threat relevance, production exposure, service consequence, evidence confidence, treatment readiness, and residual uncertainty."],
-  ["03", "Purpose-bound proving", "Uses SecLabs to prove material decisions without transferring risk acceptance, execution authority, or return-to-service accountability."],
-  ["04", "Governed domain operations", "Coordinates specialized security domains through shared identifiers, stage gates, accountable roles, and controlled evidence reuse."],
-  ["05", "Recovery-protected assurance", "Treats rollback, restoration, continuity, service health, monitoring, and learning as part of the security decision."],
+const stages = [
+  ["01", "Establish context", "Define service scope, objectives, risk criteria, ownership, obligations, and evidence requirements.", "PLAN", Layers3],
+  ["02", "Acquire trusted state", "Collect attributable production configuration, dependencies, telemetry, controls, exceptions, and recovery references.", "PLAN", Database],
+  ["03", "Analyze 5D risk", "Correlate threat relevance, visibility, response, restoration, and proof into an integrated risk position.", "PLAN", BrainCircuit],
+  ["04", "Prove in SecLabs", "Validate applicability, compatibility, monitoring, rollback, recovery, and evidence before material action.", "DO", TestTube2],
+  ["05", "Authorize treatment", "Apply accountable risk, service, control, incident, and recovery authority to the proposed operation.", "DO", FileCheck2],
+  ["06", "Execute domain operation", "Perform the approved action through Auto Remediation, SOC, Incident Response, Resilience, or Compliance.", "DO", Wrench],
+  ["07", "Observe and recover", "Confirm technical outcome, service health, monitoring behavior, rollback conditions, and recovery readiness.", "CHECK", Eye],
+  ["08", "Assure and improve", "Conclude residual risk, preserve evidence, improve criteria and playbooks, and renew the trusted baseline.", "ACT", RefreshCw],
 ];
 
-function ShiftLeftVisual() {
+function ModelDistinctionVisual() {
   return (
-    <div className="v30-shift-visual" aria-label="Shift-left product security lifecycle">
-      <div className="v30-code-plane">
+    <div className="v31-distinction-visual" aria-label="DevSecOps and ProdSecOps model distinction">
+      <div className="v31-model dev">
         <Code2 />
-        <small>PRODUCT SECURITY</small>
-        <b>SHIFT-LEFT</b>
+        <small>APPLICATION DEVELOPMENT</small>
+        <b>DEVSECOPS</b>
+        <span>PLAN · CODE · BUILD · TEST · RELEASE · DEPLOY</span>
       </div>
-      <div className="v30-pipeline">
-        {["DESIGN", "CODE", "BUILD", "TEST", "RELEASE"].map((item, index) => (
-          <div key={item} className={`v30-pipeline-node node-${index + 1}`}>
-            <span>{String(index + 1).padStart(2, "0")}</span><b>{item}</b>
-          </div>
-        ))}
-        <i className="v30-pipeline-signal" />
-      </div>
-      <div className="v30-threat-model">
-        <BrainCircuit />
-        <span>THREAT<br />MODELING</span>
-        <small>Design-time risk insight</small>
-      </div>
-    </div>
-  );
-}
 
-function ScopeExpansionVisual() {
-  return (
-    <div className="v30-expansion-visual" aria-label="Expansion from application delivery to production security operations">
-      <div className="v30-app-core"><Code2 /><span>APPLICATION<br />DELIVERY</span></div>
-      <div className="v30-production-orbit">
-        {productionScope.map(([title], index) => (
-          <div key={title} className={`v30-orbit-node orbit-${index + 1}`}><span>0{index + 1}</span><b>{title}</b></div>
-        ))}
+      <div className="v31-evolution-bridge">
+        <GitBranch />
+        <b>WORKFLOW PRINCIPLES EVALUATED</b>
+        <span>Agility</span><span>Collaboration</span><span>Automation</span><span>Feedback</span>
+        <ArrowRight />
       </div>
-      <div className="v30-prodsecops-core"><ShieldCheck /><small>SHIFT-THROUGH</small><b>PRODSECOPS</b></div>
-      <svg viewBox="0 0 600 400" aria-hidden="true">
-        <path className="v30-expansion-path" pathLength="100" d="M130 200 C230 70 370 70 470 200 C370 330 230 330 130 200Z" />
+
+      <div className="v31-model prod">
+        <ShieldCheck />
+        <small>INFRASTRUCTURE SECURITY OPERATIONS</small>
+        <b>PRODSECOPS</b>
+        <span>ANALYZE · PROVE · GOVERN · OPERATE · RECOVER · ASSURE</span>
+      </div>
+
+      <svg viewBox="0 0 900 350" aria-hidden="true">
+        <path className="v31-dev-path" pathLength="100" d="M150 175 C290 30 365 30 450 175" />
+        <path className="v31-prod-path" pathLength="100" d="M450 175 C535 320 610 320 750 175" />
       </svg>
     </div>
   );
 }
 
-function LifecycleVisual({ active, setActive }) {
+function FiveDVisual({ active, setActive }) {
   return (
-    <div className="v30-lifecycle-visual">
-      <div className="v30-life-core"><ShieldCheck /><small>PRODUCTION-RISK CASE</small><b>ONE GOVERNED<br />OPERATING CONTEXT</b></div>
-      {lifecycle.map(([name,,, Icon, color], index) => (
+    <div className="v31-five-d-visual" aria-label="Five-dimensional threat intelligence analysis">
+      <div className="v31-five-d-core">
+        <Radar />
+        <small>5D THREAT INTELLIGENCE</small>
+        <b>INTEGRATED<br />RISK ANALYSIS</b>
+      </div>
+
+      {dimensions.map(([name,,, color], index) => (
         <button
           type="button"
           key={name}
-          className={`v30-life-node life-${index + 1} ${active === index ? "active" : ""}`}
-          style={{ "--life": color }}
+          className={`v31-dimension dimension-${index + 1} ${active === index ? "active" : ""}`}
+          style={{ "--dimension": color }}
           onMouseEnter={() => setActive(index)}
           onFocus={() => setActive(index)}
           onClick={() => setActive(index)}
-        ><Icon /><span>{name}</span></button>
+        >
+          <span>0{index + 1}</span>
+          <b>{name}</b>
+        </button>
       ))}
-      <svg className="v30-life-path" viewBox="0 0 500 500" aria-hidden="true"><circle cx="250" cy="250" r="183" pathLength="100" /></svg>
+
+      <svg className="v31-five-d-path" viewBox="0 0 520 520" aria-hidden="true">
+        <polygon points="260,35 474,191 392,443 128,443 46,191" />
+        <path pathLength="100" d="M260 35L474 191L392 443L128 443L46 191Z" />
+      </svg>
+    </div>
+  );
+}
+
+function EightStageVisual({ activeStage, setActiveStage }) {
+  return (
+    <div className="v31-stage-visual" aria-label="Eight-stage ProdSecOps workflow mapped to Plan Do Check Act">
+      <div className="v31-stage-core">
+        <Workflow />
+        <small>PRODSECOPS</small>
+        <b>8-STAGE<br />WORKFLOW</b>
+      </div>
+
+      {stages.map(([number, title,,, Icon], index) => (
+        <button
+          type="button"
+          key={number}
+          className={`v31-stage stage-${index + 1} ${activeStage === index ? "active" : ""}`}
+          style={{ "--angle": `${index * 45}deg` }}
+          onMouseEnter={() => setActiveStage(index)}
+          onFocus={() => setActiveStage(index)}
+          onClick={() => setActiveStage(index)}
+        >
+          <Icon />
+          <span>{number}</span>
+          <b>{title}</b>
+        </button>
+      ))}
+
+      <svg className="v31-stage-path" viewBox="0 0 600 600" aria-hidden="true">
+        <circle cx="300" cy="300" r="235" pathLength="100" />
+      </svg>
     </div>
   );
 }
 
 export default function WhyProdSecOps() {
-  const [active, setActive] = useState(0);
+  const [activeDimension, setActiveDimension] = useState(0);
+  const [activeStage, setActiveStage] = useState(0);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setActive((value) => (value + 1) % lifecycle.length), 4300);
-    return () => window.clearInterval(timer);
+    const dimensionTimer = window.setInterval(
+      () => setActiveDimension((value) => (value + 1) % dimensions.length),
+      3600,
+    );
+    const stageTimer = window.setInterval(
+      () => setActiveStage((value) => (value + 1) % stages.length),
+      3100,
+    );
+    return () => {
+      window.clearInterval(dimensionTimer);
+      window.clearInterval(stageTimer);
+    };
   }, []);
 
-  const [phase, title, text,,,] = lifecycle[active];
+  const [dimensionName, dimensionTitle, dimensionText, dimensionColor] = dimensions[activeDimension];
+  const [stageNumber, stageTitle, stageText, stagePdca] = stages[activeStage];
 
   return (
-    <section id="why-prodsecops" className="v30-why">
-      <header className="v30-intro">
+    <section id="why-prodsecops" className="v31-why">
+      <header className="v31-intro">
         <span>WHY PRODSECOPS</span>
-        <h2>Extend Shift-Left security into a governed production-security lifecycle.</h2>
+        <h2>A systematic operating framework for risk-driven infrastructure security.</h2>
         <p>
-          DevSecOps transformed product security by moving security decisions earlier into software design and delivery. ProdSecOps extends that operating principle across the live infrastructure and service environment, creating a continuous model for interpreting risk, proving change, authorizing action, observing outcomes, protecting recovery, and improving assurance.
+          ProdSecOps is a continuous security-operations framework for infrastructure and production environments. The framework evaluates the agile workflow principles demonstrated by DevSecOps and applies those principles to a different operating objective: integrated threat analysis, accountable risk management, controlled security operations, recovery protection, evidence, and continual improvement across the production lifecycle.
         </p>
       </header>
 
-      <section className="v30-story-grid shift-left">
-        <div className="v30-story-copy">
-          <span className="v30-kicker">THE ESTABLISHED PRODUCT-SECURITY MODEL</span>
-          <h3>DevSecOps made security an engineering activity, not a final release checkpoint.</h3>
-          <p>
-            Shift-Left integrates security into the application-development lifecycle. Threat modeling identifies design flaws and abuse paths before code is written. Secure engineering practices, automated pipeline controls, testing, artifact integrity, and runtime feedback create rapid learning loops across product, development, security, and operations teams.
-          </p>
-          <div className="v30-feature-list">
-            {shiftLeft.map(([title, body]) => <article key={title}><CheckCircle2 /><div><b>{title}</b><p>{body}</p></div></article>)}
-          </div>
-        </div>
-        <ShiftLeftVisual />
-      </section>
-
-      <section className="v30-story-grid expansion">
-        <ScopeExpansionVisual />
-        <div className="v30-story-copy">
-          <span className="v30-kicker">THE PRODUCTION-SECURITY EXTENSION</span>
-          <h3>Infrastructure security needs the same agile discipline across a wider operating scope.</h3>
-          <p>
-            The software-delivery pipeline remains essential, but production security also depends on the exact deployed state, infrastructure configuration, identities, service dependencies, threat exposure, telemetry, incidents, control obligations, rollback assets, and recovery readiness. These conditions continue to change after an application is released and require decisions that extend beyond development ownership.
-          </p>
-          <p>
-            ProdSecOps applies a Shift-Through model: security context and accountability move continuously through planning, proving, authorization, domain operations, observation, recovery, and assurance. The objective is not to replace DevSecOps, IT service management, SOC, incident response, or resilience processes. The objective is to coordinate those responsibilities through one production-risk context.
-          </p>
-          <div className="v30-scope-grid">
-            {productionScope.map(([title, body]) => <article key={title}><b>{title}</b><p>{body}</p></article>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="v30-isms">
+      <section className="v31-distinction">
         <header>
-          <span className="v30-kicker">RISK-BASED ISMS OPERATIONALIZATION</span>
-          <h3>Connect risk assessment, threat intelligence, operational action, and continual improvement.</h3>
+          <span className="v31-kicker">MODEL DISTINCTION</span>
+          <h3>DevSecOps secures application development. ProdSecOps structures infrastructure security operations.</h3>
           <p>
-            ISO/IEC 27001 requires an organization to establish, implement, maintain, and continually improve an information security management system. ProdSecOps supports that management intent at the production-security layer by linking organizational context, risk criteria, objectives, accountable roles, operational planning, evidence, performance evaluation, corrective action, and improvement to the live service condition.
-          </p>
-          <p>
-            Threat intelligence becomes decision context rather than a separate feed. Intelligence is evaluated against production relevance, service consequence, observability, treatment options, and recovery conditions. The resulting assessment guides what must be proved, who must authorize it, how the operational domain executes it, and what evidence is required to conclude the outcome.
+            DevSecOps integrates product security into software planning, design, coding, build, test, release, deployment, and runtime feedback. Threat modeling is a defining Shift-Left practice because design weaknesses and abuse paths can be addressed before implementation. ProdSecOps is not a Shift-Left development model: ProdSecOps does not develop or deploy an application. ProdSecOps governs the continuously changing security condition of live infrastructure, services, identities, configurations, telemetry, controls, incidents, and recovery capabilities.
           </p>
         </header>
 
-        <div className="v30-life-grid">
-          <LifecycleVisual active={active} setActive={setActive} />
-          <div className="v30-life-readout" style={{ "--life": lifecycle[active][5] }}>
-            <span>{phase}</span><h4>{title}</h4><p>{text}</p>
-            <div>
-              <span><Database />Authoritative state</span>
-              <span><BrainCircuit />Integrated risk criteria</span>
-              <span><Radar />Threat and operational intelligence</span>
-              <span><ShieldCheck />Accountable authority</span>
-              <span><RefreshCw />Continual improvement</span>
+        <ModelDistinctionVisual />
+
+        <div className="v31-model-grid">
+          <article className="dev">
+            <Code2 />
+            <span>DEVSECOPS</span>
+            <h4>Product-security workflow</h4>
+            <p>Center of gravity: secure application engineering and software delivery.</p>
+            <div>{devSecOpsCapabilities.map(([title, body]) => <section key={title}><CheckCircle2 /><div><b>{title}</b><p>{body}</p></div></section>)}</div>
+          </article>
+
+          <article className="prod">
+            <ShieldCheck />
+            <span>PRODSECOPS</span>
+            <h4>Infrastructure-security operating framework</h4>
+            <p>Center of gravity: continuous, risk-driven security management and operations for production infrastructure.</p>
+            <div>{prodSecOpsCapabilities.map(([title, body]) => <section key={title}><CheckCircle2 /><div><b>{title}</b><p>{body}</p></div></section>)}</div>
+          </article>
+        </div>
+
+        <div className="v31-principle-strip">
+          <GitBranch />
+          <p><b>What ProdSecOps carries forward:</b> cross-functional collaboration, short feedback loops, repeatable workflow stages, automation where authorized, evidence by design, and continual learning.</p>
+          <ArrowRight />
+          <p><b>What ProdSecOps adds:</b> integrated risk criteria, exact production state, five-dimensional threat intelligence, accountable authority, SecLabs proving, rollback, recovery, and residual-risk assurance.</p>
+        </div>
+      </section>
+
+      <section className="v31-five-d-section">
+        <div className="v31-five-d-copy">
+          <span className="v31-kicker">THE PRODSECOPS ANALYTICAL CORE</span>
+          <h3>5D Threat Intelligence converts threat information into an integrated production-risk position.</h3>
+          <p>
+            The core of ProdSecOps is not a generic severity score and not a standalone threat feed. Five-dimensional analysis evaluates a security condition through five connected operational questions. The resulting context supports risk prioritization, treatment selection, detection and response planning, recovery readiness, authority, and assurance across all ProdSecOps domains.
+          </p>
+          <div className="v31-dimension-readout" style={{ "--dimension": dimensionColor }}>
+            <span>{dimensionName}</span>
+            <h4>{dimensionTitle}</h4>
+            <p>{dimensionText}</p>
+          </div>
+          <div className="v31-five-d-outcomes">
+            <span><Gauge />Risk relevance</span>
+            <span><Activity />Operational consequence</span>
+            <span><FileCheck2 />Decision evidence</span>
+            <span><ShieldCheck />Accountable authority</span>
+            <span><RotateCcw />Recovery confidence</span>
+          </div>
+        </div>
+        <FiveDVisual active={activeDimension} setActive={setActiveDimension} />
+      </section>
+
+      <section className="v31-isms">
+        <header>
+          <span className="v31-kicker">ISO/IEC 27001 MANAGEMENT-SYSTEM CONTEXT</span>
+          <h3>Translate risk-based ISMS intent into repeatable production-security operations.</h3>
+          <p>
+            ISO/IEC 27001 requires an organization to establish, implement, maintain, and continually improve an information security management system. ProdSecOps supports that management-system perspective by connecting organizational and service context, risk criteria, objectives, accountable responsibilities, operational planning, performance evidence, corrective action, and improvement to the exact production condition.
+          </p>
+          <p>
+            ProdSecOps does not replace the ISMS and does not itself establish conformity or certification. ProdSecOps provides a structured operational method for executing infrastructure-security activities consistently with risk-based management and Plan-Do-Check-Act continual improvement.
+          </p>
+        </header>
+
+        <div className="v31-pdca-map">
+          <article className="plan"><span>PLAN</span><b>Stages 01–03</b><p>Establish context, acquire trusted state, and analyze five-dimensional risk.</p></article>
+          <article className="do"><span>DO</span><b>Stages 04–06</b><p>Prove the operation, obtain authority, and execute through the responsible domain.</p></article>
+          <article className="check"><span>CHECK</span><b>Stage 07</b><p>Observe technical effectiveness, service health, monitoring, rollback, and recovery.</p></article>
+          <article className="act"><span>ACT</span><b>Stage 08</b><p>Assure residual risk, preserve evidence, improve the operating model, and renew the baseline.</p></article>
+        </div>
+
+        <div className="v31-workflow-grid">
+          <EightStageVisual activeStage={activeStage} setActiveStage={setActiveStage} />
+          <div className="v31-stage-readout" data-pdca={stagePdca.toLowerCase()}>
+            <span>{stagePdca} · STAGE {stageNumber}</span>
+            <h4>{stageTitle}</h4>
+            <p>{stageText}</p>
+            <div className="v31-readout-chain">
+              <span>Context</span><ArrowRight /><span>5D analysis</span><ArrowRight /><span>Authority</span><ArrowRight /><span>Evidence</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="v30-capability">
-        <header>
-          <span className="v30-kicker">THE PRODSECOPS CAPABILITY</span>
-          <h3>One framework connecting five security domains through a Production-Risk Case.</h3>
-          <p>
-            ProdSecOps provides the shared operating structure needed to coordinate Auto Remediation, SOC Intelligence, Incident Response, Resilience, and Compliance while preserving domain-specific authority. Every material decision remains traceable from source evidence and risk criteria through proving, approval, execution, monitoring, recovery, and residual-risk assurance.
-          </p>
-        </header>
-        <div className="v30-capability-flow">
-          {capabilities.map(([number, title, body], index) => (
-            <article key={number}><span>{number}</span><div><b>{title}</b><p>{body}</p></div>{index < capabilities.length - 1 && <ArrowRight />}</article>
-          ))}
-        </div>
-        <div className="v30-outcome">
-          <CloudCog />
-          <p><b>Enterprise outcome:</b> infrastructure-security operations gain the agility associated with DevSecOps while retaining the governance, evidence, service protection, recovery discipline, and accountability required for production-risk management.</p>
-          <Layers3 />
-        </div>
+      <section className="v31-enterprise-outcome">
+        <div><Radar /><span>5D INTELLIGENCE</span><b>Integrated risk analysis</b></div>
+        <ArrowRight />
+        <div><Workflow /><span>8-STAGE WORKFLOW</span><b>Systematic security operations</b></div>
+        <ArrowRight />
+        <div><RefreshCw /><span>PDCA ASSURANCE</span><b>Continual improvement</b></div>
+        <ArrowRight />
+        <div><ShieldCheck /><span>ENTERPRISE OUTCOME</span><b>Risk-driven infrastructure security</b></div>
       </section>
     </section>
   );
