@@ -24,6 +24,7 @@ import {
 import StageRail from "../components/framework/StageRail";
 import GlowCard from "../components/common/GlowCard";
 import SectionHeader from "../components/common/SectionHeader";
+import WhyProdSecOps from "../components/framework/WhyProdSecOps";
 
 export default function FrameworkPage() {
   const [activeKey, setActiveKey] = useState("remediation");
