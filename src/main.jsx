@@ -31,6 +31,7 @@ import "./styles/pso-v25-enterprise-pages.css";
 import "./styles/pso-v26-custom-404.css";
 import "./styles/pso-v27-logo-grey-navigation.css";
 import "./styles/pso-v28-footer-logo-contact-modal.css";
+import "./styles/pso-v29-why-prodsecops.css";
 
 
 const redirectPath = sessionStorage.getItem(
