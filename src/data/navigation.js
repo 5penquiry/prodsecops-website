@@ -15,11 +15,11 @@ export const navigationItems = [
     ],
   },
   {
-    label: "Remediation",
+    label: "Auto Remediation",
     path: "/remediation-intelligence",
     eyebrow: "Proactive intelligence",
-    title: "Remediation Intelligence",
-    description: "Prioritize exploitable exposure, govern remediation decisions, and verify treatment against the exact production state.",
+    title: "Auto Remediation Intelligence",
+    description: "Prioritize exploitable exposure, govern automated remediation decisions, and verify treatment against the exact production state.",
     links: [
       { label: "Exposure prioritization", path: "/remediation-intelligence#prioritization" },
       { label: "Vulnerability context", path: "/remediation-intelligence#context" },
@@ -28,7 +28,7 @@ export const navigationItems = [
     ],
   },
   {
-    label: "SOC",
+    label: "SOC Intelligence",
     path: "/soc-intelligence",
     eyebrow: "Detective intelligence",
     title: "SOC Intelligence",
@@ -90,25 +90,25 @@ export const moreNavigation = {
     {
       title: "Solutions",
       links: [
-        { label: "Enterprise solutions", path: "/solutions" },
-        { label: "Platform capabilities", path: "/solutions#capabilities" },
-        { label: "Integration approach", path: "/solutions#integration" },
-        { label: "SecLabs proving", path: "/solutions#seclabs" },
+        { label: "Enterprise solutions", path: "/#solutions" },
+        { label: "Platform capabilities", path: "/#capabilities" },
+        { label: "Integration approach", path: "/#integration" },
+        { label: "SecLabs proving", path: "/#seclabs" },
       ],
     },
     {
       title: "Research",
       links: [
-        { label: "Research and insights", path: "/research" },
-        { label: "Framework publications", path: "/research#publications" },
-        { label: "Insights and blog", path: "/research#insights" },
-        { label: "Release history", path: "/research#releases" },
+        { label: "Research and insights", path: "/#research" },
+        { label: "Framework publications", path: "/#publications" },
+        { label: "Insights and blog", path: "/#insights" },
+        { label: "Release history", path: "/#releases" },
       ],
     },
     {
       title: "Connect",
       links: [
-        { label: "Contact", path: "/contact" },
+        { label: "Contact", path: "mailto:framework@vpilot.org", external: true },
         { label: "Executive briefing", path: "mailto:enquiry@vpilot.org", external: true },
         { label: "Framework feedback", path: "mailto:framework@vpilot.org", external: true },
         { label: "General enquiries", path: "mailto:enquiry@vpilot.org", external: true },
