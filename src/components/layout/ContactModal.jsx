@@ -1,64 +1,252 @@
 import { useEffect, useState } from "react";
-import { Mail, X } from "lucide-react";
+import {
+  Building2,
+  Mail,
+  MessageSquare,
+  Send,
+  User,
+  X,
+} from "lucide-react";
 
-export default function ContactModal({ open, onClose }) {
-  const [form, setForm] = useState({ name: "", email: "", organization: "", subject: "", message: "" });
+export default function ContactModal({
+  open = false,
+  isOpen = false,
+  show = false,
+  onClose = () => {},
+}) {
+  const visible = open || isOpen || show;
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    organization: "",
+    subject: "",
+    message: "",
+  });
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
+    if (!visible) {
+      return undefined;
+    }
 
-  if (!open) return null;
+    const previousOverflow =
+      document.body.style.overflow;
 
-  const update = (event) => {
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener(
+      "keydown",
+      handleEscape,
+    );
+
+    return () => {
+      document.body.style.overflow =
+        previousOverflow;
+
+      document.removeEventListener(
+        "keydown",
+        handleEscape,
+      );
+    };
+  }, [visible, onClose]);
+
+  if (!visible) {
+    return null;
+  }
+
+  const updateField = (event) => {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
+
+    setForm((current) => ({
+      ...current,
+      value,
+    }));
   };
 
-  const submit = (event) => {
+  const prepareEmail = (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent(form.subject || "ProdSecOps website enquiry");
-    const body = encodeURIComponent(
-      `Name: ${form.name}
-Email: ${form.email}
-Organization: ${form.organization}
 
-${form.message}`,
-    );
-    window.location.href = `mailto:framework@vpilot.org?subject=${subject}&body=${body}`;
+    const subject =
+      form.subject.trim() ||
+      "ProdSecOps Framework Enquiry";
+
+    const body = [
+      "ProdSecOps Framework Enquiry",
+      "",
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      `Organization: ${form.organization}`,
+      "",
+      "Message:",
+      form.message,
+    ].join("\n");
+
+    const mailto = [
+      "mailto:framework@vpilot.org",
+      `?subject=${encodeURIComponent(subject)}`,
+      `&body=${encodeURIComponent(body)}`,
+    ].join("");
+
+    window.location.href = mailto;
   };
 
   return (
-    <div className="v21-contact-backdrop" role="presentation" onMouseDown={onClose}>
+    <div
+      className="contact-modal-backdrop"
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
+    >
       <section
-        className="v21-contact-modal"
+        className="contact-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby="contact-modal-title"
-        onMouseDown={(event) => event.stopPropagation()}
       >
-        <header>
+        <header className="contact-modal-header">
           <div>
-            <span>PRODSECOPS ENGAGEMENT</span>
-            <h2 id="contact-modal-title">Contact the framework team</h2>
-            <p>Submit an enquiry, request an executive briefing, or share framework feedback.</p>
+            <span className="contact-modal-eyebrow">
+              PRODSECOPS FRAMEWORK
+            </span>
+
+            <h2 id="contact-modal-title">
+              Contact Us
+            </h2>
+
+            <p>
+              Submit an enquiry about the framework,
+              enterprise implementation, research,
+              collaboration, or an executive briefing.
+            </p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close contact form"><X /></button>
+
+          <button
+            type="button"
+            className="contact-modal-close"
+            onClick={onClose}
+            aria-label="Close contact form"
+          >
+            <X aria-hidden="true" />
+          </button>
         </header>
 
-        <form onSubmit={submit}>
-          <div className="v21-form-grid">
-            <label>Name<input required name="name" value={form.name} onChange={update} /></label>
-            <label>Email<input required type="email" name="email" value={form.email} onChange={update} /></label>
-            <label>Organization<input name="organization" value={form.organization} onChange={update} /></label>
-            <label>Subject<input name="subject" value={form.subject} onChange={update} /></label>
+        <form
+          className="contact-modal-form"
+          onSubmit={prepareEmail}
+        >
+          <div className="contact-form-grid">
+            <label>
+              <span>
+                <User aria-hidden="true" />
+                Name
+              </span>
+
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={updateField}
+                autoComplete="name"
+                required
+              />
+            </label>
+
+            <label>
+              <span>
+                <Mail aria-hidden="true" />
+                Email
+              </span>
+
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={updateField}
+                autoComplete="email"
+                required
+              />
+            </label>
           </div>
-          <label>Message<textarea required rows="5" name="message" value={form.message} onChange={update} /></label>
-          <div className="v21-contact-actions">
-            <small>This static-site form opens the visitor's email application addressed to framework@vpilot.org.</small>
-            <button type="submit"><Mail size={15} /> SEND EMAIL</button>
+
+          <label>
+            <span>
+              <Building2 aria-hidden="true" />
+              Organization
+            </span>
+
+            <input
+              type="text"
+              name="organization"
+              value={form.organization}
+              onChange={updateField}
+              autoComplete="organization"
+            />
+          </label>
+
+          <label>
+            <span>
+              <MessageSquare aria-hidden="true" />
+              Subject
+            </span>
+
+            <input
+              type="text"
+              name="subject"
+              value={form.subject}
+              onChange={updateField}
+              placeholder="Framework enquiry"
+            />
+          </label>
+
+          <label>
+            <span>
+              <MessageSquare aria-hidden="true" />
+              Message
+            </span>
+
+            <textarea
+              name="message"
+              rows="6"
+              value={form.message}
+              onChange={updateField}
+              required
+              placeholder="Describe the enquiry or requested discussion."
+            />
+          </label>
+
+          <div className="contact-modal-notice">
+            Submitting this form opens the default
+            email application and prepares an email to
+            framework@vpilot.org. The website does not
+            transmit or store the entered information.
           </div>
+
+          <footer className="contact-modal-actions">
+            <button
+              type="button"
+              className="contact-modal-cancel"
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="contact-modal-submit"
+            >
+              <Send aria-hidden="true" />
+              Prepare Email
+            </button>
+          </footer>
         </form>
       </section>
     </div>
