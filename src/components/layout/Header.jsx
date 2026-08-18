@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ChevronDown, Mail, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router";
 import AnimatedLogo from "./AnimatedLogo";
-import ContactModal from "./ContactModal";
 import { moreNavigation, navigationItems } from "../../data/navigation";
 
 function MegaLink({ item, onClick }) {
