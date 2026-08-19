@@ -34,7 +34,7 @@ import "./styles/pso-v28-footer-logo-contact-modal.css";
 import "./styles/pso-v29-why-prodsecops.css";
 import "./styles/pso-v30-why-prodsecops.css";
 import "./styles/pso-v31-why-prodsecops.css";
-import "./styles/pso-v37-enterprise-framework.css";
+import "./styles/pso-v38-enterprise-framework.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
