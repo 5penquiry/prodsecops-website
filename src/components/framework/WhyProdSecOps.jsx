@@ -260,17 +260,8 @@ export default function WhyProdSecOps() {
           <article className="act"><span>ACT</span><b>Stage 08</b><p>Assure residual risk, preserve evidence, improve the operating model, and renew the baseline.</p></article>
         </div>
 
-        <div className="v31-workflow-grid">
-          <EightStageVisual activeStage={activeStage} setActiveStage={setActiveStage} />
-          <div className="v31-stage-readout" data-pdca={stagePdca.toLowerCase()}>
-            <span>{stagePdca} · STAGE {stageNumber}</span>
-            <h4>{stageTitle}</h4>
-            <p>{stageText}</p>
-            <div className="v31-readout-chain">
-              <span>Context</span><ArrowRight /><span>5D analysis</span><ArrowRight /><span>Authority</span><ArrowRight /><span>Evidence</span>
-            </div>
-          </div>
-        </div>
+        <IsoPdcaInfinityWorkflow />
+      </div>
       </section>
 
       <section className="v31-enterprise-outcome">
