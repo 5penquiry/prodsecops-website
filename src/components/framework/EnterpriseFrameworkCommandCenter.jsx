@@ -7,14 +7,17 @@ import {
   BrainCircuit,
   CheckCircle2,
   Database,
+  Eye,
   FileCheck2,
   Layers3,
   Radar,
   RefreshCw,
+  RotateCcw,
   ShieldCheck,
   TestTube2,
   TicketCheck,
   Workflow,
+  Wrench,
 } from "lucide-react";
 
 const domains = [
@@ -59,7 +62,7 @@ const domains = [
     trigger: "Backup, recovery, continuity or restoration requirement",
     color: "#10b981",
     route: "/resilience-intelligence",
-    action: "Perform the approved rollback, reconstruction, restoration or return-to-service operation.",
+    action: "Perform approved rollback, reconstruction, restoration or return-to-service activity.",
     outputs: ["Recovery Package", "Restore Evidence", "RTO/RPO Result", "Trusted Baseline"],
   },
   {
@@ -76,78 +79,156 @@ const domains = [
 ];
 
 const stages = [
-  ["01", "INGESTION & PARSING", "Receive the threat or control event and create the base RISM work log."],
-  ["02", "TRIAGE & ROUTING", "Classify the 5D phase, select the domain ticket and assign accountable ownership."],
-  ["03", "CONTEXTUAL ENRICHMENT", "Add asset criticality, exact production state, dependencies, history and risk criteria."],
-  ["04", "PLAYBOOK & PLANNING", "Associate the approved playbook, proposed treatment, authority and recovery conditions."],
-  ["05", "SECLABS VALIDATION", "Prove the proposed change, monitoring, impact, rollback and recovery in GoldenVault."],
-  ["06", "APPROVAL & EXECUTION", "Obtain accountable approval and perform the authorized production action."],
-  ["07", "VERIFICATION & MONITORING", "Re-evaluate the environment and confirm security, service and monitoring outcomes."],
-  ["08", "CLOSURE & ERM REPORTING", "Close the ticket, update residual risk and feed learning to ERM and future threat models."],
+  ["01", "INGEST & PARSE", "Preserve the source event and create the base work log.", Activity],
+  ["02", "TRIAGE & ROUTE", "Select the 5D phase, ticket type, ownership and priority.", TicketCheck],
+  ["03", "ENRICH CONTEXT", "Add production state, criticality, history and risk criteria.", Database],
+  ["04", "PLAN PLAYBOOK", "Attach the treatment, authority, monitoring and recovery plan.", Workflow],
+  ["05", "VALIDATE IN SECLABS", "Prove behavior, impact, telemetry, rollback and recovery.", TestTube2],
+  ["06", "APPROVE & EXECUTE", "Authorize and perform the state-matched domain action.", Wrench],
+  ["07", "VERIFY & MONITOR", "Confirm security effect, service health and observability.", Eye],
+  ["08", "ASSURE & REPORT", "Close the record, update residual risk and improve future models.", FileCheck2],
 ];
 
-const principles = [
-  ["Integrated risk-driven", "One context connects threat intelligence, production state, service impact and authority."],
-  ["Proactive over reactive", "Intelligence supports architectural hardening and prevention, not detection alone."],
-  ["Resource optimized", "Reusable acquisition, laboratory, telemetry and evidence work reduces duplicated effort."],
+const componentModules = [
+  {
+    number: "01",
+    title: "RISM",
+    subtitle: "Risk Intelligence Service Management",
+    purpose: "Governed tracking, ticketing, authority and evidence system of record.",
+    color: "#8b5cf6",
+    icon: TicketCheck,
+    modules: ["CPDB asset inventory", "Production-Risk Cases", "Domain tickets", "Risk and exception registers", "Risk criteria", "Authority and approvals", "Evidence and work logs", "Residual risk and assurance"],
+  },
+  {
+    number: "02",
+    title: "Eight-Stage Workflow",
+    subtitle: "Shared Ticket-Controlled Process",
+    purpose: "Repeatable operational lifecycle instantiated from every active RISM ticket.",
+    color: "#06b6d4",
+    icon: Workflow,
+    modules: ["Ingestion and parsing", "Dynamic routing", "Context enrichment", "Playbook planning", "SecLabs validation gate", "Approval and execution", "Verification and monitoring", "Closure and ERM reporting"],
+  },
+  {
+    number: "03",
+    title: "SecLabs",
+    subtitle: "GoldenVault Validation Extension",
+    purpose: "Purpose-bound, isolated technical proving invoked from the workflow when required.",
+    color: "#3b82f6",
+    icon: TestTube2,
+    modules: ["Target acquisition", "Mirrored configuration build", "ASP and TTP replay", "Treatment validation", "SIEM telemetry capture", "Impact assessment", "Rollback validation", "Recovery validation"],
+  },
 ];
 
-function Crown({ activeDomain, setActiveDomain }) {
+function OrchestratorVisual({ activeIndex, setActiveIndex }) {
+  const active = domains[activeIndex];
   return (
-    <div className="v38-crown" style={{ "--domain": activeDomain.color }}>
-      <div className="v38-crown-core">
-        <BrainCircuit />
-        <small>GOVERNANCE AND ORCHESTRATION CROWN</small>
-        <b>5D INTEGRATED<br />THREAT INTELLIGENCE</b>
-        <p>Ingest · Interpret · Direct · Evaluate · Improve</p>
+    <div className="v39-orchestrator" style={{ "--active": active.color }}>
+      <div className="v39-intake">
+        <span>THREAT & OPERATIONAL INPUTS</span>
+        <div><Radar /><Activity /><Database /><ShieldCheck /></div>
       </div>
-      {domains.map((item, index) => (
-        <button
-          type="button"
-          key={item.phase}
-          className={item.ticket === activeDomain.ticket ? "active" : ""}
-          style={{ "--angle": `${index * 72}deg`, "--phase": item.color }}
-          onMouseEnter={() => setActiveDomain(index)}
-          onFocus={() => setActiveDomain(index)}
-          onClick={() => setActiveDomain(index)}
-        >
-          <span>0{index + 1}</span><b>{item.phase}</b><small>{item.domain}</small>
-        </button>
-      ))}
-      <svg viewBox="0 0 560 560" aria-hidden="true">
-        <polygon points="280,35 513,204 424,478 136,478 47,204" />
-        <path pathLength="100" d="M280 35L513 204L424 478L136 478L47 204Z" />
+
+      <div className="v39-orchestrator-core">
+        <BrainCircuit />
+        <small>MANAGEMENT AND ORCHESTRATION CORE</small>
+        <b>5D THREAT<br />INTELLIGENCE</b>
+        <p>Classify · Correlate · Direct · Evaluate</p>
+      </div>
+
+      <div className="v39-domain-vanes">
+        {domains.map((domain, index) => (
+          <button
+            type="button"
+            key={domain.phase}
+            className={index === activeIndex ? "active" : ""}
+            style={{ "--angle": `${index * 72 - 90}deg`, "--domain": domain.color }}
+            onMouseEnter={() => setActiveIndex(index)}
+            onFocus={() => setActiveIndex(index)}
+            onClick={() => setActiveIndex(index)}
+          >
+            <span>0{index + 1}</span>
+            <b>{domain.phase}</b>
+            <small>{domain.domain}</small>
+          </button>
+        ))}
+      </div>
+
+      <div className="v39-decision-output">
+        <span>DIRECTED OPERATING INTENT</span>
+        <b>{active.ticket}</b>
+        <small>{active.ticketName}</small>
+      </div>
+
+      <svg viewBox="0 0 760 500" aria-hidden="true">
+        <defs>
+          <linearGradient id="v39-flow" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#3b82f6" />
+            <stop offset=".5" stopColor="#8b5cf6" />
+            <stop offset="1" stopColor="#10b981" />
+          </linearGradient>
+        </defs>
+        <ellipse className="v39-orbit-one" cx="380" cy="250" rx="270" ry="165" />
+        <ellipse className="v39-orbit-two" cx="380" cy="250" rx="200" ry="120" />
+        <path className="v39-flow-signal" pathLength="100" d="M90 250C180 55 580 55 670 250C580 445 180 445 90 250Z" />
+        <path className="v39-command-beam" d="M380 310L380 455" />
       </svg>
     </div>
   );
 }
 
-function TicketSpine({ domain, activeStage }) {
+function ComponentsVisual() {
   return (
-    <div className="v38-spine" style={{ "--domain": domain.color }}>
-      <div className="v38-spine-head"><TicketCheck /><div><small>RISM SYSTEM OF RECORD</small><b>{domain.ticket}</b><span>{domain.ticketName}</span></div></div>
-      <div className="v38-spine-line" />
-      {stages.map(([number, title, text], index) => (
-        <article key={number} className={activeStage === index ? "active" : ""}>
-          <span>{number}</span><div><b>{title}</b><p>{text}</p></div>
-          {index < stages.length - 1 && <ArrowDown />}
+    <div className="v39-components-grid">
+      {componentModules.map(({ number, title, subtitle, purpose, color, icon: Icon, modules }, index) => (
+        <article key={number} style={{ "--component": color }}>
+          <header>
+            <span>{number}</span><Icon /><div><small>SHARED COMPONENT</small><h4>{title}</h4><b>{subtitle}</b></div>
+          </header>
+          <p>{purpose}</p>
+          <div className="v39-module-grid">{modules.map(item => <span key={item}><CheckCircle2 />{item}</span>)}</div>
+          {index < componentModules.length - 1 && <ArrowRight className="v39-component-arrow" />}
         </article>
       ))}
-      <div className="v38-spine-case"><Database /><div><small>PRODUCTION-RISK CASE</small><b>Work logs · Authority · Evidence · Exceptions · Residual Risk</b></div></div>
     </div>
   );
 }
 
-function SecLabCrucible({ domain, activeStage }) {
-  const tests = ["Mirror target", "Deploy proposed change", "Replay ASP/TTP", "Capture SIEM telemetry", "Assess service impact", "Validate rollback and recovery"];
+function ProcessVisual({ activeDomain, activeStage, setActiveStage }) {
   return (
-    <div className={`v38-crucible ${activeStage === 4 ? "active" : ""}`} style={{ "--domain": domain.color }}>
-      <div className="v38-crucible-shell">
-        <div className="v38-crucible-core"><TestTube2 /><small>STAGE 05 · UNIVERSAL TESTING GROUND</small><b>SECLABS<br />GOLDENVAULT</b><p>Isolated from production</p></div>
-        <div className="v38-test-ring">{tests.map((item,index)=><span key={item} style={{"--angle":`${index*60}deg`}}><b>0{index+1}</b>{item}</span>)}</div>
-        <svg viewBox="0 0 500 500" aria-hidden="true"><circle cx="250" cy="250" r="207" pathLength="100" /></svg>
+    <div className="v39-process-visual" style={{ "--domain": activeDomain.color }}>
+      <div className="v39-process-source"><Radar /><small>SOURCE EVENT</small><b>{activeDomain.trigger}</b></div>
+      <ArrowDown className="v39-process-down" />
+      <div className="v39-process-ticket"><TicketCheck /><small>RISM DOMAIN RECORD</small><b>{activeDomain.ticket}</b><span>{activeDomain.ticketName}</span></div>
+      <ArrowDown className="v39-process-down" />
+
+      <div className="v39-stage-rail">
+        {stages.map(([number, title, text, Icon], index) => (
+          <button
+            type="button"
+            key={number}
+            className={index === activeStage ? "active" : ""}
+            onMouseEnter={() => setActiveStage(index)}
+            onFocus={() => setActiveStage(index)}
+            onClick={() => setActiveStage(index)}
+          >
+            <Icon /><span>{number}</span><b>{title}</b><small>{text}</small>
+            {index < stages.length - 1 && <ArrowRight />}
+          </button>
+        ))}
+        <i className="v39-stage-signal" />
       </div>
-      <p>SecLabs validates the proposed operation before production. Results return to the active RISM ticket for approval, evidence, residual-risk and assurance decisions.</p>
+
+      <div className={`v39-seclabs-branch ${activeStage === 4 ? "active" : ""}`}>
+        <div className="v39-lab-tunnel"><TestTube2 /><small>WORKFLOW VALIDATION BRANCH</small><b>SECLABS GOLDENVAULT</b><p>Mirror · Replay · Validate · Recover</p></div>
+        <ArrowRight />
+        <div className="v39-lab-evidence"><FileCheck2 /><small>RESULT RETURN</small><b>Evidence written to {activeDomain.ticket}</b></div>
+      </div>
+
+      <div className="v39-process-result">
+        <div><Wrench /><small>AUTHORIZED DOMAIN ACTION</small><p>{activeDomain.action}</p></div>
+        <ArrowRight />
+        <div><RefreshCw /><small>ASSURANCE AND LEARNING</small><p>Verify outcome, update residual risk, improve ERM reporting and future threat models.</p></div>
+      </div>
     </div>
   );
 }
@@ -158,80 +239,70 @@ export default function EnterpriseFrameworkCommandCenter() {
   const activeDomain = domains[activeDomainIndex];
 
   useEffect(() => {
-    const timer = window.setInterval(() => setActiveStage(value => (value + 1) % stages.length), 3400);
-    return () => window.clearInterval(timer);
+    const stageTimer = window.setInterval(() => setActiveStage(value => (value + 1) % stages.length), 3400);
+    return () => window.clearInterval(stageTimer);
   }, []);
 
   return (
-    <div className="v38-framework">
-      <header className="v38-intro">
-        <span>5D INTEGRATED THREAT INTELLIGENCE ARCHITECTURE</span>
-        <h3>From threat context to governed ticket, validated action and enterprise learning.</h3>
-        <p>ProdSecOps expands threat intelligence beyond conventional detection and response. The framework integrates Proactive, Detective, Reactive, Recover and Compliance intelligence, directs each engagement through the correct security-operations domain, and converts the resulting evidence into enterprise risk visibility, optimized resources and structured operational governance.</p>
-      </header>
+    <div className="v39-framework">
+      <section className="v39-chapter v39-architecture">
+        <header className="v39-chapter-header">
+          <span>01 · 5D ORCHESTRATOR ARCHITECTURE</span>
+          <h3>A management controller that converts five intelligence perspectives into one directed SecOps engagement.</h3>
+          <p>5D Threat Intelligence continuously correlates Proactive, Detective, Reactive, Recover and Compliance intelligence. The orchestrator interprets source events against production context, identifies cross-domain relevance, applies risk criteria and directs the appropriate RISM ticket. Integrated enterprise risk visibility is the outcome of this intelligence process, not the controller’s only purpose.</p>
+        </header>
 
-      <section className="v38-principles">
-        <div className="v38-principles-copy">
-          <span>DESIGN PRINCIPLES</span>
-          <h4>Integrated intelligence protects operational value.</h4>
-          <p>ISO 31000 is referenced only for general integrated-risk design guidance. ProdSecOps introduces a distinct integrated threat-intelligence structure for infrastructure security operations.</p>
-        </div>
-        <div className="v38-principle-cards">
-          {principles.map(([title,text],index)=><article key={title}><span>0{index+1}</span><div><b>{title}</b><p>{text}</p></div></article>)}
-        </div>
-      </section>
-
-      <section className="v38-topology">
-        <div className="v38-crown-panel">
-          <span>THE CROWN · GOVERNANCE AND ORCHESTRATION</span>
-          <h4>One controller integrates five threat-intelligence phases.</h4>
-          <Crown activeDomain={activeDomain} setActiveDomain={setActiveDomainIndex} />
+        <div className="v39-principle-bar">
+          <article><BrainCircuit /><b>Integrated intelligence</b><p>Connect prevention, detection, response, recovery and hardening.</p></article>
+          <article><ShieldCheck /><b>Risk-directed operations</b><p>Translate threat context into accountable priorities and authority.</p></article>
+          <article><Layers3 /><b>Shared-resource governance</b><p>Reuse approved data, lab and evidence services without merging ownership.</p></article>
+          <article><RefreshCw /><b>Enterprise learning</b><p>Return outcomes to risk reporting, threat models and trusted baselines.</p></article>
         </div>
 
-        <div className="v38-crown-to-spine"><ArrowDown /><span>classified intelligence creates the domain record</span></div>
+        <OrchestratorVisual activeIndex={activeDomainIndex} setActiveIndex={setActiveDomainIndex} />
+      </section>
 
-        <div className="v38-operation-layout">
-          <section className="v38-spine-panel">
-            <span>THE SPINE · RISM TRACKING AND SHARED PROCESS</span>
-            <h4>The ticket type changes. The governed workflow remains systematic.</h4>
-            <TicketSpine domain={activeDomain} activeStage={activeStage} />
-          </section>
+      <section className="v39-chapter v39-components">
+        <header className="v39-chapter-header">
+          <span>02 · SHARED COMPONENT SYSTEM</span>
+          <h3>Three reusable components provide the record, process and proving capabilities.</h3>
+          <p>The components are deliberately separated. RISM records and governs the engagement. The ticket instantiates the shared eight-stage workflow. SecLabs is invoked by the workflow when technical uncertainty requires isolated proving. The 5D orchestrator remains above the components and directs how they are used.</p>
+        </header>
+        <ComponentsVisual />
+      </section>
 
-          <section className="v38-crucible-panel">
-            <span>THE CRUCIBLE · VALIDATION INSIDE THE WORKFLOW</span>
-            <h4>Stage 05 invokes the common SecLabs proving environment.</h4>
-            <SecLabCrucible domain={activeDomain} activeStage={activeStage} />
-          </section>
+      <section className="v39-chapter v39-process">
+        <header className="v39-chapter-header">
+          <span>03 · TICKET-TO-ASSURANCE PROCESS FLOW</span>
+          <h3>One source event becomes a governed record, validated action and measurable enterprise outcome.</h3>
+          <p>Select a 5D intelligence domain to view how the trigger, RISM record, workflow, SecLabs branch, authorized action and outputs change while the shared architecture remains consistent.</p>
+        </header>
+
+        <div className="v39-domain-tabs">
+          {domains.map((domain, index) => (
+            <button type="button" key={domain.ticket} className={index === activeDomainIndex ? "active" : ""} style={{ "--domain": domain.color }} onClick={() => { setActiveDomainIndex(index); setActiveStage(0); }}>
+              <span>0{index + 1}</span><div><b>{domain.phase}</b><small>{domain.domain} · {domain.ticket}</small></div>
+            </button>
+          ))}
+        </div>
+
+        <ProcessVisual activeDomain={activeDomain} activeStage={activeStage} setActiveStage={setActiveStage} />
+
+        <div className="v39-output-row" style={{ "--domain": activeDomain.color }}>
+          <div><span>KEY OUTPUTS</span><div>{activeDomain.outputs.map(output => <b key={output}><CheckCircle2 />{output}</b>)}</div></div>
+          <Link to={activeDomain.route}>Explore {activeDomain.domain} workflow <ArrowRight /></Link>
         </div>
       </section>
 
-      <section className="v38-domain-matrix" style={{ "--domain": activeDomain.color }}>
-        <div><span>5D PHASE</span><b>{activeDomain.phase}</b></div>
+      <section className="v39-ciso-summary">
+        <div><Radar /><span>WHAT IT IS</span><b>Integrated five-perspective threat-intelligence orchestration</b></div>
         <ArrowRight />
-        <div><span>SECOPS DOMAIN</span><b>{activeDomain.domain}</b></div>
+        <div><TicketCheck /><span>HOW IT IS CONTROLLED</span><b>RISM tickets, authority, evidence and residual risk</b></div>
         <ArrowRight />
-        <div><span>TRIGGER SOURCE</span><b>{activeDomain.trigger}</b></div>
+        <div><Workflow /><span>HOW IT OPERATES</span><b>Shared eight-stage workflow with SecLabs validation</b></div>
         <ArrowRight />
-        <div><span>RISM TICKET</span><b>{activeDomain.ticket}</b></div>
+        <div><ShieldCheck /><span>WHAT IT DELIVERS</span><b>Governed action, optimized resources and enterprise assurance</b></div>
       </section>
-
-      <section className="v38-outcome" style={{ "--domain": activeDomain.color }}>
-        <div className="v38-action"><span>AUTHORIZED DOMAIN ACTION</span><p>{activeDomain.action}</p></div>
-        <div className="v38-outputs">{activeDomain.outputs.map(item=><span key={item}><CheckCircle2 />{item}</span>)}</div>
-        <Link to={activeDomain.route}>Explore {activeDomain.domain} workflow <ArrowRight /></Link>
-      </section>
-
-      <section className="v38-enterprise-feedback">
-        <div><Radar /><b>Integrated threat intelligence</b><span>Five perspectives inform one operational decision.</span></div>
-        <ArrowRight />
-        <div><Layers3 /><b>Resource optimization</b><span>Shared acquisition, test and evidence services reduce duplication.</span></div>
-        <ArrowRight />
-        <div><Workflow /><b>SecOps governance</b><span>Tickets, stages, approvals and outcomes remain traceable.</span></div>
-        <ArrowRight />
-        <div><RefreshCw /><b>ERM and threat-model feedback</b><span>Closure updates residual risk, dashboards and future models.</span></div>
-      </section>
-
-      <footer className="v38-boundary"><ShieldCheck /><p><b>Framework position:</b> ProdSecOps is an original integrated threat-intelligence and infrastructure-SecOps operating model. ISO 31000 is referenced for general integrated-risk principles only. ProdSecOps does not reproduce ISO 31000, replace enterprise risk management or an ISMS, or independently establish conformity or certification.</p></footer>
     </div>
   );
 }
