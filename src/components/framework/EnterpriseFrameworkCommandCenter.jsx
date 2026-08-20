@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import {
   Activity,
-  ArrowDown,
   ArrowRight,
   BrainCircuit,
   CheckCircle2,
   Database,
-  Eye,
   FileCheck2,
   Layers3,
   Radar,
   RefreshCw,
-  RotateCcw,
   ShieldCheck,
   TestTube2,
   TicketCheck,
   Workflow,
-  Wrench,
 } from "lucide-react";
+import TicketAssuranceInfinityWorkflow from "./TicketAssuranceInfinityWorkflow";
 
 const domains = [
   {
@@ -78,17 +75,6 @@ const domains = [
   },
 ];
 
-const stages = [
-  ["01", "INGEST & PARSE", "Preserve the source event and create the base work log.", Activity],
-  ["02", "TRIAGE & ROUTE", "Select the 5D phase, ticket type, ownership and priority.", TicketCheck],
-  ["03", "ENRICH CONTEXT", "Add production state, criticality, history and risk criteria.", Database],
-  ["04", "PLAN PLAYBOOK", "Attach the treatment, authority, monitoring and recovery plan.", Workflow],
-  ["05", "VALIDATE IN SECLABS", "Prove behavior, impact, telemetry, rollback and recovery.", TestTube2],
-  ["06", "APPROVE & EXECUTE", "Authorize and perform the state-matched domain action.", Wrench],
-  ["07", "VERIFY & MONITOR", "Confirm security effect, service health and observability.", Eye],
-  ["08", "ASSURE & REPORT", "Close the record, update residual risk and improve future models.", FileCheck2],
-];
-
 const componentModules = [
   {
     number: "01",
@@ -121,6 +107,7 @@ const componentModules = [
 
 function OrchestratorVisual({ activeIndex, setActiveIndex }) {
   const active = domains[activeIndex];
+
   return (
     <div className="v39-orchestrator" style={{ "--active": active.color }}>
       <div className="v39-intake">
@@ -182,10 +169,14 @@ function ComponentsVisual() {
       {componentModules.map(({ number, title, subtitle, purpose, color, icon: Icon, modules }, index) => (
         <article key={number} style={{ "--component": color }}>
           <header>
-            <span>{number}</span><Icon /><div><small>SHARED COMPONENT</small><h4>{title}</h4><b>{subtitle}</b></div>
+            <span>{number}</span>
+            <Icon />
+            <div><small>SHARED COMPONENT</small><h4>{title}</h4><b>{subtitle}</b></div>
           </header>
           <p>{purpose}</p>
-          <div className="v39-module-grid">{modules.map(item => <span key={item}><CheckCircle2 />{item}</span>)}</div>
+          <div className="v39-module-grid">
+            {modules.map((item) => <span key={item}><CheckCircle2 />{item}</span>)}
+          </div>
           {index < componentModules.length - 1 && <ArrowRight className="v39-component-arrow" />}
         </article>
       ))}
@@ -193,55 +184,9 @@ function ComponentsVisual() {
   );
 }
 
-function ProcessVisual({ activeDomain, activeStage, setActiveStage }) {
-  return (
-    <div className="v39-process-visual" style={{ "--domain": activeDomain.color }}>
-      <div className="v39-process-source"><Radar /><small>SOURCE EVENT</small><b>{activeDomain.trigger}</b></div>
-      <ArrowDown className="v39-process-down" />
-      <div className="v39-process-ticket"><TicketCheck /><small>RISM DOMAIN RECORD</small><b>{activeDomain.ticket}</b><span>{activeDomain.ticketName}</span></div>
-      <ArrowDown className="v39-process-down" />
-
-      <div className="v39-stage-rail">
-        {stages.map(([number, title, text, Icon], index) => (
-          <button
-            type="button"
-            key={number}
-            className={index === activeStage ? "active" : ""}
-            onMouseEnter={() => setActiveStage(index)}
-            onFocus={() => setActiveStage(index)}
-            onClick={() => setActiveStage(index)}
-          >
-            <Icon /><span>{number}</span><b>{title}</b><small>{text}</small>
-            {index < stages.length - 1 && <ArrowRight />}
-          </button>
-        ))}
-        <i className="v39-stage-signal" />
-      </div>
-
-      <div className={`v39-seclabs-branch ${activeStage === 4 ? "active" : ""}`}>
-        <div className="v39-lab-tunnel"><TestTube2 /><small>WORKFLOW VALIDATION BRANCH</small><b>SECLABS GOLDENVAULT</b><p>Mirror · Replay · Validate · Recover</p></div>
-        <ArrowRight />
-        <div className="v39-lab-evidence"><FileCheck2 /><small>RESULT RETURN</small><b>Evidence written to {activeDomain.ticket}</b></div>
-      </div>
-
-      <div className="v39-process-result">
-        <div><Wrench /><small>AUTHORIZED DOMAIN ACTION</small><p>{activeDomain.action}</p></div>
-        <ArrowRight />
-        <div><RefreshCw /><small>ASSURANCE AND LEARNING</small><p>Verify outcome, update residual risk, improve ERM reporting and future threat models.</p></div>
-      </div>
-    </div>
-  );
-}
-
 export default function EnterpriseFrameworkCommandCenter() {
   const [activeDomainIndex, setActiveDomainIndex] = useState(0);
-  const [activeStage, setActiveStage] = useState(0);
   const activeDomain = domains[activeDomainIndex];
-
-  useEffect(() => {
-    const stageTimer = window.setInterval(() => setActiveStage(value => (value + 1) % stages.length), 3400);
-    return () => window.clearInterval(stageTimer);
-  }, []);
 
   return (
     <div className="v39-framework">
@@ -275,21 +220,31 @@ export default function EnterpriseFrameworkCommandCenter() {
         <header className="v39-chapter-header">
           <span>03 · TICKET-TO-ASSURANCE PROCESS FLOW</span>
           <h3>One source event becomes a governed record, validated action and measurable enterprise outcome.</h3>
-          <p>Select a 5D intelligence domain to view how the trigger, RISM record, workflow, SecLabs branch, authorized action and outputs change while the shared architecture remains consistent.</p>
+          <p>Select a 5D intelligence domain to view how the trigger, RISM record, workflow, SecLabs validation, authorized action and outputs change while the approved infinity architecture remains consistent.</p>
         </header>
 
         <div className="v39-domain-tabs">
           {domains.map((domain, index) => (
-            <button type="button" key={domain.ticket} className={index === activeDomainIndex ? "active" : ""} style={{ "--domain": domain.color }} onClick={() => { setActiveDomainIndex(index); setActiveStage(0); }}>
-              <span>0{index + 1}</span><div><b>{domain.phase}</b><small>{domain.domain} · {domain.ticket}</small></div>
+            <button
+              type="button"
+              key={domain.ticket}
+              className={index === activeDomainIndex ? "active" : ""}
+              style={{ "--domain": domain.color }}
+              onClick={() => setActiveDomainIndex(index)}
+            >
+              <span>0{index + 1}</span>
+              <div><b>{domain.phase}</b><small>{domain.domain} · {domain.ticket}</small></div>
             </button>
           ))}
         </div>
 
-        <ProcessVisual activeDomain={activeDomain} activeStage={activeStage} setActiveStage={setActiveStage} />
+        <TicketAssuranceInfinityWorkflow activeDomain={activeDomain} />
 
         <div className="v39-output-row" style={{ "--domain": activeDomain.color }}>
-          <div><span>KEY OUTPUTS</span><div>{activeDomain.outputs.map(output => <b key={output}><CheckCircle2 />{output}</b>)}</div></div>
+          <div>
+            <span>KEY OUTPUTS</span>
+            <div>{activeDomain.outputs.map((output) => <b key={output}><CheckCircle2 />{output}</b>)}</div>
+          </div>
           <Link to={activeDomain.route}>Explore {activeDomain.domain} workflow <ArrowRight /></Link>
         </div>
       </section>
@@ -299,7 +254,7 @@ export default function EnterpriseFrameworkCommandCenter() {
         <ArrowRight />
         <div><TicketCheck /><span>HOW IT IS CONTROLLED</span><b>RISM tickets, authority, evidence and residual risk</b></div>
         <ArrowRight />
-        <div><Workflow /><span>HOW IT OPERATES</span><b>Shared eight-stage workflow with SecLabs validation</b></div>
+        <div><Workflow /><span>HOW IT OPERATES</span><b>Shared eight-stage infinity workflow with SecLabs validation</b></div>
         <ArrowRight />
         <div><ShieldCheck /><span>WHAT IT DELIVERS</span><b>Governed action, optimized resources and enterprise assurance</b></div>
       </section>
