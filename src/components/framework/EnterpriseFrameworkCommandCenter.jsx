@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import {
   Activity,
+  ArrowDown,
   ArrowRight,
   BrainCircuit,
   CheckCircle2,
+  CloudCog,
   Database,
   FileCheck2,
   Layers3,
@@ -26,6 +28,8 @@ const domains = [
     trigger: "Vulnerability management finding",
     color: "#3b82f6",
     route: "/remediation-intelligence",
+    intent: "Reduce exploitable exposure before it becomes an operational event.",
+    intelligence: "Exposure relevance · Attack paths · Treatment readiness",
     action: "Apply a validated, state-matched remediation or maintain a governed exception.",
     outputs: ["Remediation Code", "Risk Profile", "SIEM ASP Rule", "Recovery-Verified Package"],
   },
@@ -37,6 +41,8 @@ const domains = [
     trigger: "SIEM or SOAR malicious-traffic event",
     color: "#06b6d4",
     route: "/soc-intelligence",
+    intent: "Establish reliable visibility for relevant production-risk conditions.",
+    intelligence: "Telemetry confidence · Detection coverage · Exception watch",
     action: "Publish validated monitoring, detection, correlation and escalation content.",
     outputs: ["Monitoring Profile", "Detection Rule", "Exception Watch", "Escalation Evidence"],
   },
@@ -48,6 +54,8 @@ const domains = [
     trigger: "Incident, WAF or firewall control requirement",
     color: "#8b5cf6",
     route: "/incident-response-intelligence",
+    intent: "Coordinate timely containment and accountable response action.",
+    intelligence: "Incident context · Containment options · Response authority",
     action: "Execute the approved containment, response or incident-control change.",
     outputs: ["Response Playbook", "Control Package", "Evidence Chain", "Recovery Coordination"],
   },
@@ -59,6 +67,8 @@ const domains = [
     trigger: "Backup, recovery, continuity or restoration requirement",
     color: "#10b981",
     route: "/resilience-intelligence",
+    intent: "Protect recoverability and trusted return to service.",
+    intelligence: "Rollback confidence · Recovery dependencies · Service restoration",
     action: "Perform approved rollback, reconstruction, restoration or return-to-service activity.",
     outputs: ["Recovery Package", "Restore Evidence", "RTO/RPO Result", "Trusted Baseline"],
   },
@@ -70,6 +80,8 @@ const domains = [
     trigger: "Audit finding, benchmark deviation or policy drift",
     color: "#f3c34e",
     route: "/compliance-intelligence",
+    intent: "Translate obligations and benchmarks into production assurance.",
+    intelligence: "Control applicability · Hardening state · Evidence confidence",
     action: "Apply a validated hardening treatment, compensating control or governed exception.",
     outputs: ["Control Evidence", "Hardening Profile", "Exception Record", "Assurance Conclusion"],
   },
@@ -105,60 +117,98 @@ const componentModules = [
   },
 ];
 
+const sourceInputs = [
+  [Radar, "Threat Intelligence", "External and internal threat context"],
+  [Activity, "Security Operations", "Findings, alerts and incidents"],
+  [Database, "Production Context", "State, services and dependencies"],
+  [ShieldCheck, "Governance Context", "Criteria, authority and obligations"],
+];
+
 function OrchestratorVisual({ activeIndex, setActiveIndex }) {
   const active = domains[activeIndex];
 
   return (
-    <div className="v39-orchestrator" style={{ "--active": active.color }}>
-      <div className="v39-intake">
-        <span>THREAT & OPERATIONAL INPUTS</span>
-        <div><Radar /><Activity /><Database /><ShieldCheck /></div>
+    <div className="v43-command-bridge" style={{ "--active": active.color }}>
+      <div className="v43-source-bus" aria-label="Threat and operational input sources">
+        {sourceInputs.map(([Icon, title, detail]) => (
+          <article key={title}>
+            <Icon aria-hidden="true" />
+            <div><b>{title}</b><small>{detail}</small></div>
+          </article>
+        ))}
+        <i aria-hidden="true" />
       </div>
 
-      <div className="v39-orchestrator-core">
-        <BrainCircuit />
-        <small>MANAGEMENT AND ORCHESTRATION CORE</small>
-        <b>5D THREAT<br />INTELLIGENCE</b>
-        <p>Classify · Correlate · Direct · Evaluate</p>
+      <div className="v43-analysis-deck">
+        <div className="v43-controller-stack">
+          <div className="v43-controller-crown">
+            <span>MANAGEMENT AND ORCHESTRATION CORE</span>
+            <b>5D THREAT INTELLIGENCE</b>
+            <small>Continuous analysis across five SecOps intelligence dimensions</small>
+          </div>
+
+          <div className="v43-controller-engine">
+            <div className="v43-engine-orbit orbit-a" />
+            <div className="v43-engine-orbit orbit-b" />
+            <div className="v43-engine-orbit orbit-c" />
+            <BrainCircuit aria-hidden="true" />
+            <span>INTEGRATED ANALYSIS</span>
+            <b>Classify</b><i />
+            <b>Correlate</b><i />
+            <b>Direct</b><i />
+            <b>Evaluate</b>
+          </div>
+
+          <div className="v43-controller-foundation">
+            <span><ShieldCheck />Risk criteria</span>
+            <span><Layers3 />Cross-domain context</span>
+            <span><FileCheck2 />Decision evidence</span>
+          </div>
+        </div>
+
+        <aside className="v43-intelligence-readout">
+          <header>
+            <span>ACTIVE INTELLIGENCE DIMENSION</span>
+            <b>{active.phase}</b>
+            <small>{active.domain}</small>
+          </header>
+          <div className="v43-readout-purpose">
+            <span>OPERATING INTENT</span>
+            <p>{active.intent}</p>
+          </div>
+          <div className="v43-readout-analysis">
+            <span>INTEGRATED ANALYSIS</span>
+            <p>{active.intelligence}</p>
+          </div>
+          <div className="v43-readout-ticket">
+            <TicketCheck aria-hidden="true" />
+            <div><span>DIRECTED RISM RECORD</span><b>{active.ticket}</b><small>{active.ticketName}</small></div>
+          </div>
+        </aside>
       </div>
 
-      <div className="v39-domain-vanes">
+      <div className="v43-domain-console" aria-label="Five threat-intelligence dimensions">
         {domains.map((domain, index) => (
           <button
             type="button"
             key={domain.phase}
             className={index === activeIndex ? "active" : ""}
-            style={{ "--angle": `${index * 72 - 90}deg`, "--domain": domain.color }}
+            style={{ "--domain": domain.color }}
             onMouseEnter={() => setActiveIndex(index)}
             onFocus={() => setActiveIndex(index)}
             onClick={() => setActiveIndex(index)}
+            aria-pressed={index === activeIndex}
           >
             <span>0{index + 1}</span>
-            <b>{domain.phase}</b>
-            <small>{domain.domain}</small>
+            <div><b>{domain.phase}</b><small>{domain.domain}</small></div>
+            <i aria-hidden="true" />
           </button>
         ))}
       </div>
 
-      <div className="v39-decision-output">
-        <span>DIRECTED OPERATING INTENT</span>
-        <b>{active.ticket}</b>
-        <small>{active.ticketName}</small>
+      <div className="v43-control-flow" aria-hidden="true">
+        <span>INGEST</span><ArrowRight /><span>ANALYZE</span><ArrowRight /><span>DIRECT</span><ArrowRight /><span>RISM TICKET</span>
       </div>
-
-      <svg viewBox="0 0 760 500" aria-hidden="true">
-        <defs>
-          <linearGradient id="v39-flow" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#3b82f6" />
-            <stop offset=".5" stopColor="#8b5cf6" />
-            <stop offset="1" stopColor="#10b981" />
-          </linearGradient>
-        </defs>
-        <ellipse className="v39-orbit-one" cx="380" cy="250" rx="270" ry="165" />
-        <ellipse className="v39-orbit-two" cx="380" cy="250" rx="200" ry="120" />
-        <path className="v39-flow-signal" pathLength="100" d="M90 250C180 55 580 55 670 250C580 445 180 445 90 250Z" />
-        <path className="v39-command-beam" d="M380 310L380 455" />
-      </svg>
     </div>
   );
 }
@@ -190,11 +240,11 @@ export default function EnterpriseFrameworkCommandCenter() {
 
   return (
     <div className="v39-framework">
-      <section className="v39-chapter v39-architecture">
+      <section className="v39-chapter v39-architecture v43-architecture">
         <header className="v39-chapter-header">
           <span>01 · 5D ORCHESTRATOR ARCHITECTURE</span>
-          <h3>A management controller that converts five intelligence perspectives into one directed SecOps engagement.</h3>
-          <p>5D Threat Intelligence continuously correlates Proactive, Detective, Reactive, Recover and Compliance intelligence. The orchestrator interprets source events against production context, identifies cross-domain relevance, applies risk criteria and directs the appropriate RISM ticket. Integrated enterprise risk visibility is the outcome of this intelligence process, not the controller’s only purpose.</p>
+          <h3>An integrated intelligence controller that converts multi-source threat context into governed SecOps direction.</h3>
+          <p>5D Threat Intelligence continuously evaluates Proactive, Detective, Reactive, Recover and Compliance intelligence. The controller correlates threat information with exact production state, service consequence, organizational criteria and available evidence, then directs the appropriate RISM ticket while preserving cross-domain relevance.</p>
         </header>
 
         <div className="v39-principle-bar">
