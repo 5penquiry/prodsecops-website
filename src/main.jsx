@@ -37,6 +37,7 @@ import "./styles/pso-v31-why-prodsecops.css";
 import "./styles/pso-v39-enterprise-framework.css";
 import "./styles/pso-v41-ticket-assurance-infinity.css";
 import "./styles/pso-v43-orchestrator-command-bridge.css";
+import "./styles/pso-v44-integrated-intelligence-fabric.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
