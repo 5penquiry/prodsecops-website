@@ -35,7 +35,7 @@ import "./styles/pso-v29-why-prodsecops.css";
 import "./styles/pso-v30-why-prodsecops.css";
 import "./styles/pso-v31-why-prodsecops.css";
 import "./styles/pso-v39-enterprise-framework.css";
-import "./styles/pso-v40-iso-pdca-infinity.css";
+import "./styles/pso-v41-ticket-assurance-infinity.css";
 
 const redirectPath = sessionStorage.getItem(
   "prodsecops-redirect-path",
