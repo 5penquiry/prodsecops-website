@@ -18,6 +18,7 @@ import {
   Workflow,
 } from "lucide-react";
 import TicketAssuranceInfinityWorkflow from "./TicketAssuranceInfinityWorkflow";
+import FiveDIntegratedIntelligenceFabric from "./FiveDIntegratedIntelligenceFabric";
 
 const domains = [
   {
@@ -124,95 +125,6 @@ const sourceInputs = [
   [ShieldCheck, "Governance Context", "Criteria, authority and obligations"],
 ];
 
-function OrchestratorVisual({ activeIndex, setActiveIndex }) {
-  const active = domains[activeIndex];
-
-  return (
-    <div className="v43-command-bridge" style={{ "--active": active.color }}>
-      <div className="v43-source-bus" aria-label="Threat and operational input sources">
-        {sourceInputs.map(([Icon, title, detail]) => (
-          <article key={title}>
-            <Icon aria-hidden="true" />
-            <div><b>{title}</b><small>{detail}</small></div>
-          </article>
-        ))}
-        <i aria-hidden="true" />
-      </div>
-
-      <div className="v43-analysis-deck">
-        <div className="v43-controller-stack">
-          <div className="v43-controller-crown">
-            <span>MANAGEMENT AND ORCHESTRATION CORE</span>
-            <b>5D THREAT INTELLIGENCE</b>
-            <small>Continuous analysis across five SecOps intelligence dimensions</small>
-          </div>
-
-          <div className="v43-controller-engine">
-            <div className="v43-engine-orbit orbit-a" />
-            <div className="v43-engine-orbit orbit-b" />
-            <div className="v43-engine-orbit orbit-c" />
-            <BrainCircuit aria-hidden="true" />
-            <span>INTEGRATED ANALYSIS</span>
-            <b>Classify</b><i />
-            <b>Correlate</b><i />
-            <b>Direct</b><i />
-            <b>Evaluate</b>
-          </div>
-
-          <div className="v43-controller-foundation">
-            <span><ShieldCheck />Risk criteria</span>
-            <span><Layers3 />Cross-domain context</span>
-            <span><FileCheck2 />Decision evidence</span>
-          </div>
-        </div>
-
-        <aside className="v43-intelligence-readout">
-          <header>
-            <span>ACTIVE INTELLIGENCE DIMENSION</span>
-            <b>{active.phase}</b>
-            <small>{active.domain}</small>
-          </header>
-          <div className="v43-readout-purpose">
-            <span>OPERATING INTENT</span>
-            <p>{active.intent}</p>
-          </div>
-          <div className="v43-readout-analysis">
-            <span>INTEGRATED ANALYSIS</span>
-            <p>{active.intelligence}</p>
-          </div>
-          <div className="v43-readout-ticket">
-            <TicketCheck aria-hidden="true" />
-            <div><span>DIRECTED RISM RECORD</span><b>{active.ticket}</b><small>{active.ticketName}</small></div>
-          </div>
-        </aside>
-      </div>
-
-      <div className="v43-domain-console" aria-label="Five threat-intelligence dimensions">
-        {domains.map((domain, index) => (
-          <button
-            type="button"
-            key={domain.phase}
-            className={index === activeIndex ? "active" : ""}
-            style={{ "--domain": domain.color }}
-            onMouseEnter={() => setActiveIndex(index)}
-            onFocus={() => setActiveIndex(index)}
-            onClick={() => setActiveIndex(index)}
-            aria-pressed={index === activeIndex}
-          >
-            <span>0{index + 1}</span>
-            <div><b>{domain.phase}</b><small>{domain.domain}</small></div>
-            <i aria-hidden="true" />
-          </button>
-        ))}
-      </div>
-
-      <div className="v43-control-flow" aria-hidden="true">
-        <span>INGEST</span><ArrowRight /><span>ANALYZE</span><ArrowRight /><span>DIRECT</span><ArrowRight /><span>RISM TICKET</span>
-      </div>
-    </div>
-  );
-}
-
 function ComponentsVisual() {
   return (
     <div className="v39-components-grid">
@@ -242,10 +154,31 @@ export default function EnterpriseFrameworkCommandCenter() {
     <div className="v39-framework">
       <section className="v39-chapter v39-architecture v43-architecture">
         <header className="v39-chapter-header">
-          <span>01 · 5D ORCHESTRATOR ARCHITECTURE</span>
-          <h3>An integrated intelligence controller that converts multi-source threat context into governed SecOps direction.</h3>
-          <p>5D Threat Intelligence continuously evaluates Proactive, Detective, Reactive, Recover and Compliance intelligence. The controller correlates threat information with exact production state, service consequence, organizational criteria and available evidence, then directs the appropriate RISM ticket while preserving cross-domain relevance.</p>
-        </header>
+  <span>
+    01 · 5D ORCHESTRATOR ARCHITECTURE
+  </span>
+
+  <h3>
+    An integrated intelligence fabric
+    that creates actionable threat
+    intelligence across five
+    security-operations dimensions.
+  </h3>
+
+  <p>
+    ProdSecOps does not treat threat
+    intelligence as a standalone feed
+    or SIEM-only function. The 5D
+    Orchestrator creates an integrated
+    operational intelligence picture
+    by correlating security signals,
+    exact production state, business
+    consequence, risk criteria,
+    authority, and evidence across
+    Proactive, Detective, Reactive,
+    Recover, and Compliance operations.
+  </p>
+</header>
 
         <div className="v39-principle-bar">
           <article><BrainCircuit /><b>Integrated intelligence</b><p>Connect prevention, detection, response, recovery and hardening.</p></article>
@@ -253,8 +186,9 @@ export default function EnterpriseFrameworkCommandCenter() {
           <article><Layers3 /><b>Shared-resource governance</b><p>Reuse approved data, lab and evidence services without merging ownership.</p></article>
           <article><RefreshCw /><b>Enterprise learning</b><p>Return outcomes to risk reporting, threat models and trusted baselines.</p></article>
         </div>
-
-        <OrchestratorVisual activeIndex={activeDomainIndex} setActiveIndex={setActiveDomainIndex} />
+        
+        <FiveDIntegratedIntelligenceFabric domains={domains} activeIndex={activeDomainIndex} setActiveIndex={setActiveDomainIndex} />
+        
       </section>
 
       <section className="v39-chapter v39-components">
