@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { Box, CircleCheck, ClipboardList, Download, FileCheck2, RefreshCw, Rocket, Settings } from "lucide-react";
 
 const stages = [
-  ["01", "Ingest", "Preserve the source event and create the base work log."],
-  ["02", "Route", "Select the 5D phase, ticket type, ownership, and priority."],
-  ["03", "Enrich", "Add production state, criticality, history, and risk criteria."],
-  ["04", "Plan", "Attach treatment, authority, monitoring, rollback, and recovery conditions."],
-  ["05", "Validate", "Prove behavior, impact, telemetry, compatibility, rollback, and recovery in SecLabs."],
-  ["06", "Execute", "Authorize and perform the state-matched domain operation."],
-  ["07", "Verify", "Confirm security effect, service health, and observability."],
-  ["08", "Assure", "Close the record, update residual risk, and improve future models."],
+  ["01", "Audit", "Define scope, service, owner, criticality, and the governed Production-Risk Case.", ClipboardList],
+  ["02", "Acquire", "Acquire authorized production state, packages, dependencies, and evidence references.", Download],
+  ["03", "Build", "Reconstruct the purpose-bound SecLabs context from approved production-state artifacts.", Box],
+  ["04", "Deploy", "Deploy the scenario, telemetry, proposed treatment, and recovery controls in GoldenVault.", Rocket],
+  ["05", "Validate", "Validate relevance, compatibility, visibility, service impact, rollback, and recovery.", CircleCheck],
+  ["06", "Assess", "Assess treatment evidence, residual uncertainty, authority, and execution readiness.", FileCheck2],
+  ["07", "Execute", "Perform the authorized, state-matched domain action and record production evidence.", Settings],
+  ["08", "Assure", "Verify the outcome, residual risk, evidence completeness, and the trusted baseline.", RefreshCw],
 ];
 
 const labelClasses = ["rl-1", "rl-2", "rl-3", "rl-4", "rl-5", "rl-6", "rl-7", "rl-8"];
@@ -20,167 +21,69 @@ export default function TicketAssuranceInfinityWorkflow({ activeDomain }) {
   const beamRef = useRef(null);
   const offsetRef = useRef(0);
   const targetRef = useRef(null);
-  const lastTimeRef = useRef(0);
+  const lastRef = useRef(0);
   const activeRef = useRef(0);
   const pausedRef = useRef(false);
 
-  useEffect(() => {
-    pausedRef.current = paused;
-  }, [paused]);
+  useEffect(() => { pausedRef.current = paused; }, [paused]);
+  useEffect(() => { setActiveStage(0); activeRef.current = 0; targetRef.current = 0; }, [activeDomain.ticket]);
 
   useEffect(() => {
-    setActiveStage(0);
-    activeRef.current = 0;
-    targetRef.current = 0;
-  }, [activeDomain.ticket]);
-
-  useEffect(() => {
-    let frameId;
-    const pathLength = 800;
-    const speed = 28;
-
+    let frame;
     const animate = (now) => {
-      if (!lastTimeRef.current) lastTimeRef.current = now;
-      const delta = Math.min((now - lastTimeRef.current) / 1000, 0.05);
-      lastTimeRef.current = now;
-
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (!pausedRef.current && !reducedMotion) {
+      if (!lastRef.current) lastRef.current = now;
+      const delta = Math.min((now - lastRef.current) / 1000, 0.05);
+      lastRef.current = now;
+      if (!pausedRef.current && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         if (targetRef.current !== null) {
-          const difference = targetRef.current - offsetRef.current;
-          if (Math.abs(difference) < 1) {
-            offsetRef.current = targetRef.current;
-            targetRef.current = null;
-          } else {
-            offsetRef.current += difference * 10 * delta;
-          }
-        } else {
-          offsetRef.current -= speed * delta;
-        }
-
-        if (offsetRef.current <= -pathLength && targetRef.current === null) {
-          offsetRef.current += pathLength;
-        }
-
-        if (beamRef.current) {
-          beamRef.current.style.strokeDashoffset = String(offsetRef.current);
-        }
-
-        const normalized = ((-offsetRef.current % pathLength) + pathLength) % pathLength;
-        const nextStage = Math.min(7, Math.floor(normalized / 100));
-        if (nextStage !== activeRef.current) {
-          activeRef.current = nextStage;
-          setActiveStage(nextStage);
-        }
+          const diff = targetRef.current - offsetRef.current;
+          if (Math.abs(diff) < 1) { offsetRef.current = targetRef.current; targetRef.current = null; }
+          else offsetRef.current += diff * 10 * delta;
+        } else offsetRef.current -= 28 * delta;
+        if (offsetRef.current <= -800 && targetRef.current === null) offsetRef.current += 800;
+        if (beamRef.current) beamRef.current.style.strokeDashoffset = String(offsetRef.current);
+        const normalized = ((-offsetRef.current % 800) + 800) % 800;
+        const next = Math.min(7, Math.floor(normalized / 100));
+        if (next !== activeRef.current) { activeRef.current = next; setActiveStage(next); }
       }
-
-      frameId = window.requestAnimationFrame(animate);
+      frame = requestAnimationFrame(animate);
     };
-
-    frameId = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(frameId);
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const selectStage = (index) => {
-    activeRef.current = index;
-    setActiveStage(index);
-
-    const pathLength = 800;
-    const desiredWithinCycle = -(index * 100);
-    const cycle = Math.floor(offsetRef.current / -pathLength);
-    let candidate = -(cycle * pathLength) + desiredWithinCycle;
-
-    if (candidate > offsetRef.current) candidate -= pathLength;
+    activeRef.current = index; setActiveStage(index);
+    const cycle = Math.floor(offsetRef.current / -800);
+    let candidate = -(cycle * 800) - index * 100;
+    if (candidate > offsetRef.current) candidate -= 800;
     targetRef.current = candidate;
   };
 
-  const [number, name, detail] = stages[activeStage];
-  const secLabsActive = activeStage >= 2 && activeStage <= 4;
+  const [number, name, detail, ActiveIcon] = stages[activeStage];
+  const labActive = activeStage >= 2 && activeStage <= 5;
 
   return (
-    <div className="v41-ticket-workflow" style={{ "--domain": activeDomain.color, "--stage": colors[activeStage] }}>
-      <div className="v41-event-card">
-        <span>SOURCE EVENT</span>
-        <b>{activeDomain.trigger}</b>
-      </div>
-
-      <div
-        className="v41-loop"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        <div className="v41-watermark wm-prod">PROD</div>
-        <div className="v41-watermark wm-ops">OPS</div>
-
-        <div className="v41-center-orb">
-          <small>RISM DOMAIN RECORD</small>
-          <strong>{activeDomain.ticket}</strong>
-          <span>TICKET TO ASSURANCE</span>
-          <em>{activeDomain.ticketName}</em>
-        </div>
-
-        <svg viewBox="0 0 1200 600" className="v41-ribbon-svg" role="img" aria-label="Eight-stage ticket-to-assurance infinity workflow">
-          <path
-            id="v41-base-ribbon"
-            pathLength="800"
-            fill="none"
-            d="M 600 300 C 400 50, 100 50, 100 300 C 100 550, 400 550, 600 300 C 800 50, 1100 50, 1100 300 C 1100 550, 800 550, 600 300 Z"
-          />
-          <use href="#v41-base-ribbon" className="v41-ribbon-track" />
-          {stages.map((stage, index) => (
-            <use
-              key={stage[0]}
-              href="#v41-base-ribbon"
-              className={`v41-ribbon-segment ${activeStage === index ? "active" : ""}`}
-              style={{ "--segment": colors[index] }}
-              strokeDashoffset={-(index * 100)}
-            />
-          ))}
-          <use ref={beamRef} href="#v41-base-ribbon" className="v41-ribbon-beam" />
+    <div className="v42-workflow" style={{ "--domain": activeDomain.color, "--stage": colors[activeStage] }}>
+      <div className="v42-event"><span>SOURCE EVENT</span><b>{activeDomain.trigger}</b></div>
+      <div className="v42-loop" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+        <div className="v42-watermark prod">PROD</div><div className="v42-watermark ops">OPS</div>
+        <div className="v42-orb"><small>RISM DOMAIN RECORD</small><strong>{activeDomain.ticket}</strong><span>TICKET TO ASSURANCE</span></div>
+        <svg viewBox="0 0 1200 600" className="v42-svg" role="img" aria-label="Eight-stage infinity workflow">
+          <path id="v42-path" pathLength="800" fill="none" d="M 600 300 C 400 50, 100 50, 100 300 C 100 550, 400 550, 600 300 C 800 50, 1100 50, 1100 300 C 1100 550, 800 550, 600 300 Z" />
+          <use href="#v42-path" className="v42-track" />
+          {stages.map((s, i) => <use key={s[0]} href="#v42-path" className={`v42-segment ${activeStage === i ? "active" : ""}`} style={{ "--segment": colors[i] }} strokeDashoffset={-(i * 100)} />)}
+          <use ref={beamRef} href="#v42-path" className="v42-beam" />
         </svg>
-
-        {stages.map(([stageNumber, stageName], index) => (
-          <button
-            type="button"
-            key={stageNumber}
-            className={`v41-ribbon-label ${labelClasses[index]} ${activeStage === index ? "active" : ""}`}
-            style={{ "--segment": colors[index] }}
-            aria-current={activeStage === index ? "step" : undefined}
-            onClick={() => selectStage(index)}
-            onMouseEnter={() => {
-              setPaused(true);
-              selectStage(index);
-            }}
-            onFocus={() => {
-              setPaused(true);
-              selectStage(index);
-            }}
-            onBlur={() => setPaused(false)}
-          >
-            <span>{stageNumber}</span>
-            <b>{stageName}</b>
+        {stages.map(([n, title, , Icon], i) => (
+          <button type="button" key={n} className={`v42-label ${labelClasses[i]} ${activeStage === i ? "active" : ""}`} style={{ "--segment": colors[i] }} onClick={() => selectStage(i)} onMouseEnter={() => selectStage(i)} onFocus={() => { setPaused(true); selectStage(i); }} onBlur={() => setPaused(false)} aria-current={activeStage === i ? "step" : undefined}>
+            <span>{n}</span><Icon aria-hidden="true" /><b>{title}</b>
           </button>
         ))}
       </div>
-
-      <div className="v41-stage-readout" aria-live="polite">
-        <div>
-          <span>ACTIVE STAGE {number}</span>
-          <h4>{name}</h4>
-          <p>{detail}</p>
-        </div>
-        <div className={`v41-seclabs-gate ${secLabsActive ? "active" : ""}`}>
-          <span>SECLABS VALIDATION GATE</span>
-          <b>{secLabsActive ? "Invoked by the workflow" : "Available when proving is required"}</b>
-          <small>GoldenVault results return to {activeDomain.ticket}</small>
-        </div>
-      </div>
-
-      <div className="v41-result-chain">
-        <div><span>AUTHORIZED DOMAIN ACTION</span><p>{activeDomain.action}</p></div>
-        <i aria-hidden="true">→</i>
-        <div><span>ASSURANCE AND LEARNING</span><p>Verify the outcome, update residual risk, preserve evidence, and improve future threat models.</p></div>
+      <div className="v42-readout">
+        <div className="v42-current"><ActiveIcon /><div><span>ACTIVE STAGE {number}</span><h4>{name}</h4><p>{detail}</p></div></div>
+        <div className={`v42-lab ${labActive ? "active" : ""}`}><span>SECLABS VALIDATION GATE</span><b>{labActive ? "Invoked by the workflow" : "Available when proving is required"}</b><small>GoldenVault evidence returns to {activeDomain.ticket}</small></div>
       </div>
     </div>
   );
