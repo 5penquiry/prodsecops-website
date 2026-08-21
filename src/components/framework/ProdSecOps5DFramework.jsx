@@ -95,9 +95,9 @@ const dimensions = [
     outcome: "Production-aware prioritization grounded in actual service impact",
   },
   {
-    id: "governance",
+    id: "testimonial",
     short: "Decide",
-    title: "Governance Context",
+    title: "Isolated TedBed",
     eyebrow: "Dimension 04",
     icon: Gavel,
     color: "#FF6EAC",
