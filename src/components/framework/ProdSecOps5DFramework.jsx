@@ -491,24 +491,26 @@ export default function ProdSecOps5DFramework() {
   }
 >
   <div>
-    <p className="text-xs font-bold uppercase tracking-[.22em] text-cyan-200/70">
-      8-stage governed workflow
-    </p>
+  <p className="text-xs font-bold uppercase tracking-[.22em] text-cyan-200/70">
+    8-stage governed workflow
+  </p>
 
-    <h3 className="mt-2 text-2xl font-semibold sm:text-3xl">
-      A continuous infinity lifecycle
-      from governed scope to assurance
-    </h3>
+  <h3 className="mt-2 text-2xl font-semibold sm:text-3xl">
+    A continuous infinity lifecycle from governed
+    scope to assured production outcome
+  </h3>
 
-    <p className="mt-2 text-sm text-white/45">
-      RISM preserves the ticket,
-      authority, evidence, and
-      residual-risk record. SecLabs is
-      invoked by the workflow when
-      purpose-bound technical proving
-      is required.
-    </p>
-  </div>
+  <p className="mt-2 max-w-5xl text-sm leading-6 text-white/45">
+    Each production-risk case progresses through
+    governed state acquisition, production-representative
+    reconstruction, SecLabs proving, integrated risk
+    assessment, least-privileged execution, and assured
+    recovery. The five dimensions contribute shared
+    context at every stage, while RISM preserves ownership,
+    authority, evidence, access scope, exceptions,
+    residual risk, and stage state.
+  </p>
+</div>
 
   <ProdSecOpsEightStageInfinity
     paused={paused}
