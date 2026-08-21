@@ -77,9 +77,9 @@ const dimensions = [
     outcome: "Validated security conditions with accountable response ownership",
   },
   {
-    id: "production",
-    short: "Understand",
-    title: "Production Context",
+    id: "Risk",
+    short: "Risk Govern",
+    title: "Production Risk Governance",
     eyebrow: "Dimension 03",
     icon: Factory,
     color: "#A66CFF",
