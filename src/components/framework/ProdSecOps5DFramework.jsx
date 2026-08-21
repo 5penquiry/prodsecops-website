@@ -97,7 +97,7 @@ const dimensions = [
   {
     id: "testimonial",
     short: "Decide",
-    title: "Isolated TedBed",
+    title: "Isolated Testimonial",
     eyebrow: "Dimension 04",
     icon: Gavel,
     color: "#FF6EAC",
