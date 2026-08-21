@@ -14,7 +14,7 @@ import { domains } from "../data/domains";
 import FrameworkHero from "../components/framework/FrameworkHero";
 import ContextPanel from "../components/framework/ContextPanel";
 import FrameworkComponentVisuals from "../components/framework/FrameworkComponentVisuals";
-import EnterpriseFrameworkCommandCenter from "../components/framework/EnterpriseFrameworkCommandCenter";
+import ProdSecOps5DFramework from "../components/framework/ProdSecOps5DFramework";
 import {
   FrameworkIntroduction,
   IntegrationNarrative,
@@ -58,7 +58,7 @@ export default function FrameworkPage() {
             body="The Production-Risk Case connects exact production state, 5D Intelligence, RGSM governance, isolated SecLabs evidence, controlled execution, monitoring, recovery, and assurance."
           />
 
-          <EnterpriseFrameworkCommandCenter />
+          <ProdSecOps5DFramework />
         </div>
       </section>
 
