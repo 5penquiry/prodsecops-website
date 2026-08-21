@@ -35,9 +35,9 @@ import {
   Workflow,
   Zap,
 } from "lucide-react";
+import ProdSecOpsEightStageInfinity from "./ProdSecOpsEightStageInfinity";
 
 const AUTO_PLAY_INTERVAL = 5500;
-const WORKFLOW_INTERVAL = 3400;
 
 const dimensions = [
   {
@@ -237,105 +237,6 @@ const capabilities = [
   },
 ];
 
-const workflowStages = [
-  {
-    number: "01",
-    title: "Observe",
-    short: "Observe",
-    icon: Radar,
-    color: "#35D7FF",
-    summary: "Collect authorized signals, monitor the environment and detect changes.",
-    output: "Signals",
-    domains: "Sense + Detect",
-    x: 413,
-    y: 164,
-  },
-  {
-    number: "02",
-    title: "Contextualize",
-    short: "Context",
-    icon: Network,
-    color: "#45B8FF",
-    summary: "Enrich identities, assets, threats, services, dependencies and obligations.",
-    output: "Shared context",
-    domains: "Sense + Understand",
-    x: 191,
-    y: 177,
-  },
-  {
-    number: "03",
-    title: "Validate",
-    short: "Validate",
-    icon: CircleCheck,
-    color: "#7C8CFF",
-    summary: "Validate the condition, evidence confidence and materiality.",
-    output: "Validated condition",
-    domains: "Detect",
-    x: 191,
-    y: 423,
-  },
-  {
-    number: "04",
-    title: "Assess",
-    short: "Assess",
-    icon: FileCheck2,
-    color: "#A66CFF",
-    summary: "Assess exposure, impact, access risk, blast radius and recovery uncertainty.",
-    output: "Risk and impact",
-    domains: "Understand + Decide",
-    x: 413,
-    y: 436,
-  },
-  {
-    number: "05",
-    title: "Authorize",
-    short: "Authorize",
-    icon: Gavel,
-    color: "#FF6EAC",
-    summary: "Select the pathway, accountable role, permitted scope and treatment authority.",
-    output: "Authorized plan",
-    domains: "Decide + RBAC",
-    x: 787,
-    y: 164,
-  },
-  {
-    number: "06",
-    title: "Test in SecLabs",
-    short: "Test",
-    icon: FlaskConical,
-    color: "#C16CFF",
-    summary: "Test efficacy, production safety, privilege boundaries, rollback and recovery readiness.",
-    output: "Validated plan",
-    domains: "Decide + Validate",
-    x: 1009,
-    y: 177,
-  },
-  {
-    number: "07",
-    title: "Execute and Recover",
-    short: "Execute",
-    icon: Settings,
-    color: "#FFB55E",
-    summary: "Perform the authorized least-privileged action, monitor production and recover services.",
-    output: "Treatment deployed",
-    domains: "Act + PAM",
-    x: 1009,
-    y: 423,
-  },
-  {
-    number: "08",
-    title: "Assure and Learn",
-    short: "Assure",
-    icon: RefreshCcw,
-    color: "#75DE8D",
-    summary: "Verify risk reduction, revoke elevation, capture evidence and improve controls.",
-    output: "Assured closure",
-    domains: "Decide + Act",
-    x: 787,
-    y: 436,
-  },
-];
-
 const secLabsControls = [
   { title: "Security efficacy", question: "Does the treatment reduce, stop or detect the risk?", icon: ShieldCheck },
   { title: "Production safety", question: "Does the treatment preserve services and dependencies?", icon: Factory },
@@ -450,148 +351,10 @@ function CapabilityCard({ item, active, onClick, reduceMotion }) {
   );
 }
 
-function PrecisionInfinityWorkflow({ activeStage, onStageChange, reduceMotion }) {
-  const active = workflowStages[activeStage] ?? workflowStages[0];
-  const ActiveIcon = active.icon;
-
-  return (
-    <div className="mt-7">
-      <div className="relative mx-auto aspect-[2/1] w-full max-w-[1240px] overflow-hidden rounded-[32px] border border-cyan-300/15 bg-[#041426] shadow-[0_30px_90px_rgba(0,0,0,.48)]" style={{ perspective: 1400 }}>
-        <motion.div
-          className="absolute inset-0"
-          style={{ transformStyle: "preserve-3d" }}
-          animate={reduceMotion ? {} : { rotateX: [0, 1.5, 0, -1.5, 0], rotateY: [0, -1.5, 0, 1.5, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <svg viewBox="0 0 1200 600" className="absolute inset-0 h-full w-full" role="img" aria-label="ProdSecOps eight-stage risk-governed infinity lifecycle">
-            <defs>
-              <linearGradient id="pso-infinity-track" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stopColor="#10376f" />
-                <stop offset=".42" stopColor="#1857a7" />
-                <stop offset=".58" stopColor="#6b3fa0" />
-                <stop offset="1" stopColor="#08745e" />
-              </linearGradient>
-              <filter id="pso-infinity-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="7" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-              <path id="pso-infinity-path" pathLength="1000" d="M600 300C438 80 116 68 94 286C72 505 390 530 600 300C810 70 1128 95 1106 314C1084 532 762 520 600 300Z" fill="none" />
-            </defs>
-            <use href="#pso-infinity-path" fill="none" stroke="#08101f" strokeWidth="88" />
-            <use href="#pso-infinity-path" fill="none" stroke="url(#pso-infinity-track)" strokeWidth="72" opacity=".68" />
-            <use href="#pso-infinity-path" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="2" />
-            {!reduceMotion && (
-              <>
-                <circle r="10" fill={active.color} filter="url(#pso-infinity-glow)">
-                  <animateMotion dur="5.2s" repeatCount="indefinite" rotate="auto"><mpath href="#pso-infinity-path" /></animateMotion>
-                </circle>
-                <circle r="4" fill="#fff">
-                  <animateMotion dur="5.2s" begin="-.18s" repeatCount="indefinite" rotate="auto"><mpath href="#pso-infinity-path" /></animateMotion>
-                </circle>
-              </>
-            )}
-            <text x="300" y="326" textAnchor="middle" fill="rgba(59,130,246,.11)" stroke="rgba(59,130,246,.34)" strokeWidth="1" className="text-[88px] font-black">PROD</text>
-            <text x="900" y="326" textAnchor="middle" fill="rgba(16,185,129,.11)" stroke="rgba(16,185,129,.34)" strokeWidth="1" className="text-[88px] font-black">OPS</text>
-
-            {workflowStages.map((stage, index) => {
-              const isActive = index === activeStage;
-              return (
-                <g
-                  key={stage.number}
-                  transform={`translate(${stage.x} ${stage.y}) scale(${isActive ? 1.1 : 1})`}
-                  role="button"
-                  tabIndex="0"
-                  aria-label={`${stage.number} ${stage.title}`}
-                  onClick={() => onStageChange(index)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") onStageChange(index);
-                  }}
-                  className="cursor-pointer outline-none"
-                >
-                  <rect x="-56" y="-29" width="112" height="58" rx="29" fill="#071425" stroke={isActive ? stage.color : "rgba(255,255,255,.14)"} strokeWidth={isActive ? 2.5 : 1.5} filter={isActive ? "url(#pso-infinity-glow)" : undefined} />
-                  <text textAnchor="middle" y="-5" fill={stage.color} className="text-[11px] font-black">{stage.number}</text>
-                  <text textAnchor="middle" y="15" fill="#fff" className="text-[12px] font-bold">{stage.short}</text>
-                </g>
-              );
-            })}
-          </svg>
-
-          <motion.div
-            className="absolute left-1/2 top-1/2 z-20 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-fuchsia-300/40 bg-[#090e1a]/95 text-center shadow-[0_18px_40px_rgba(0,0,0,.8),0_0_35px_rgba(193,108,255,.25)] sm:h-32 sm:w-32"
-            animate={reduceMotion ? {} : { scale: [1, 1.04, 1] }}
-            transition={{ duration: 3.4, repeat: Infinity }}
-          >
-            <Workflow aria-hidden="true" className="text-fuchsia-300" size={25} />
-            <b className="mt-1 text-sm font-black sm:text-xl">RISK</b>
-            <small className="text-[7px] font-bold tracking-[.16em] text-fuchsia-200/70 sm:text-[9px]">GOVERNANCE</small>
-            <span className="mt-1 text-[6px] font-bold tracking-[.12em] text-cyan-200 sm:text-[8px]">RBAC • PAM</span>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active.number}
-          initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
-          className="mt-5 grid gap-4 rounded-[24px] border border-white/10 bg-[#080d1a] p-5 lg:grid-cols-[1.25fr_.75fr]"
-          style={{ borderTopColor: active.color, borderTopWidth: 3 }}
-        >
-          <div className="flex gap-4">
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border" style={{ color: active.color, borderColor: active.color }}>
-              <ActiveIcon aria-hidden="true" size={25} />
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[.18em]" style={{ color: active.color }}>Stage {active.number}</p>
-              <h4 className="mt-1 text-xl font-semibold">{active.title}</h4>
-              <p className="mt-2 text-sm leading-6 text-white/60">{active.summary}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/[.08] bg-white/[.035] p-3">
-              <p className="text-xs text-white/35">Output</p>
-              <p className="mt-1 text-sm font-semibold text-white/80">{active.output}</p>
-            </div>
-            <div className="rounded-xl border border-white/[.08] bg-white/[.035] p-3">
-              <p className="text-xs text-white/35">Primary domains</p>
-              <p className="mt-1 text-sm font-semibold" style={{ color: active.color }}>{active.domains}</p>
-            </div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        {workflowStages.map((stage, index) => {
-          const Icon = stage.icon;
-          const isActive = index === activeStage;
-          return (
-            <button
-              type="button"
-              key={stage.number}
-              onClick={() => onStageChange(index)}
-              aria-pressed={isActive}
-              className="rounded-2xl border bg-[#080d1a] p-4 text-left transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              style={{ borderColor: isActive ? stage.color : "rgba(255,255,255,.09)", boxShadow: isActive ? `0 14px 35px ${stage.color}25` : undefined }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black" style={{ color: stage.color }}>{stage.number}</span>
-                <Icon aria-hidden="true" size={19} style={{ color: stage.color }} />
-              </div>
-              <b className="mt-3 block text-sm">{stage.title}</b>
-              <p className="mt-2 text-xs leading-5 text-white/55">{stage.summary}</p>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
 export default function ProdSecOps5DFramework() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeCapability, setActiveCapability] = useState(0);
-  const [activeStage, setActiveStage] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -601,12 +364,6 @@ export default function ProdSecOps5DFramework() {
   useEffect(() => {
     if (paused || reduceMotion) return undefined;
     const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % dimensions.length), AUTO_PLAY_INTERVAL);
-    return () => window.clearInterval(timer);
-  }, [paused, reduceMotion]);
-
-  useEffect(() => {
-    if (paused || reduceMotion) return undefined;
-    const timer = window.setInterval(() => setActiveStage((current) => (current + 1) % workflowStages.length), WORKFLOW_INTERVAL);
     return () => window.clearInterval(timer);
   }, [paused, reduceMotion]);
 
@@ -718,10 +475,46 @@ export default function ProdSecOps5DFramework() {
           <div className="mt-6 grid gap-4 rounded-[28px] border border-violet-300/15 bg-violet-300/[.035] p-5 lg:grid-cols-[auto_1fr] lg:items-center"><div className="grid h-14 w-14 place-items-center rounded-2xl border border-violet-300/20 bg-black/20 text-violet-300"><LockKeyhole aria-hidden="true" size={28} /></div><div><p className="text-xs font-bold uppercase tracking-[.2em] text-violet-200/70">Cross-cutting access control plane</p><h4 className="mt-1 text-lg font-semibold">Least privilege, RBAC and PAM govern every operational capability</h4><p className="mt-2 text-sm leading-6 text-white/60">Each workflow resolves the requesting identity, assigned role, permitted scope, separation-of-duties constraints, JIT elevation, approval authority, session evidence and revocation conditions before execution.</p></div></div>
         </section>
 
-        <section className="mt-12 rounded-[36px] border border-cyan-300/15 bg-white/[.035] p-6 sm:p-8" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
-          <div><p className="text-xs font-bold uppercase tracking-[.22em] text-cyan-200/70">8-stage governed workflow</p><h3 className="mt-2 text-2xl font-semibold sm:text-3xl">A 3D infinity loop from signal to assurance</h3><p className="mt-2 text-sm text-white/45">Risk governance, RBAC and PAM remain at the center of every stage.</p></div>
-          <PrecisionInfinityWorkflow activeStage={activeStage} onStageChange={setActiveStage} reduceMotion={reduceMotion} />
-        </section>
+        <section
+  className="mt-12 rounded-[36px] border border-cyan-300/15 bg-white/[.035] p-6 sm:p-8"
+  onMouseEnter={() =>
+    setPaused(true)
+  }
+  onMouseLeave={() =>
+    setPaused(false)
+  }
+  onFocusCapture={() =>
+    setPaused(true)
+  }
+  onBlurCapture={() =>
+    setPaused(false)
+  }
+>
+  <div>
+    <p className="text-xs font-bold uppercase tracking-[.22em] text-cyan-200/70">
+      8-stage governed workflow
+    </p>
+
+    <h3 className="mt-2 text-2xl font-semibold sm:text-3xl">
+      A continuous infinity lifecycle
+      from governed scope to assurance
+    </h3>
+
+    <p className="mt-2 text-sm text-white/45">
+      RISM preserves the ticket,
+      authority, evidence, and
+      residual-risk record. SecLabs is
+      invoked by the workflow when
+      purpose-bound technical proving
+      is required.
+    </p>
+  </div>
+
+  <ProdSecOpsEightStageInfinity
+    paused={paused}
+    onPauseChange={setPaused}
+  />
+</section>
 
         <section className="mt-12 grid gap-7 xl:grid-cols-[1fr_.78fr]">
           <div className="rounded-[36px] border border-fuchsia-300/20 bg-fuchsia-300/[.035] p-6 sm:p-8"><p className="text-xs font-bold uppercase tracking-[.22em] text-fuchsia-200/70">SecLabs testbed validation fabric</p><h3 className="mt-2 text-2xl font-semibold sm:text-3xl">Validate before change, or immediately after urgent action</h3><div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">{secLabsControls.map((control) => { const Icon = control.icon; return <div key={control.title} className="rounded-2xl border border-fuchsia-300/15 bg-black/20 p-4"><Icon aria-hidden="true" className="text-fuchsia-300" size={23} /><p className="mt-3 font-semibold">{control.title}</p><p className="mt-2 text-sm leading-6 text-white/55">{control.question}</p></div>; })}</div></div>
